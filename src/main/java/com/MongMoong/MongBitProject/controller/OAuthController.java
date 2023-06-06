@@ -5,6 +5,7 @@ import com.MongMoong.MongBitProject.config.KakaoUserInfo;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,12 +23,22 @@ public class OAuthController {
 
     private final MemberService memberService;
     private final KakaoOAuth2 kakaoOAuth2;
-/*
-# 로컬 테스트용 url
-# https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=http://localhost:8080/login/oauth2/kakao/code&response_type=code
-# 배포 테스트용 url
-# https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-willneiman.koyeb.app/login/oauth2/kakao/code&response_type=code
- */
+    @Value("${kakao.oauth.url}")
+    private String kakaoOAuthUrl;
+
+    /*
+    # 로컬 테스트용 url
+    # https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=http://localhost:8080/login/oauth2/kakao/code&response_type=code
+    # 배포 테스트용 url
+    # https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-willneiman.koyeb.app/login/oauth2/kakao/code&response_type=code
+     */
+// 카카오 OAuth 인증 URL을 반환하는 엔드포인트
+    @GetMapping("/login/oauth2/kakao/url")
+    public ResponseEntity<String> getKakaoOAuthUrl() {
+        // 카카오 OAuth 인증 URL 반환, 테스트 환경에 따라 URL을 변경해야 할 수 있음
+        return ResponseEntity.ok(kakaoOAuthUrl);
+    }
+
     @GetMapping("/login/oauth2/kakao/code")
     public ResponseEntity<String> kakaoLogin(String code, HttpServletRequest request) {
         // authorizedCode: 카카오 서버로부터 받은 인가 코드
