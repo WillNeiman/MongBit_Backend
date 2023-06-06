@@ -1,4 +1,4 @@
-#MongBit Project
+# MongBit Project
 
 ### [프로젝트 개요]
 - MBTI 검사 및 다양한 심리테스트를 할 수 있는 웹 페이지 개발
