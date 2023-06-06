@@ -1,0 +1,40 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://willneimann:pkskok12@mongbitdb.unaoa4m.mongodb.net/mongbitdb?retryWrites=true&w=majority
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: 3245a5f9cb8303814aadbe1eb65b2e73 # REST API KEY
+            client-secret: 7FtHbXlW6FIoWjDb2hMUfNCqaExv3Opv # Client Secret
+            redirect-uri: http://localhost:8080/login/oauth2/kakao/code # Redirect URI
+            authorization-grant-type: authorization_code
+            scope:
+            client-name: Kakao
+            client-authentication-method: post
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+admin:
+  token: "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC"
+jwt:
+  secret: "5v8y/B?E(H+MbPeShVmYq3t6w9z$C&F)"
+
+# REST API KEY
+# 3245a5f9cb8303814aadbe1eb65b2e73
+
+# Redirect URI
+# http://localhost:8080/login/oauth2/kakao/code
+
+# Client Secret
+# 7FtHbXlW6FIoWjDb2hMUfNCqaExv3Opv
+
+# 테스트용 url
+# https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=http://localhost:8080/login/oauth2/kakao/code&response_type=code
