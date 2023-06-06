@@ -44,7 +44,7 @@ public class OAuthController {
         // JWT 토큰을 HTTP 응답에 포함시키기
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
-                .body("New jwt response");
+                .body("Bearer " + jwtToken);
     }
 
 }
