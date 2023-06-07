@@ -39,10 +39,12 @@ public class MemberService {
         Long kakaoId = userInfo.getId();
         String kakaoNickname = userInfo.getNickname();
         String email = userInfo.getEmail();
+        String thumbnailImage = userInfo.getThumbnailImage();
 
         System.out.println("kakaoId = " + kakaoId);
         System.out.println("kakaoNickname = " + kakaoNickname);
         System.out.println("email = " + email);
+        System.out.println("thumbnailImage = " + thumbnailImage);
 
         // 패스워드 = 카카오 Id + ADMIN TOKEN
         String password = kakaoId + ADMIN_TOKEN;

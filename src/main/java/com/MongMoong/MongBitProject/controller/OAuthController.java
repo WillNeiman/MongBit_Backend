@@ -1,17 +1,13 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.KakaoOAuth2;
-import com.MongMoong.MongBitProject.config.KakaoUserInfo;
-import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
