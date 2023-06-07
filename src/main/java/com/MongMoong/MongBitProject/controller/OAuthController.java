@@ -37,6 +37,7 @@ public class OAuthController {
     @GetMapping("/login/oauth2/kakao/url")
     public ResponseEntity<String> getKakaoOAuthUrl() {
         // 카카오 OAuth 인증 URL 반환, 테스트 환경에 따라 URL을 변경해야 할 수 있음
+        System.out.println("kakaoOAuthUrl 전달 = " + kakaoOAuthUrl);
         return ResponseEntity.ok(kakaoOAuthUrl);
     }
 
