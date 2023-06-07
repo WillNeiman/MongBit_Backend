@@ -42,7 +42,7 @@ public class KakaoOAuth2 {
         // grant_type은 "authorization_code"로 설정되어 인증 코드 교환을 요청
         params.add("grant_type", "authorization_code");
         params.add("client_id", "3245a5f9cb8303814aadbe1eb65b2e73");
-        params.add("redirect_uri", "https://mongbit-willneiman.koyeb.app/login/oauth2/kakao/code");
+        params.add("redirect_uri", "https://mongbit-frontend-moorisong.koyeb.app/login/oauth2/kakao/code");
         params.add("code", authorizedCode);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기

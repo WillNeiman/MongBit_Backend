@@ -25,10 +25,12 @@ public class OAuthController {
     private String kakaoOAuthUrl;
 
     /*
-    # 로컬 테스트용 url
-    # https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=http://localhost:8080/login/oauth2/kakao/code&response_type=code
-    # 배포 테스트용 url
-    # https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-willneiman.koyeb.app/login/oauth2/kakao/code&response_type=code
+    로컬 테스트용 url
+    https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=http://localhost:8080/login/oauth2/kakao/code&response_type=code
+    배포 테스트용 url
+    https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-willneiman.koyeb.app/login/oauth2/kakao/code&response_type=code
+    프론트엔드 도메인
+    https://mongbit-frontend-moorisong.koyeb.app/
      */
 
     // 카카오 OAuth 인증 URL을 반환하는 엔드포인트
