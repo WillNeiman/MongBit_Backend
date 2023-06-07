@@ -33,7 +33,7 @@ public class MemberService {
     @Value("${admin.token}")
     private String ADMIN_TOKEN;
 
-    public void kakaoLogin(String authorizedCode) {
+    public KakaoUserInfo kakaoLogin(String authorizedCode) {
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
         KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(authorizedCode);
         Long kakaoId = userInfo.getId();
@@ -97,5 +97,7 @@ public class MemberService {
         context.setAuthentication(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), jwtToken, authentication.getAuthorities()));
         System.out.println("jwtToken = " + jwtToken);
         SecurityContextHolder.setContext(context);
+
+        return userInfo;
     }
 }

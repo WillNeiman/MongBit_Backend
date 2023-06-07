@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.KakaoOAuth2;
+import com.MongMoong.MongBitProject.config.KakaoUserInfo;
 import com.MongMoong.MongBitProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class OAuthController {
     # 배포 테스트용 url
     # https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-willneiman.koyeb.app/login/oauth2/kakao/code&response_type=code
      */
+
     // 카카오 OAuth 인증 URL을 반환하는 엔드포인트
     @GetMapping("/login/oauth2/kakao/url")
     public ResponseEntity<String> getKakaoOAuthUrl() {
@@ -36,12 +39,15 @@ public class OAuthController {
     }
 
     @GetMapping("/login/oauth2/kakao/code")
-    public ResponseEntity<String> kakaoLogin(String code, HttpServletRequest request) {
+    public ResponseEntity<String> kakaoLogin(String code, HttpServletRequest request, HttpSession session) {
         // authorizedCode: 카카오 서버로부터 받은 인가 코드
         System.out.println("code = " + code);
 
-        memberService.kakaoLogin(code);
+        KakaoUserInfo userInfo = memberService.kakaoLogin(code);
         System.out.println("kakaoLogin() 완료");
+
+        // 세션에 프로필 이미지 저장하기
+        session.setAttribute("thumbnailImage", userInfo.getThumbnailImage());
 
         // JWT 토큰 가져오기
         Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
