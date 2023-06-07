@@ -37,18 +37,15 @@ public class MemberService {
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
         KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(authorizedCode);
         Long kakaoId = userInfo.getId();
-        String nickname = userInfo.getNickname();
+        String kakaoNickname = userInfo.getNickname();
         String email = userInfo.getEmail();
 
         System.out.println("kakaoId = " + kakaoId);
-        System.out.println("nickname = " + nickname);
+        System.out.println("kakaoNickname = " + kakaoNickname);
         System.out.println("email = " + email);
 
-        // 회원 Id = 카카오 nickname
-        String username = nickname;
         // 패스워드 = 카카오 Id + ADMIN TOKEN
         String password = kakaoId + ADMIN_TOKEN;
-        System.out.println("username = " + username);
         System.out.println("password = " + password);
 
         // DB 에 중복된 Kakao Id 가 있는지 확인
@@ -62,16 +59,15 @@ public class MemberService {
             // ROLE = 사용자
             MemberRole role = MemberRole.USER;
 
-            kakaoMember = new Member(kakaoId, nickname, encodedPassword, email, role);
+            kakaoMember = new Member(kakaoId, kakaoNickname, encodedPassword, email, role);
             memberRepository.save(kakaoMember);
             System.out.println("memberRepository.save(kakaoMember 실행");
         }
 
-
         // 로그인 처리
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(username, password, authorities);
+        Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(kakaoNickname, password, authorities);
         Authentication authentication = authenticationManager.authenticate(kakaoUsernamePassword);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // SecurityContextHolder에 저장된 Authentication 객체가 정상적으로 저장되었는지 확인

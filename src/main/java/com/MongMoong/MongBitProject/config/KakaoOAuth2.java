@@ -95,7 +95,8 @@ public class KakaoOAuth2 {
         System.out.println("JSONObject body 내용보기 : "+ body.toString());
         String email = body.getJSONObject("kakao_account").getString("email");
         String nickname = body.getJSONObject("properties").getString("nickname");
+        String thumbnailImage = body.getJSONObject("properties").getString("thumbnail_image");
 
-        return new KakaoUserInfo(id, email, nickname);
+        return new KakaoUserInfo(id, email, nickname, thumbnailImage);
     }
 }
