@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
-    private static final long TOKEN_VALIDITY = 1000 * 60 * 60; // 1 hour
+    private static final long TOKEN_VALIDITY = 1000 * 60; //* 60; // 1 hour
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
