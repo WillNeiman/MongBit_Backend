@@ -54,8 +54,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
-            .authorizeRequests(authorize -> authorize
-                    .anyRequest().permitAll()
+            .authorizeRequests(authorize ->
+                    authorize.anyRequest().permitAll()
             )
             .oauth2Login()
                 .userInfoEndpoint()
