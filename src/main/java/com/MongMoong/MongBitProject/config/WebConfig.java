@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://mongbit-frontend-moorisong.koyeb.app", "http://localhost:3000") // 리액트 애플리케이션의 URL을 여기에 입력하세요.
+                .allowedOrigins("http://localhost:3000") // 리액트 애플리케이션의 URL을 여기에 입력하세요.
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
