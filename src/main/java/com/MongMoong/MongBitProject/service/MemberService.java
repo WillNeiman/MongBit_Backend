@@ -1,7 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.config.KakaoOAuth2;
-import com.MongMoong.MongBitProject.config.KakaoUserInfo;
+import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
 import com.MongMoong.MongBitProject.config.TokenProvider;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.model.MemberRole;

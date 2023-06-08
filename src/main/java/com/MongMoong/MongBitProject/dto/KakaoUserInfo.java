@@ -1,4 +1,4 @@
-package com.MongMoong.MongBitProject.config;
+package com.MongMoong.MongBitProject.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
