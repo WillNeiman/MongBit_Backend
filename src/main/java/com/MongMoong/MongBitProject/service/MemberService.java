@@ -34,9 +34,9 @@ public class MemberService {
     @Value("${admin.token}")
     private String ADMIN_TOKEN;
 
-    public KakaoUserInfo kakaoLogin(String authorizedCode, String origin) {
+    public KakaoUserInfo kakaoLogin(String authorizedCode, String url) {
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
-        KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(authorizedCode, origin);
+        KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(authorizedCode, url);
         Long kakaoId = userInfo.getId();
         String kakaoNickname = userInfo.getNickname();
         String email = userInfo.getEmail();
