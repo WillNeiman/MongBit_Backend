@@ -27,8 +27,8 @@ public class KakaoOAuth2 {
     @Value("${kakao.oauth.client-id}")
     private String CLIENT_ID;
     private String API = "login/oauth2/kakao/code";
-        private String REDIRECT_URI = "http://localhost:8080/login/oauth2/kakao/code";
-    //    private String REDIRECT_URI = "http://localhost:3000/login/oauth2/kakao/code";
+    private String REDIRECT_URI = "http://localhost:8080/login/oauth2/kakao/code";
+//    private String REDIRECT_URI = "http://localhost:3000/login/oauth2/kakao/code";
 //    private String REDIRECT_URI = "https://mongbit-frontend-moorisong.koyeb.app/login/oauth2/kakao/code";
 
     public KakaoUserInfo getUserInfo(String authorizedCode, String url) {
