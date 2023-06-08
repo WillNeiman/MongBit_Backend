@@ -1,8 +1,8 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.KakaoOAuth2;
-import com.MongMoong.MongBitProject.config.KakaoUserInfo;
-import com.MongMoong.MongBitProject.model.KakaoLoginResponse;
+import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
+import com.MongMoong.MongBitProject.dto.KakaoLoginResponse;
 import com.MongMoong.MongBitProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

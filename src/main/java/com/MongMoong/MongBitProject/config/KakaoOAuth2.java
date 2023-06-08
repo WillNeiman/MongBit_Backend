@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.config;
 
+import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

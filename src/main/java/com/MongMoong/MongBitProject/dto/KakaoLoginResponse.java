@@ -1,4 +1,4 @@
-package com.MongMoong.MongBitProject.model;
+package com.MongMoong.MongBitProject.dto;
 
 import lombok.Getter;
 import lombok.Setter;
