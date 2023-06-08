@@ -2,6 +2,7 @@ package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.KakaoOAuth2;
 import com.MongMoong.MongBitProject.config.KakaoUserInfo;
+import com.MongMoong.MongBitProject.model.KakaoLoginResponse;
 import com.MongMoong.MongBitProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,25 +44,27 @@ public class OAuthController {
     }
 
     @GetMapping("/login/oauth2/kakao/code")
-    public ResponseEntity<String> kakaoLogin(String code, HttpServletRequest request, HttpSession session) {
+    public ResponseEntity<KakaoLoginResponse> kakaoLogin(String code, HttpServletRequest request, HttpSession session) {
         // authorizedCode: 카카오 서버로부터 받은 인가 코드
         System.out.println("code = " + code);
 
         KakaoUserInfo userInfo = memberService.kakaoLogin(code);
         System.out.println("kakaoLogin() 완료");
 
-        // 세션에 프로필 이미지 저장하기
-        session.setAttribute("thumbnailImage", userInfo.getThumbnailImage());
+        // response body 객체 만들기
+        String thumbnail = userInfo.getThumbnailImage();
+        LocalDateTime registDate = userInfo.getRegistDate();
+        KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(thumbnail, registDate);
 
         // JWT 토큰 가져오기
         Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("현재 인증된 사용자: " + currentAuthentication);
         String jwtToken = (String) currentAuthentication.getCredentials();
 
-        // JWT 토큰을 HTTP 응답에 포함시키기
+        // JWT 토큰을 HTTP 응답에 포함시키기, 바디에 썸네일과 가입일 정보 담아서 보내기
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
-                .body("Bearer " + jwtToken);
+                .body(kakaoLoginResponse);
     }
 
 }

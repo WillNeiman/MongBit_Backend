@@ -29,6 +29,7 @@ jwt:
 kakao:
   oauth:
     url: "https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-frontend-moorisong.koyeb.app/login/oauth2/kakao/code&response_type=code"
+    client-id: "3245a5f9cb8303814aadbe1eb65b2e73"
 
 # REST API KEY
 # 3245a5f9cb8303814aadbe1eb65b2e73
