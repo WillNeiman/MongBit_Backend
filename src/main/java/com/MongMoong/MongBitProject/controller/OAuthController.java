@@ -48,7 +48,6 @@ public class OAuthController {
 
     @GetMapping("/login/oauth2/kakao/code")
     public ResponseEntity<KakaoLoginResponse> kakaoLogin(String code, HttpServletRequest request, HttpSession session) {
-        try {
             // host 헤더 가져오기
             String url = request.getHeader("Referer");
             System.out.println("호출 도메인: " + url);
@@ -73,19 +72,6 @@ public class OAuthController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
                     .body(kakaoLoginResponse);
-        } catch (HttpClientErrorException.BadRequest e) {
-            // 카카오 OAuth2 인증 요청에서 발생한 400 에러를 처리
-            // 예외 메시지에 포함된 상세 정보를 클라이언트에게 전달
-            String errorMessage = e.getResponseBodyAsString();
-            KakaoLoginResponse errorResponse = new KakaoLoginResponse(errorMessage);
-            return ResponseEntity.badRequest().body(errorResponse);
-        } catch (Exception e) {
-            // 기타 예외를 처리
-            // 예외 메시지를 클라이언트에게 전달
-            String errorMessage = "카카오 로그인 예외 발생";
-            KakaoLoginResponse errorResponse = new KakaoLoginResponse(errorMessage);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-        }
     }
 
 }

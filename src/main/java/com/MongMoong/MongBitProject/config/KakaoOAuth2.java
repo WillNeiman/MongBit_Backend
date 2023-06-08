@@ -26,11 +26,17 @@ public class KakaoOAuth2 {
 
     @Value("${kakao.oauth.client-id}")
     private String CLIENT_ID;
-    private String apiString = "login/oauth2/kakao/code";
-    private String REDIRECT_URI;
+    private String API = "login/oauth2/kakao/code";
+        private String REDIRECT_URI = "http://localhost:8080/login/oauth2/kakao/code";
+    //    private String REDIRECT_URI = "http://localhost:3000/login/oauth2/kakao/code";
+//    private String REDIRECT_URI = "https://mongbit-frontend-moorisong.koyeb.app/login/oauth2/kakao/code";
 
     public KakaoUserInfo getUserInfo(String authorizedCode, String url) {
-        this.REDIRECT_URI = url + apiString;
+        if(url == null) {
+            REDIRECT_URI = "http://localhost:8080/login/oauth2/kakao/code";
+        } else {
+            REDIRECT_URI = url + API;
+        }
         // 1. 인가코드 -> 액세스 토큰
         String accessToken = getAccessToken(authorizedCode, REDIRECT_URI);
         // 2. 액세스 토큰 -> 카카오 사용자 정보
