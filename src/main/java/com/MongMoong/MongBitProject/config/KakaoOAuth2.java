@@ -26,7 +26,7 @@ public class KakaoOAuth2 {
 
     @Value("${kakao.oauth.client-id}")
     private String CLIENT_ID;
-    private String apiString = "/login/oauth2/kakao/code";
+    private String apiString = "login/oauth2/kakao/code";
     private String REDIRECT_URI;
 
     public KakaoUserInfo getUserInfo(String authorizedCode, String url) {
