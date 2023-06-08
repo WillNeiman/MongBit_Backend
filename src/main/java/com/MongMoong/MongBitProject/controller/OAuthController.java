@@ -50,19 +50,13 @@ public class OAuthController {
     public ResponseEntity<KakaoLoginResponse> kakaoLogin(String code, HttpServletRequest request, HttpSession session) {
         try {
             // host 헤더 가져오기
-            String host = request.getHeader("Host");
-            String url = "";
-            if(host.contains("localhost")){
-                url = request.getScheme() + "://" + host;
-            } else {
-                url = request.getScheme() + "s://" + host;
-            }
-            System.out.println("호출 도메인: " + url);
+            String origin = request.getHeader("Origin");
+            System.out.println("호출 도메인: " + origin);
 
             // authorizedCode: 카카오 서버로부터 받은 인가 코드
             System.out.println("code = " + code);
 
-            KakaoUserInfo userInfo = memberService.kakaoLogin(code, url);
+            KakaoUserInfo userInfo = memberService.kakaoLogin(code, origin);
             System.out.println("kakaoLogin() 완료");
 
             // response body 객체 만들기

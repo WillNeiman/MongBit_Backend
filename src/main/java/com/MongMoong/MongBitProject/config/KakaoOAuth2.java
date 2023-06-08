@@ -29,8 +29,8 @@ public class KakaoOAuth2 {
     private String apiString = "/login/oauth2/kakao/code";
     private String REDIRECT_URI;
 
-    public KakaoUserInfo getUserInfo(String authorizedCode, String url) {
-        this.REDIRECT_URI = url + apiString;
+    public KakaoUserInfo getUserInfo(String authorizedCode, String origin) {
+        this.REDIRECT_URI = origin + apiString;
         // 1. 인가코드 -> 액세스 토큰
         String accessToken = getAccessToken(authorizedCode, REDIRECT_URI);
         // 2. 액세스 토큰 -> 카카오 사용자 정보
