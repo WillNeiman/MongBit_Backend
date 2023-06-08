@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +41,13 @@ public class MemberService {
         String kakaoNickname = userInfo.getNickname();
         String email = userInfo.getEmail();
         String thumbnailImage = userInfo.getThumbnailImage();
+        LocalDateTime registDate = userInfo.getRegistDate();
 
         System.out.println("kakaoId = " + kakaoId);
         System.out.println("kakaoNickname = " + kakaoNickname);
         System.out.println("email = " + email);
         System.out.println("thumbnailImage = " + thumbnailImage);
+        System.out.println("registDate = " + registDate);
 
         // 패스워드 = 카카오 Id + ADMIN TOKEN
         String password = kakaoId + ADMIN_TOKEN;
@@ -97,6 +100,9 @@ public class MemberService {
         context.setAuthentication(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), jwtToken, authentication.getAuthorities()));
         System.out.println("jwtToken = " + jwtToken);
         SecurityContextHolder.setContext(context);
+
+        // 반환할 userInfo에 우리 서비스 가입일 정보 담아주기
+        userInfo.setRegistDate(kakaoMember.getRegistDate());
 
         return userInfo;
     }
