@@ -7,15 +7,18 @@ import com.MongMoong.MongBitProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.Enumeration;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,26 +48,44 @@ public class OAuthController {
 
     @GetMapping("/login/oauth2/kakao/code")
     public ResponseEntity<KakaoLoginResponse> kakaoLogin(String code, HttpServletRequest request, HttpSession session) {
-        // authorizedCode: 카카오 서버로부터 받은 인가 코드
-        System.out.println("code = " + code);
+        try {
+            // host 헤더 가져오기
+            String url = request.getScheme() + "://" + request.getHeader("Host");
+            System.out.println("호출 도메인: " + url);
 
-        KakaoUserInfo userInfo = memberService.kakaoLogin(code);
-        System.out.println("kakaoLogin() 완료");
+            // authorizedCode: 카카오 서버로부터 받은 인가 코드
+            System.out.println("code = " + code);
 
-        // response body 객체 만들기
-        String thumbnail = userInfo.getThumbnailImage();
-        LocalDateTime registDate = userInfo.getRegistDate();
-        KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(thumbnail, registDate);
+            KakaoUserInfo userInfo = memberService.kakaoLogin(code, url);
+            System.out.println("kakaoLogin() 완료");
 
-        // JWT 토큰 가져오기
-        Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("현재 인증된 사용자: " + currentAuthentication);
-        String jwtToken = (String) currentAuthentication.getCredentials();
+            // response body 객체 만들기
+            String thumbnail = userInfo.getThumbnailImage();
+            LocalDateTime registDate = userInfo.getRegistDate();
+            KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(thumbnail, registDate);
 
-        // JWT 토큰을 HTTP 응답에 포함시키기, 바디에 썸네일과 가입일 정보 담아서 보내기
-        return ResponseEntity.ok()
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
-                .body(kakaoLoginResponse);
+            // JWT 토큰 가져오기
+            Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
+            System.out.println("현재 인증된 사용자: " + currentAuthentication);
+            String jwtToken = (String) currentAuthentication.getCredentials();
+
+            // JWT 토큰을 HTTP 응답에 포함시키기, 바디에 썸네일과 가입일 정보 담아서 보내기
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
+                    .body(kakaoLoginResponse);
+        } catch (HttpClientErrorException.BadRequest e) {
+            // 카카오 OAuth2 인증 요청에서 발생한 400 에러를 처리
+            // 예외 메시지에 포함된 상세 정보를 클라이언트에게 전달
+            String errorMessage = e.getResponseBodyAsString();
+            KakaoLoginResponse errorResponse = new KakaoLoginResponse(errorMessage);
+            return ResponseEntity.badRequest().body(errorResponse);
+        } catch (Exception e) {
+            // 기타 예외를 처리
+            // 예외 메시지를 클라이언트에게 전달
+            String errorMessage = "카카오 로그인 예외 발생";
+            KakaoLoginResponse errorResponse = new KakaoLoginResponse(errorMessage);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 
 }

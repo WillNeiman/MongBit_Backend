@@ -26,19 +26,20 @@ public class KakaoOAuth2 {
 
     @Value("${kakao.oauth.client-id}")
     private String CLIENT_ID;
-//    private String REDIRECT_URI = "http://localhost:8080/login/oauth2/kakao/code";
-    private String REDIRECT_URI = "https://mongbit-frontend-moorisong.koyeb.app/login/oauth2/kakao/code";
+    private String apiString = "/login/oauth2/kakao/code";
+    private String REDIRECT_URI;
 
-    public KakaoUserInfo getUserInfo(String authorizedCode) {
+    public KakaoUserInfo getUserInfo(String authorizedCode, String url) {
+        this.REDIRECT_URI = url + apiString;
         // 1. 인가코드 -> 액세스 토큰
-        String accessToken = getAccessToken(authorizedCode);
+        String accessToken = getAccessToken(authorizedCode, REDIRECT_URI);
         // 2. 액세스 토큰 -> 카카오 사용자 정보
         KakaoUserInfo userInfo = getUserInfoByToken(accessToken);
 
         return userInfo;
     }
 
-    public String getAccessToken(String authorizedCode) {
+    public String getAccessToken(String authorizedCode, String redirectUri) {
         // HttpHeader 오브젝트 생성, HTTP 요청의 헤더 정보를 저장
         HttpHeaders headers = new HttpHeaders();
         // "Content-type" 헤더를 추가하여 요청의 본문 타입을 지정
@@ -50,7 +51,7 @@ public class KakaoOAuth2 {
         // grant_type은 "authorization_code"로 설정되어 인증 코드 교환을 요청
         params.add("grant_type", "authorization_code");
         params.add("client_id", CLIENT_ID);
-        params.add("redirect_uri", REDIRECT_URI);
+        params.add("redirect_uri", redirectUri);
         params.add("code", authorizedCode);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
