@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://mong-bit-frontend-git-buildksh-moorisong.vercel.app", "http://localhost:3000") // 리액트 애플리케이션의 URL을 여기에 입력하세요.
+                .allowedOrigins("https://mong-bit-frontend.vercel.app", "http://localhost:3000") // 리액트 애플리케이션의 URL을 여기에 입력하세요.
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
                 .exposedHeaders(HttpHeaders.AUTHORIZATION) // 권한 헤더 노출 설정
