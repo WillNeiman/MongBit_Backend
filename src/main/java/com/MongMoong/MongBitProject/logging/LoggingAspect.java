@@ -15,16 +15,16 @@ public class LoggingAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // 컨트롤러 패키지에 대한 Pointcut 정의
+    // 모든 패키지에 대한 Pointcut 정의
     @Pointcut("execution(* com.MongMoong.MongBitProject..*(..))")
     public void projectPackagePointcut() {}
 
-    @Before("projectPackagePointcut()") // 메소드 실행 전
+    @Before("projectPackagePointcut()")
     public void logBefore(JoinPoint joinPoint) {
         logger.info("Executing: " + joinPoint.getSignature().toShortString());
     }
 
-    @AfterReturning(value = "projectPackagePointcut()", returning = "result") // 메소드 실행 후
+    @AfterReturning(value = "projectPackagePointcut()", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         logger.info("Executed: " + joinPoint.getSignature().toShortString() + ", Return: " + result);
     }

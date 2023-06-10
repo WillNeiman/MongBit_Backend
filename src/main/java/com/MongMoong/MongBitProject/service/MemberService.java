@@ -78,6 +78,7 @@ public class MemberService {
         // SecurityContextHolder에 저장된 Authentication 객체가 정상적으로 저장되었는지 확인
 
         /*
+        SecurityContextHolder
         Spring Security의 핵심 클래스 중 하나로, 현재 인증된 사용자의 세부 정보를 저장하는데 사용
         보안 컨텍스트는 사용자의 인증 정보, 그리고 해당 사용자에게 부여된 권한 등의 정보를 담고 있다
         이렇게 저장된 Authentication 객체는 다음과 같은 상황에서 사용된다.
