@@ -15,8 +15,8 @@ public class MemberTestResultService {
 
     private final MemberTestResultRepository memberTestResultRepository;
 
-    public Page<MemberTestResult> getResultsByMemberId(String memberId, int page, int size) {
+    public Page<MemberTestResult> getResultsByMemberId(Long kakaoId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "testDate"));
-        return memberTestResultRepository.findByMemberId(memberId, pageable);
+        return memberTestResultRepository.findByMemberId(kakaoId, pageable);
     }
 }
