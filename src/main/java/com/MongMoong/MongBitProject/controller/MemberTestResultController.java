@@ -14,13 +14,13 @@ public class MemberTestResultController {
 
     private final MemberTestResultService memberTestResultService;
 
-    @GetMapping("/{memberId}")
+    @GetMapping("/{kakaoId}")
     public ResponseEntity<Page<MemberTestResult>> getResultsByMemberId(
-            @PathVariable String memberId,
+            @PathVariable String kakaoId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(memberId, page, size);
+        Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(Long.parseLong(kakaoId), page, size);
         return ResponseEntity.ok(results);
     }
 }

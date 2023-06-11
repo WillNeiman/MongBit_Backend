@@ -8,11 +8,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class KakaoLoginResponse {
+    private Long kakaoId;
     private String thumbnail;
     private LocalDateTime registDate;
     private String errorMessage;
 
-    public KakaoLoginResponse(String thumbnail, LocalDateTime registDate) {
+    public KakaoLoginResponse(Long kakaoId, String thumbnail, LocalDateTime registDate) {
+        this.kakaoId = kakaoId;
         this.thumbnail = thumbnail;
         this.registDate = registDate;
     }
