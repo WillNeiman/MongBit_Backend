@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.controller;
 
+import com.MongMoong.MongBitProject.config.TokenProvider;
 import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
 import com.MongMoong.MongBitProject.dto.KakaoLoginResponse;
 import com.MongMoong.MongBitProject.service.MemberService;
@@ -21,6 +22,8 @@ import java.time.LocalDateTime;
 public class OAuthController {
 
     private final MemberService memberService;
+    private final TokenProvider tokenProvider;
+
     @Value("${kakao.oauth.url}")
     private String kakaoOAuthUrl;
 
@@ -63,6 +66,10 @@ public class OAuthController {
             Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
             System.out.println("현재 인증된 사용자: " + currentAuthentication);
             String jwtToken = (String) currentAuthentication.getCredentials();
+
+            // JWT 토큰 검증하고 인증 객체 가져오기
+            Authentication authFromToken = tokenProvider.getAuthentication(jwtToken);
+            System.out.println("토큰을 통해 얻은 인증 정보: " + authFromToken);
 
             // JWT 토큰을 HTTP 응답에 포함시키기, 바디에 썸네일과 가입일 정보 담아서 보내기
             return ResponseEntity.ok()
