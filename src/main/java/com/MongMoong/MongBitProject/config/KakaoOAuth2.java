@@ -1,6 +1,8 @@
 package com.MongMoong.MongBitProject.config;
 
+import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,16 +23,29 @@ import org.springframework.web.client.RestTemplate;
  */
 @Component
 public class KakaoOAuth2 {
-    public KakaoUserInfo getUserInfo(String authorizedCode) {
+
+    @Value("${kakao.oauth.client-id}")
+    private String CLIENT_ID;
+    private String API = "login/oauth2/kakao/code";
+    private String REDIRECT_URI = "http://localhost:8080/login/oauth2/kakao/code";
+//    private String REDIRECT_URI = "http://localhost:3000/login/oauth2/kakao/code";
+//    private String REDIRECT_URI = "https://mongbit-frontend-moorisong.koyeb.app/login/oauth2/kakao/code";
+
+    public KakaoUserInfo getUserInfo(String authorizedCode, String url) {
+        if(url == null) {
+            REDIRECT_URI = "http://localhost:8080/login/oauth2/kakao/code";
+        } else {
+            REDIRECT_URI = url + API;
+        }
         // 1. 인가코드 -> 액세스 토큰
-        String accessToken = getAccessToken(authorizedCode);
+        String accessToken = getAccessToken(authorizedCode, REDIRECT_URI);
         // 2. 액세스 토큰 -> 카카오 사용자 정보
         KakaoUserInfo userInfo = getUserInfoByToken(accessToken);
 
         return userInfo;
     }
 
-    public String getAccessToken(String authorizedCode) {
+    public String getAccessToken(String authorizedCode, String redirectUri) {
         // HttpHeader 오브젝트 생성, HTTP 요청의 헤더 정보를 저장
         HttpHeaders headers = new HttpHeaders();
         // "Content-type" 헤더를 추가하여 요청의 본문 타입을 지정
@@ -41,8 +56,8 @@ public class KakaoOAuth2 {
         // 파라미터를 추가하여 Kakao API에 전달될 요청 정보를 설정
         // grant_type은 "authorization_code"로 설정되어 인증 코드 교환을 요청
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "3245a5f9cb8303814aadbe1eb65b2e73");
-        params.add("redirect_uri", "http://localhost:8080/login/oauth2/kakao/code");
+        params.add("client_id", CLIENT_ID);
+        params.add("redirect_uri", redirectUri);
         params.add("code", authorizedCode);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
@@ -93,9 +108,13 @@ public class KakaoOAuth2 {
         JSONObject body = new JSONObject(response.getBody());
         Long id = body.getLong("id");
         System.out.println("JSONObject body 내용보기 : "+ body.toString());
-        String email = body.getJSONObject("kakao_account").getString("email");
+        String email = "";
+        if (!body.getJSONObject("kakao_account").getBoolean("email_needs_agreement")) {
+            email = body.getJSONObject("kakao_account").getString("email");
+        }
         String nickname = body.getJSONObject("properties").getString("nickname");
+        String thumbnailImage = body.getJSONObject("properties").getString("thumbnail_image");
 
-        return new KakaoUserInfo(id, email, nickname);
+        return new KakaoUserInfo(id, email, nickname, thumbnailImage);
     }
 }
