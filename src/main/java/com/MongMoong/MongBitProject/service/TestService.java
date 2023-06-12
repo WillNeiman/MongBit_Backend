@@ -1,6 +1,8 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.model.Test;
+import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.repository.TestRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TestService {
@@ -25,5 +28,14 @@ public class TestService {
     public List<Test> getRecentTests(int size) {
         Page<Test> page = testRepository.findByOrderByCreateDateDesc(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createDate")));
         return page.getContent();
+    }
+    public Optional<Test> getTest(String id){
+        return testRepository.findById(id);
+    }
+    public List<Question> getQuestions(String id){
+        return testRepository.findQuestionById(id);
+    }
+    public Optional<TestResult> getTestResult(String id){
+        return testRepository.findTestResultById(id);
     }
 }
