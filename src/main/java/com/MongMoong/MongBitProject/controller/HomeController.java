@@ -3,6 +3,7 @@ package com.MongMoong.MongBitProject.controller;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.service.TestService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class HomeController {
 
     private final TestService testService;
-
-    public HomeController(TestService testService) {
-        this.testService = testService;
-    }
 
     @GetMapping("/")
     public ResponseEntity<String> homeView(HttpServletRequest request) {
