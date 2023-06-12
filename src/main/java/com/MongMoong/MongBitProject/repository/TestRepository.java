@@ -7,4 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface TestRepository extends MongoRepository<Test, String> {
     Page<Test> save(Pageable pageable);
+    Page<Test> findAllByOrderByCreateDateDesc(Pageable pageable);
 }
