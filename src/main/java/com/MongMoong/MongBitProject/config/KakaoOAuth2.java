@@ -108,7 +108,10 @@ public class KakaoOAuth2 {
         JSONObject body = new JSONObject(response.getBody());
         Long id = body.getLong("id");
         System.out.println("JSONObject body 내용보기 : "+ body.toString());
-        String email = body.getJSONObject("kakao_account").getString("email");
+        String email = "";
+        if (!body.getJSONObject("kakao_account").getBoolean("email_needs_agreement")) {
+            email = body.getJSONObject("kakao_account").getString("email");
+        }
         String nickname = body.getJSONObject("properties").getString("nickname");
         String thumbnailImage = body.getJSONObject("properties").getString("thumbnail_image");
 
