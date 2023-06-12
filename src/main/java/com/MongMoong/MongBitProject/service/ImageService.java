@@ -1,5 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.dto.ImageUploadResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -41,6 +43,10 @@ public class ImageService {
 
         System.out.println("responseEntity = " + responseEntity);
         String result = EntityUtils.toString(responseEntity);
-        return result;
+
+        ObjectMapper mapper = new ObjectMapper();
+        ImageUploadResponse uploadResponse = mapper.readValue(result, ImageUploadResponse.class);
+
+        return uploadResponse.getData().getUrl();
     }
 }

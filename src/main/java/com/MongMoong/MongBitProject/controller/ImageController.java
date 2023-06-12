@@ -15,8 +15,10 @@ public class ImageController {
 
     @PostMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file) throws Exception{
-        return "asdasdasd";
-//        System.out.println("/upload 실행");
-//        return imageService.uploadImageToImgBB(file);
+//        return "asdasdasd";
+        System.out.println("/upload 실행");
+        String imageUrl = imageService.uploadImageToImgBB(file);
+        System.out.println("imageUrl = " + imageUrl);
+        return imageUrl;
     }
 }
