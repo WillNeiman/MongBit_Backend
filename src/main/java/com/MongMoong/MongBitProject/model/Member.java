@@ -40,6 +40,7 @@ public class Member {
         this.email = email;
         this.role = role;
         this.kakaoId = kakaoId;
+        this.registDate = LocalDateTime.now();
     }
 
     public List<GrantedAuthority> getAuthorities() {

@@ -20,6 +20,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         this.tokenProvider = tokenProvider;
     }
 
+    // OAuth2 인증 절차를 직접 구현했기 때문에 사실 안씀
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
@@ -29,6 +30,7 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         Authentication: 사용자의 인증 정보를 담고 있는 객체
          */
         String token = tokenProvider.createToken(authentication);
+        System.out.println("successHandler(jwtAuthenticationSuccessHandler) = " + token);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

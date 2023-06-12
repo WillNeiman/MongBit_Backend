@@ -50,6 +50,7 @@ public class SecurityConfig {
     }
 
 
+    // OAuth2 인증 절차를 직접 구현했기 때문에 사실 안씀
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
