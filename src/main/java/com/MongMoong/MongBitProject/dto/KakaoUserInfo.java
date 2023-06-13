@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 public class KakaoUserInfo {
     Long id;
+    String memberId;
     String email;
     String nickname;
     String thumbnailImage;

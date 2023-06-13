@@ -46,6 +46,7 @@ public class OAuthController {
 
     @GetMapping("/login/oauth2/kakao/code")
     public ResponseEntity<KakaoLoginResponse> kakaoLogin(String code, HttpServletRequest request, HttpSession session) {
+        try {
             // 요청 도메인 가져오기
             String url = request.getHeader("Referer");
             System.out.println("호출 도메인: " + url);
@@ -60,7 +61,8 @@ public class OAuthController {
             String thumbnail = userInfo.getThumbnailImage();
             LocalDateTime registDate = userInfo.getRegistDate();
             Long kakaoId = userInfo.getId();
-            KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(kakaoId, thumbnail, registDate);
+            String memberId = userInfo.getMemberId();
+            KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(kakaoId, memberId, thumbnail, registDate);
 
             // JWT 토큰 가져오기
             Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
@@ -75,6 +77,9 @@ public class OAuthController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
                     .body(kakaoLoginResponse);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     // TODO 토큰 블랙리스트
