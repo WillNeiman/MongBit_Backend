@@ -60,9 +60,9 @@ public class OAuthController {
             // response body 객체 만들기
             String thumbnail = userInfo.getThumbnailImage();
             LocalDateTime registDate = userInfo.getRegistDate();
-            Long kakaoId = userInfo.getId();
+            String username = userInfo.getNickname();
             String memberId = userInfo.getMemberId();
-            KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(kakaoId, memberId, thumbnail, registDate);
+            KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(memberId, username, thumbnail, registDate);
 
             // JWT 토큰 가져오기
             Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
