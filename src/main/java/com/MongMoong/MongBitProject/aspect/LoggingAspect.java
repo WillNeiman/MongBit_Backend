@@ -1,4 +1,4 @@
-package com.MongMoong.MongBitProject.logging;
+package com.MongMoong.MongBitProject.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
