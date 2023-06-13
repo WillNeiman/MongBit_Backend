@@ -14,21 +14,13 @@ public class LikeController {
 
     @GetMapping("/{memberId}/{testId}")
     public ResponseEntity<Boolean> hasUserLikedTest(@PathVariable String memberId, String testId) {
-        try {
-            boolean hasLiked = likeService.hasUserLikedTest(memberId, testId);
-            return ResponseEntity.ok(hasLiked);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
+        boolean hasLiked = likeService.hasUserLikedTest(memberId, testId);
+        return ResponseEntity.ok(hasLiked);
     }
 
     @GetMapping("/count/{testId}")
     public ResponseEntity<Integer> getLikesCountByTestId(@PathVariable String testId) {
-        try {
-            int count = likeService.getLikesCountByTestId(testId);
-            return ResponseEntity.ok(count);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
+        int count = likeService.getLikesCountByTestId(testId);
+        return ResponseEntity.ok(count);
     }
 }
