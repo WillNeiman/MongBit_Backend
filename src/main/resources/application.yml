@@ -42,7 +42,8 @@ kakao:
   oauth:
     url: "https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-frontend-moorisong.koyeb.app/login/oauth2/kakao/code&response_type=code"
     client-id: "3245a5f9cb8303814aadbe1eb65b2e73"
-
+imgbb:
+  key: 8157b37797b76c11b2c257b37b1a7080
 # REST API KEY
 # 3245a5f9cb8303814aadbe1eb65b2e73
 

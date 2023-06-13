@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.model.Test;
+import com.MongMoong.MongBitProject.repository.QuizRepository;
 import com.MongMoong.MongBitProject.repository.TestRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
