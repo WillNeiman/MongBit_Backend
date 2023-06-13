@@ -26,7 +26,7 @@ public class TestService {
     getRecentTests())에서 PageRequest 인스턴스를 생성하고 findByOrderByCreateDateDesc())에 전달하면 타입 오류가 발생하지 않는다.
      */
     public List<Test> getRecentTests(int size) {
-        Page<Test> page = testRepository.findAllByOrderByCreateDateDesc(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createDate")));
+        Page<Test> page = testRepository.findByOrderByCreateDateDesc(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createDate")));
         return page.getContent();
     }
     public Optional<Test> getTest(String id){
