@@ -18,7 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                         "https://mong-bit-frontend.vercel.app",
-                        "http://localhost:3000"
+                        "http://localhost:3000",
+                        "http://localhost:8080"
                 ) // 리액트 애플리케이션의 URL을 여기에 입력하세요.
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
