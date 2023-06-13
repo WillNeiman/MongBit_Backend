@@ -35,7 +35,16 @@ public class TestService {
     public List<Question> getQuestions(String id){
         return testRepository.findQuestionById(id);
     }
-    public Optional<TestResult> getTestResult(String id){
-        return testRepository.findTestResultById(id);
+    public Optional<TestResult> getTestResult(String id, String result){
+        return testRepository.findTestResultById(id, result);
     }
+
+    public Test saveTest(Test test) {
+        return testRepository.saveTest(test);
+    }
+
+    public void deleteTest(String id) {
+        testRepository.deleteTestById(id);
+    }
+
 }

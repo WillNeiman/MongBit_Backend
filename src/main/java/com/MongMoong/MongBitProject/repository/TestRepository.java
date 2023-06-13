@@ -16,5 +16,10 @@ public interface TestRepository extends MongoRepository<Test, String> {
 
     Optional<Test> findById(String id);
     List<Question> findQuestionById(String id);
-    Optional<TestResult> findTestResultById(String id);
+    Optional<TestResult> findTestResultById(String id, String result);
+
+    Test saveTest(Test test);
+
+    void deleteTestById(String id);
+
 }
