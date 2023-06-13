@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Like {
     @Id
     private String id;
-    private long kakaoId;
+    private String memberId;
     private String testId;
     private LocalDateTime likeDate;
 }

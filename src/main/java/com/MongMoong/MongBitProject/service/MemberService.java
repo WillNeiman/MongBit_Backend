@@ -65,7 +65,7 @@ public class MemberService {
             MemberRole role = MemberRole.USER;
 
             kakaoMember = new Member(kakaoId, kakaoNickname, encodedPassword, email, role);
-            memberRepository.save(kakaoMember);
+            kakaoMember = memberRepository.save(kakaoMember); //회원 저장하고 저장된 객체 반환
             System.out.println("memberRepository.save(kakaoMember 실행");
         }
 
@@ -104,6 +104,7 @@ public class MemberService {
 
         // 반환할 userInfo에 우리 서비스 가입일 정보 담아주기
         userInfo.setRegistDate(kakaoMember.getRegistDate());
+        userInfo.setMemberId(kakaoMember.getId()); // memberId 설정
 
         return userInfo;
     }
