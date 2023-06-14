@@ -44,6 +44,14 @@ kakao:
     client-id: "3245a5f9cb8303814aadbe1eb65b2e73"
 imgbb:
   key: 8157b37797b76c11b2c257b37b1a7080
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: "/swagger-ui.html"
+  api-docs:
+    path: "/v3/api-docs"
+
 # REST API KEY
 # 3245a5f9cb8303814aadbe1eb65b2e73
 
