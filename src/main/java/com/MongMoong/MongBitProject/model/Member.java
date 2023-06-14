@@ -27,15 +27,15 @@ public class Member {
     @Id
     private String id;
     private Long kakaoId;
-    private String userName;
+    private String username;
     // password = kakaoId + ADMIN_TOKEN
     private String password;
     private String email;
     private MemberRole role;
     private LocalDateTime registDate;
 
-    public Member(Long kakaoId, String userName, String password, String email, MemberRole role){
-        this.userName = userName;
+    public Member(Long kakaoId, String username, String password, String email, MemberRole role){
+        this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;

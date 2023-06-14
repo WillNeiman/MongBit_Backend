@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 @Setter
 public class KakaoLoginResponse {
     private String memberId;
-    private String userName;
+    private String username;
     private String thumbnail;
     private LocalDateTime registDate;
     private String errorMessage;
 
-    public KakaoLoginResponse(String memberId, String userName, String thumbnail, LocalDateTime registDate) {
-        this.userName = userName;
+    public KakaoLoginResponse(String memberId, String username, String thumbnail, LocalDateTime registDate) {
+        this.username = username;
         this.memberId = memberId;
         this.thumbnail = thumbnail;
         this.registDate = registDate;
