@@ -44,18 +44,5 @@ public class TestController {
         }
     }
 
-    //임시
-    @PostMapping
-    public ResponseEntity<Test> saveTest(@RequestBody Test test){
-        Test savedTest = testService.saveTest(test);
-        return ResponseEntity.ok(savedTest);
-    }
-
-    // 임시 삭제
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTest(@PathVariable String id) {
-        testService.deleteTest(id);
-        return ResponseEntity.noContent().build();
-    }
 
 }
