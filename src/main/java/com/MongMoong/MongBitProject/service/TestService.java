@@ -39,12 +39,5 @@ public class TestService {
         return testRepository.findTestResultById(id, result);
     }
 
-    public Test saveTest(Test test) {
-        return testRepository.saveTest(test);
-    }
-
-    public void deleteTest(String id) {
-        testRepository.deleteTestById(id);
-    }
 
 }
