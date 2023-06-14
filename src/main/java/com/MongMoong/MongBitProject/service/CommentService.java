@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
 import com.MongMoong.MongBitProject.exception.ResourceNotFoundException;
 import com.MongMoong.MongBitProject.model.Comment;
@@ -25,15 +26,25 @@ public class CommentService {
     private final TestRepository testRepository;
     private final MemberRepository memberRepository;
 
+    @TestExistenceCheck
     public Comment saveComment(String testId, Comment comment) {
-        Test test = testRepository.findById(testId).orElseThrow(() -> new ResourceNotFoundException("해당 테스트가 조회되지 않았습니다. " + testId));
         comment.setTestId(testId);
         comment.setCommentDate(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 
+    @TestExistenceCheck
+    public void updateComment(String testId, Comment comment) {
+        commentRepository.save(comment);
+    }
+
+    @TestExistenceCheck
+    public void deleteComment(String testId, Comment comment) {
+        commentRepository.delete(comment);
+    }
+
+    @TestExistenceCheck
     public List<CommentResponse> getCommentsForTest(String testId) {
-        Test test = testRepository.findById(testId).orElseThrow(() -> new ResourceNotFoundException("해당 테스트가 조회되지 않았습니다. " + testId));
         List<Comment> comments = commentRepository.findByTestId(testId);
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
@@ -47,4 +58,5 @@ public class CommentService {
         }
         return commentResponses;
     }
+
 }
