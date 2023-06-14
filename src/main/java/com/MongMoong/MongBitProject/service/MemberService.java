@@ -67,6 +67,14 @@ public class MemberService {
             kakaoMember = new Member(kakaoId, kakaoNickname, encodedPassword, email, role);
             kakaoMember = memberRepository.save(kakaoMember); //회원 저장하고 저장된 객체 반환
             System.out.println("memberRepository.save(kakaoMember 실행");
+        } else {
+            // 이미 존재하는 회원이라면 닉네임이 바뀌었는지 확인
+            if (!kakaoNickname.equals(kakaoMember.getUsername())) {
+                // 닉네임이 변경되었다면 DB에 저장된 닉네임 업데이트
+                kakaoMember.setUsername(kakaoNickname);
+                memberRepository.save(kakaoMember);
+                System.out.println("닉네임 업데이트 완료: " + kakaoNickname);
+            }
         }
 
         // 로그인 처리
