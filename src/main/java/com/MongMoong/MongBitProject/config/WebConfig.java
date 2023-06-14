@@ -19,8 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "https://mong-bit-frontend.vercel.app",
                         "http://localhost:3000",
-                        "http://localhost:8080",
-                        "https://mongbit-willneiman.koyeb.app" // Swagger UI가 호스팅되는 서버의 URL을 추가.
+                        "http://localhost:8080"
                 ) // 리액트 애플리케이션의 URL을 여기에 입력하세요.
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
