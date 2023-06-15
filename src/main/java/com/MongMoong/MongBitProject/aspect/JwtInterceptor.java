@@ -1,13 +1,15 @@
-package com.MongMoong.MongBitProject.config;
+package com.MongMoong.MongBitProject.aspect;
 
+import com.MongMoong.MongBitProject.config.TokenProvider;
+import com.MongMoong.MongBitProject.exception.TokenVerificationException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /*
 HandlerInterceptor 인터페이스에는 3가지 메소드가 선언되어 있다.
@@ -32,23 +34,26 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = tokenProvider.resolveToken(request);
-
-        if (token == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 존재하지 않습니다.");
-            return false;
-        }
-
         try {
-            if (!tokenProvider.validateToken(token)) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 유효하지 않습니다.");
-                return false;
-            }
+            String token = tokenProvider.resolveToken(request);
+            tokenProvider.validateToken(token);
+            System.out.println("토큰 검증 완료");
+            return true;
+        } catch (JWTDecodeException ex) {
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write(ex.getMessage());
+            return false;
         } catch (TokenExpiredException ex) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "토큰이 만료되었습니다.");
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(ex.getMessage());
+            return false;
+        } catch (TokenVerificationException ex) {
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.getWriter().write(ex.getMessage());
             return false;
         }
-
-        return true;
     }
 }

@@ -2,12 +2,16 @@ package com.MongMoong.MongBitProject.aspect;
 
 import com.MongMoong.MongBitProject.exception.BadRequestException;
 import com.MongMoong.MongBitProject.exception.ResourceNotFoundException;
+import com.MongMoong.MongBitProject.exception.TokenVerificationException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
