@@ -30,18 +30,18 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("Authorization");
-        if (token != null && token.startsWith("Bearer ")) {
-            String jwtToken = token.substring(7);
-            Authentication authFromToken = tokenProvider.getAuthentication(jwtToken);
-            if (authFromToken == null) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 유효하지 않습니다.");
-                return false;
-            }
-        } else {
+        String token = tokenProvider.resolveToken(request);
+
+        if (token == null) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 존재하지 않습니다.");
             return false;
         }
+
+        if (!tokenProvider.validateToken(token)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 유효하지 않습니다.");
+            return false;
+        }
+
         return true;
     }
 }

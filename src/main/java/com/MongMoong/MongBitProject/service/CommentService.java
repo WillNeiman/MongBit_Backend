@@ -1,14 +1,12 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.aspect.CommentExistenceCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
-import com.MongMoong.MongBitProject.exception.ResourceNotFoundException;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Member;
-import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.repository.CommentRepository;
 import com.MongMoong.MongBitProject.repository.MemberRepository;
-import com.MongMoong.MongBitProject.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,23 +21,28 @@ import java.util.stream.Collectors;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final TestRepository testRepository;
     private final MemberRepository memberRepository;
 
     @TestExistenceCheck
-    public Comment saveComment(String testId, Comment comment) {
-        comment.setTestId(testId);
+    public Comment saveComment(Comment comment) {
         comment.setCommentDate(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 
     @TestExistenceCheck
-    public void updateComment(String testId, Comment comment) {
-        commentRepository.save(comment);
+    @CommentExistenceCheck
+    public Comment updateComment(Comment comment) {
+        Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
+        if(existingComment != null){
+            existingComment.setContent(comment.getContent());
+            commentRepository.save(existingComment);
+        }
+        return existingComment;
     }
 
     @TestExistenceCheck
-    public void deleteComment(String testId, Comment comment) {
+    @CommentExistenceCheck
+    public void deleteComment(Comment comment) {
         commentRepository.delete(comment);
     }
 

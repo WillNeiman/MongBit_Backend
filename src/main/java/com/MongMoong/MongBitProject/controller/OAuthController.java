@@ -4,6 +4,7 @@ import com.MongMoong.MongBitProject.config.TokenProvider;
 import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
 import com.MongMoong.MongBitProject.dto.KakaoLoginResponse;
 import com.MongMoong.MongBitProject.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
