@@ -13,9 +13,6 @@ import java.util.Optional;
 
 public interface TestRepository extends MongoRepository<Test, String> {
     Page<Test> findByOrderByCreateDateDesc(Pageable pageable);
-
-    Optional<Test> findById(String id);
-    List<Question> findQuestionById(String id);
-    Optional<TestResult> findTestResultById(String id, String result);
-
+    List<Question> findQuestionsById(String id);
+    List<TestResult> findTestResultsById(String id);
 }
