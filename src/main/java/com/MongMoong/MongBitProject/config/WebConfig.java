@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.config;
 
+import com.MongMoong.MongBitProject.aspect.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;

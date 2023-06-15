@@ -25,16 +25,20 @@ public class TestService {
     PageRequest는 Pageable 인터페이스를 구현하는 클래스이므로 Pageable 타입을 요구하는 메소드에 PageRequest 인스턴스를 전달할 수 있다.
     getRecentTests())에서 PageRequest 인스턴스를 생성하고 findByOrderByCreateDateDesc())에 전달하면 타입 오류가 발생하지 않는다.
      */
+
     public List<Test> getRecentTests(int size) {
         Page<Test> page = testRepository.findByOrderByCreateDateDesc(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createDate")));
         return page.getContent();
     }
+
     public Optional<Test> getTest(String id){
         return testRepository.findById(id);
     }
+
     public List<Question> getQuestions(String id){
         return testRepository.findQuestionById(id);
     }
+
     public Optional<TestResult> getTestResult(String id, String result){
         return testRepository.findTestResultById(id, result);
     }

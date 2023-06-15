@@ -1,9 +1,11 @@
 package com.MongMoong.MongBitProject.config;
 
+import com.MongMoong.MongBitProject.exception.TokenVerificationException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +25,7 @@ import java.util.stream.Collectors;
 public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
-    private static final long TOKEN_VALIDITY = 1000 * 60 * 30; //* 60; // 1 hour
+    private static final long TOKEN_VALIDITY = 1000 * 60 * 3; //* 60; // 1 hour
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
@@ -50,8 +52,7 @@ public class TokenProvider {
         String token = request.getHeader("Authorization");
         if (token != null && token.startsWith("Bearer ")) {
             return token.substring(7);
-        }
-        return null;
+        } throw new TokenVerificationException("토큰이 존재하지 않습니다.");
     }
 
     // 주어진 토큰의 유효성을 검증
@@ -62,9 +63,11 @@ public class TokenProvider {
             JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
             return true;
         } catch (JWTDecodeException ex) {
-            return false;
+            throw new JWTDecodeException("토큰 형식이 잘못되었습니다.");
         } catch (TokenExpiredException ex) {
             throw new TokenExpiredException("토큰이 만료되었습니다.");
+        } catch (SignatureVerificationException ex) {
+            throw new TokenVerificationException("토큰 시그니처 검증에 실패했습니다.");
         }
     }
 
