@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.Nullable;
@@ -62,6 +63,8 @@ public class TokenProvider {
             return true;
         } catch (JWTDecodeException ex) {
             return false;
+        } catch (TokenExpiredException ex) {
+            throw new TokenExpiredException("토큰이 만료되었습니다.");
         }
     }
 

@@ -1,11 +1,13 @@
 package com.MongMoong.MongBitProject.config;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /*
 HandlerInterceptor 인터페이스에는 3가지 메소드가 선언되어 있다.
@@ -37,8 +39,13 @@ public class JwtInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        if (!tokenProvider.validateToken(token)) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 유효하지 않습니다.");
+        try {
+            if (!tokenProvider.validateToken(token)) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "토큰이 유효하지 않습니다.");
+                return false;
+            }
+        } catch (TokenExpiredException ex) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "토큰이 만료되었습니다.");
             return false;
         }
 
