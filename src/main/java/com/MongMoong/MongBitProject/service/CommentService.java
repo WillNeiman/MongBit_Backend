@@ -1,7 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.aspect.CommentExistenceCheck;
-import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
+import com.MongMoong.MongBitProject.aspect.TestExistenceAtCommentCheck;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Member;
@@ -23,13 +23,13 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
 
-    @TestExistenceCheck
+    @TestExistenceAtCommentCheck
     public Comment saveComment(Comment comment) {
         comment.setCommentDate(LocalDateTime.now());
         return commentRepository.save(comment);
     }
 
-    @TestExistenceCheck
+    @TestExistenceAtCommentCheck
     @CommentExistenceCheck
     public Comment updateComment(Comment comment) {
         Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
@@ -40,13 +40,13 @@ public class CommentService {
         return existingComment;
     }
 
-    @TestExistenceCheck
+    @TestExistenceAtCommentCheck
     @CommentExistenceCheck
     public void deleteComment(Comment comment) {
         commentRepository.delete(comment);
     }
 
-    @TestExistenceCheck
+    @TestExistenceAtCommentCheck
     public List<CommentResponse> getCommentsForTest(String testId) {
         List<Comment> comments = commentRepository.findByTestId(testId);
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());

@@ -10,16 +10,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class TestExistenceAspect {
+public class TestExistenceAtLikeAspect {
 
     private final TestRepository testRepository;
 
-    @Before("@annotation(com.MongMoong.MongBitProject.aspect.TestExistenceCheck)")
+    @Before("@annotation(com.MongMoong.MongBitProject.aspect.TestExistenceAtLikeCheck)")
     public void checkTestExistence(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         String testId = findTestId(args);
@@ -28,11 +26,10 @@ public class TestExistenceAspect {
 
     private String findTestId(Object[] args) {
         for (Object arg : args) {
-            if (arg instanceof Comment) {
-                Comment comment = (Comment) arg;
-                return comment.getTestId();
+            if (arg instanceof String) {
+                return (String)arg;
             }
         }
-        throw new ResourceNotFoundException("Comment의 testId를 찾을 수 없습니다.");
+        throw new ResourceNotFoundException("testId를 찾을 수 없습니다.");
     }
 }

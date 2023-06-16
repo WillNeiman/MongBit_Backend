@@ -343,3 +343,281 @@ Caused by: java.net.UnknownHostException: ac-7q1nkxa-shard-00-02.unaoa4m.mongodb
 2023-06-16 10:55:55.847  INFO 35228 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executed: WebConfig.addCorsMappings(..), Return: null
 2023-06-16 10:55:58.345  INFO 35228 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2023-06-16 10:55:58.370  INFO 35228 --- [restartedMain] c.M.M.MongBitProjectApplication          : Started MongBitProjectApplication in 12.644 seconds (JVM running for 13.479)
+2023-06-16 11:38:03.269  INFO 35228 --- [cluster-rtt-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:7, serverValue:8397}] to ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017
+2023-06-16 11:38:03.362  INFO 35228 --- [cluster-rtt-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:8, serverValue:10048}] to ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 11:38:03.523  INFO 35228 --- [cluster-rtt-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:9, serverValue:11428}] to ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017
+2023-06-16 11:38:04.972  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017
+
+com.mongodb.MongoSocketReadTimeoutException: Timeout while receiving message
+	at com.mongodb.internal.connection.InternalStreamConnection.translateReadException(InternalStreamConnection.java:696) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:574) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157) ~[mongodb-driver-core-4.6.1.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.base/java.net.SocketInputStream.socketRead0(Native Method) ~[na:na]
+	at java.base/java.net.SocketInputStream.socketRead(SocketInputStream.java:115) ~[na:na]
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:168) ~[na:na]
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:140) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:478) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:472) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.bytesInCompletePacket(SSLSocketInputRecord.java:70) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.readApplicationRecord(SSLSocketImpl.java:1334) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl$AppInputStream.read(SSLSocketImpl.java:977) ~[na:na]
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:110) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571) ~[mongodb-driver-core-4.6.1.jar:na]
+	... 5 common frames omitted
+
+2023-06-16 11:38:04.972  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+
+com.mongodb.MongoSocketReadTimeoutException: Timeout while receiving message
+	at com.mongodb.internal.connection.InternalStreamConnection.translateReadException(InternalStreamConnection.java:696) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:574) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157) ~[mongodb-driver-core-4.6.1.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.base/java.net.SocketInputStream.socketRead0(Native Method) ~[na:na]
+	at java.base/java.net.SocketInputStream.socketRead(SocketInputStream.java:115) ~[na:na]
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:168) ~[na:na]
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:140) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:478) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:472) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.bytesInCompletePacket(SSLSocketInputRecord.java:70) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.readApplicationRecord(SSLSocketImpl.java:1334) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl$AppInputStream.read(SSLSocketImpl.java:977) ~[na:na]
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:110) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571) ~[mongodb-driver-core-4.6.1.jar:na]
+	... 5 common frames omitted
+
+2023-06-16 11:38:04.973  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017
+
+com.mongodb.MongoSocketReadTimeoutException: Timeout while receiving message
+	at com.mongodb.internal.connection.InternalStreamConnection.translateReadException(InternalStreamConnection.java:696) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:574) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveCommandMessageResponse(InternalStreamConnection.java:410) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receive(InternalStreamConnection.java:369) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:221) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157) ~[mongodb-driver-core-4.6.1.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.base/java.net.SocketInputStream.socketRead0(Native Method) ~[na:na]
+	at java.base/java.net.SocketInputStream.socketRead(SocketInputStream.java:115) ~[na:na]
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:168) ~[na:na]
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:140) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:478) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:472) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.bytesInCompletePacket(SSLSocketInputRecord.java:70) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl.readApplicationRecord(SSLSocketImpl.java:1334) ~[na:na]
+	at java.base/sun.security.ssl.SSLSocketImpl$AppInputStream.read(SSLSocketImpl.java:977) ~[na:na]
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:110) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.read(SocketStream.java:135) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveResponseBuffers(InternalStreamConnection.java:713) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.receiveMessageWithAdditionalTimeout(InternalStreamConnection.java:571) ~[mongodb-driver-core-4.6.1.jar:na]
+	... 5 common frames omitted
+
+2023-06-16 11:38:04.997  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:11, serverValue:8402}] to ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017
+2023-06-16 11:38:04.997  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:10, serverValue:11427}] to ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017
+2023-06-16 11:38:04.997  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=17, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=16736700, setName='atlas-fy51qb-shard-0', canonicalAddress=ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, hosts=[ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017], passives=[], arbiters=[], primary='ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_NORTHEAST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=2, topologyVersion=TopologyVersion{processId=648b396a0405e7a0fc9cf448, counter=3}, lastWriteDate=Fri Jun 16 11:38:04 GMT+09:00 2023, lastUpdateTimeNanos=698639418973100}
+2023-06-16 11:38:04.997  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=17, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=16697300, setName='atlas-fy51qb-shard-0', canonicalAddress=ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, hosts=[ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017], passives=[], arbiters=[], primary='ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_NORTHEAST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=2, topologyVersion=TopologyVersion{processId=648b3786590fce666bf84bcd, counter=4}, lastWriteDate=Fri Jun 16 11:38:04 GMT+09:00 2023, lastUpdateTimeNanos=698639418973100}
+2023-06-16 11:38:04.999  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:12, serverValue:10114}] to ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 11:38:04.999  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017, type=REPLICA_SET_PRIMARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=17, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=18434500, setName='atlas-fy51qb-shard-0', canonicalAddress=ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017, hosts=[ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017], passives=[], arbiters=[], primary='ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_NORTHEAST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=7fffffff000000000000002a, setVersion=2, topologyVersion=TopologyVersion{processId=648b38877ce14ed9364a96d0, counter=6}, lastWriteDate=Fri Jun 16 11:38:04 GMT+09:00 2023, lastUpdateTimeNanos=698639420670000}
+2023-06-16 11:38:04.999  INFO 35228 --- [cluster-ClusterId{value='648bc127f64a431ac1fb034b', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Discovered replica set primary ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 11:55:12.067  INFO 35228 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-16 11:55:12.068  INFO 35228 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-06-16 11:55:12.069  INFO 35228 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-06-16 11:55:12.151  INFO 35228 --- [http-nio-8080-exec-2] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeController.getLikesCountByTestId(..)
+2023-06-16 11:55:12.156  INFO 35228 --- [http-nio-8080-exec-2] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeService.getLikesCountByTestId(..)
+2023-06-16 11:55:12.167  INFO 35228 --- [http-nio-8080-exec-2] c.M.MongBitProject.aspect.LoggingAspect  : Executing: GlobalExceptionHandler.handleResourceNotFoundException(..)
+2023-06-16 11:55:12.185  INFO 35228 --- [http-nio-8080-exec-2] c.M.MongBitProject.aspect.LoggingAspect  : Executed: GlobalExceptionHandler.handleResourceNotFoundException(..), Return: <404 NOT_FOUND Not Found,Comment의 testId를 찾을 수 없습니다.,[]>
+2023-06-16 11:55:12.211  WARN 35228 --- [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.MongMoong.MongBitProject.exception.ResourceNotFoundException: Comment의 testId를 찾을 수 없습니다.]
+2023-06-16 12:05:16.124  INFO 32640 --- [restartedMain] c.M.M.MongBitProjectApplication          : Starting MongBitProjectApplication using Java 11.0.18 on Zyarim with PID 32640 (C:\MongBitProject\MongBitProject\build\classes\java\main started by kiloi in C:\MongBitProject\MongBitProject)
+2023-06-16 12:05:16.126 DEBUG 32640 --- [restartedMain] c.M.M.MongBitProjectApplication          : Running with Spring Boot v2.7.12, Spring v5.3.27
+2023-06-16 12:05:16.128  INFO 32640 --- [restartedMain] c.M.M.MongBitProjectApplication          : No active profile set, falling back to 1 default profile: "default"
+2023-06-16 12:05:16.269  INFO 32640 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-06-16 12:05:16.269  INFO 32640 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-06-16 12:05:18.028  INFO 32640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2023-06-16 12:05:18.167  INFO 32640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 129 ms. Found 6 MongoDB repository interfaces.
+2023-06-16 12:05:19.063  WARN 32640 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'projectingArgumentResolverBeanPostProcessor' defined in class path resource [org/springframework/data/web/config/ProjectingArgumentResolverRegistrar.class]: Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error at ::0 formal unbound in pointcut 
+2023-06-16 12:05:19.078  INFO 32640 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-06-16 12:05:19.136 ERROR 32640 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'projectingArgumentResolverBeanPostProcessor' defined in class path resource [org/springframework/data/web/config/ProjectingArgumentResolverRegistrar.class]: Initialization of bean failed; nested exception is java.lang.IllegalArgumentException: error at ::0 formal unbound in pointcut 
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:628) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.registerBeanPostProcessors(PostProcessorRegistrationDelegate.java:270) ~[spring-context-5.3.27.jar:5.3.27]
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:764) ~[spring-context-5.3.27.jar:5.3.27]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:567) ~[spring-context-5.3.27.jar:5.3.27]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.12.jar:2.7.12]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731) ~[spring-boot-2.7.12.jar:2.7.12]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.12.jar:2.7.12]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307) ~[spring-boot-2.7.12.jar:2.7.12]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303) ~[spring-boot-2.7.12.jar:2.7.12]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292) ~[spring-boot-2.7.12.jar:2.7.12]
+	at com.MongMoong.MongBitProject.MongBitProjectApplication.main(MongBitProjectApplication.java:10) ~[main/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) ~[spring-boot-devtools-2.7.12.jar:2.7.12]
+Caused by: java.lang.IllegalArgumentException: error at ::0 formal unbound in pointcut 
+	at org.aspectj.weaver.tools.PointcutParser.parsePointcutExpression(PointcutParser.java:319) ~[aspectjweaver-1.9.7.jar:na]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.buildPointcutExpression(AspectJExpressionPointcut.java:227) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.obtainPointcutExpression(AspectJExpressionPointcut.java:198) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.aspectj.AspectJExpressionPointcut.getClassFilter(AspectJExpressionPointcut.java:177) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:226) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.support.AopUtils.canApply(AopUtils.java:289) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.support.AopUtils.findAdvisorsThatCanApply(AopUtils.java:321) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findAdvisorsThatCanApply(AbstractAdvisorAutoProxyCreator.java:128) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.findEligibleAdvisors(AbstractAdvisorAutoProxyCreator.java:97) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator.getAdvicesAndAdvisorsForBean(AbstractAdvisorAutoProxyCreator.java:78) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:341) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:293) ~[spring-aop-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:455) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808) ~[spring-beans-5.3.27.jar:5.3.27]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.27.jar:5.3.27]
+	... 20 common frames omitted
+
+2023-06-16 12:08:49.998  INFO 41872 --- [restartedMain] c.M.M.MongBitProjectApplication          : Starting MongBitProjectApplication using Java 11.0.18 on Zyarim with PID 41872 (C:\MongBitProject\MongBitProject\build\classes\java\main started by kiloi in C:\MongBitProject\MongBitProject)
+2023-06-16 12:08:50.002 DEBUG 41872 --- [restartedMain] c.M.M.MongBitProjectApplication          : Running with Spring Boot v2.7.12, Spring v5.3.27
+2023-06-16 12:08:50.003  INFO 41872 --- [restartedMain] c.M.M.MongBitProjectApplication          : No active profile set, falling back to 1 default profile: "default"
+2023-06-16 12:08:50.144  INFO 41872 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-06-16 12:08:50.145  INFO 41872 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-06-16 12:08:52.027  INFO 41872 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2023-06-16 12:08:52.157  INFO 41872 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 119 ms. Found 6 MongoDB repository interfaces.
+2023-06-16 12:08:54.729  INFO 41872 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-06-16 12:08:54.764  INFO 41872 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-06-16 12:08:54.765  INFO 41872 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.75]
+2023-06-16 12:08:54.998  INFO 41872 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-06-16 12:08:55.000  INFO 41872 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4854 ms
+2023-06-16 12:08:55.970  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-srv-mongbitdb.unaoa4m.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017 to client view of cluster
+2023-06-16 12:08:56.039  INFO 41872 --- [restartedMain] org.mongodb.driver.client                : MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.6.1"}, "os": {"type": "Windows", "name": "Windows 11", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Oracle Corporation/11.0.18+9-LTS-195"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=majority, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=null, userName='willneimann', source='admin', password=<hidden>, mechanismProperties=<hidden>}, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.Jep395RecordCodecProvider@6a3d53ef]}, clusterSettings={hosts=[127.0.0.1:27017], srvHost=mongbitdb.unaoa4m.mongodb.net, srvServiceName=mongodb, mode=MULTIPLE, requiredClusterType=REPLICA_SET, requiredReplicaSetName='atlas-fy51qb-shard-0', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=true, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, contextProvider=null}
+2023-06-16 12:08:56.059  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-srv-mongbitdb.unaoa4m.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017 to client view of cluster
+2023-06-16 12:08:56.063  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-srv-mongbitdb.unaoa4m.mongodb.net] org.mongodb.driver.cluster               : Adding discovered server ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017 to client view of cluster
+2023-06-16 12:08:56.972  INFO 41872 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-06-16 12:08:57.491  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:10523}] to ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.491  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:5, serverValue:11841}] to ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.491  INFO 41872 --- [cluster-rtt-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:8802}] to ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.491  INFO 41872 --- [cluster-rtt-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:11841}] to ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.491  INFO 41872 --- [cluster-rtt-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:4, serverValue:10487}] to ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.491  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:6, serverValue:8802}] to ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.495  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017, type=REPLICA_SET_PRIMARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=17, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=872869900, setName='atlas-fy51qb-shard-0', canonicalAddress=ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017, hosts=[ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017], passives=[], arbiters=[], primary='ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_NORTHEAST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=7fffffff000000000000002a, setVersion=2, topologyVersion=TopologyVersion{processId=648b38877ce14ed9364a96d0, counter=6}, lastWriteDate=Fri Jun 16 12:08:56 GMT+09:00 2023, lastUpdateTimeNanos=700491909953100}
+2023-06-16 12:08:57.496  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=17, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=873363700, setName='atlas-fy51qb-shard-0', canonicalAddress=ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, hosts=[ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017], passives=[], arbiters=[], primary='ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_NORTHEAST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=2, topologyVersion=TopologyVersion{processId=648b396a0405e7a0fc9cf448, counter=3}, lastWriteDate=Fri Jun 16 12:08:56 GMT+09:00 2023, lastUpdateTimeNanos=700491910451500}
+2023-06-16 12:08:57.495  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, type=REPLICA_SET_SECONDARY, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=17, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=872826300, setName='atlas-fy51qb-shard-0', canonicalAddress=ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, hosts=[ac-7q1nkxa-shard-00-02.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-00.unaoa4m.mongodb.net:27017, ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017], passives=[], arbiters=[], primary='ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017', tagSet=TagSet{[Tag{name='nodeType', value='ELECTABLE'}, Tag{name='provider', value='AWS'}, Tag{name='region', value='AP_NORTHEAST_2'}, Tag{name='workloadType', value='OPERATIONAL'}]}, electionId=null, setVersion=2, topologyVersion=TopologyVersion{processId=648b3786590fce666bf84bcd, counter=4}, lastWriteDate=Fri Jun 16 12:08:56 GMT+09:00 2023, lastUpdateTimeNanos=700491909880000}
+2023-06-16 12:08:57.511  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Setting max election id to 7fffffff000000000000002a from replica set primary ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.512  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Setting max set version to 2 from replica set primary ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:57.513  INFO 41872 --- [cluster-ClusterId{value='648bd247dd033d068f38aaa1', description='null'}-ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017] org.mongodb.driver.cluster               : Discovered replica set primary ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 12:08:59.067  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executing: SecurityConfig.passwordEncoder()
+2023-06-16 12:08:59.156  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executed: SecurityConfig.passwordEncoder(), Return: org.springframework.security.crypto.password.DelegatingPasswordEncoder@5de4e71d
+2023-06-16 12:08:59.164  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executing: SecurityConfig.authenticationManager()
+2023-06-16 12:08:59.168  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executed: SecurityConfig.authenticationManager(), Return: com.MongMoong.MongBitProject.config.SecurityConfig$$Lambda$987/0x00000008006ea440@8639c68
+2023-06-16 12:08:59.572  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executing: SecurityConfig.securityFilterChain(..)
+2023-06-16 12:09:00.018  INFO 41872 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6b065370, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@270c080, org.springframework.security.web.context.SecurityContextPersistenceFilter@25b82401, org.springframework.security.web.header.HeaderWriterFilter@77ce7316, org.springframework.security.web.authentication.logout.LogoutFilter@67ed7f4c, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@55d79901, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@2599e337, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@80a38e2, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@689a0ba2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f86c410, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2139aab6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@27f68ec7, org.springframework.security.web.session.SessionManagementFilter@19e1ab77, org.springframework.security.web.access.ExceptionTranslationFilter@1645242d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2cffabcb]
+2023-06-16 12:09:00.020  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executed: SecurityConfig.securityFilterChain(..), Return: DefaultSecurityFilterChain [RequestMatcher=any request, Filters=[org.springframework.security.web.session.DisableEncodeUrlFilter@6b065370, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@270c080, org.springframework.security.web.context.SecurityContextPersistenceFilter@25b82401, org.springframework.security.web.header.HeaderWriterFilter@77ce7316, org.springframework.security.web.authentication.logout.LogoutFilter@67ed7f4c, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@55d79901, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@2599e337, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@80a38e2, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@689a0ba2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7f86c410, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2139aab6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@27f68ec7, org.springframework.security.web.session.SessionManagementFilter@19e1ab77, org.springframework.security.web.access.ExceptionTranslationFilter@1645242d, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2cffabcb]]
+2023-06-16 12:09:00.023  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executing: SwaggerConfig.customOpenAPI()
+2023-06-16 12:09:00.039  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executed: SwaggerConfig.customOpenAPI(), Return: class OpenAPI {
+    openapi: 3.0.1
+    info: class Info {
+        title: Comment API
+        description: APIs for managing comments in the MongBitProject
+        termsOfService: http://swagger.io/terms/
+        contact: null
+        license: class License {
+            name: Apache 2.0
+            url: http://springdoc.org
+        }
+        version: 1.0
+    }
+    externalDocs: null
+    servers: null
+    security: null
+    tags: null
+    paths: null
+    components: null
+}
+2023-06-16 12:09:01.213  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executing: WebConfig.addInterceptors(..)
+2023-06-16 12:09:01.219  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executed: WebConfig.addInterceptors(..), Return: null
+2023-06-16 12:09:01.251  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executing: WebConfig.addCorsMappings(..)
+2023-06-16 12:09:01.260  INFO 41872 --- [restartedMain] c.M.MongBitProject.aspect.LoggingAspect  : Executed: WebConfig.addCorsMappings(..), Return: null
+2023-06-16 12:09:03.569  INFO 41872 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-06-16 12:09:03.595  INFO 41872 --- [restartedMain] c.M.M.MongBitProjectApplication          : Started MongBitProjectApplication in 14.599 seconds (JVM running for 15.901)
+2023-06-16 12:09:43.758  INFO 41872 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-16 12:09:43.758  INFO 41872 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-06-16 12:09:43.760  INFO 41872 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2023-06-16 12:09:43.840  INFO 41872 --- [http-nio-8080-exec-1] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeController.getLikesCountByTestId(..)
+2023-06-16 12:09:43.849  INFO 41872 --- [http-nio-8080-exec-1] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeService.getLikesCountByTestId(..)
+2023-06-16 12:09:43.864  INFO 41872 --- [http-nio-8080-exec-1] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.findById(..)
+2023-06-16 12:09:44.136  INFO 41872 --- [http-nio-8080-exec-1] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:7, serverValue:10484}] to ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 12:09:44.190  INFO 41872 --- [http-nio-8080-exec-1] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.findById(..), Return: Optional.empty
+2023-06-16 12:09:44.196  INFO 41872 --- [http-nio-8080-exec-1] c.M.MongBitProject.aspect.LoggingAspect  : Executing: GlobalExceptionHandler.handleResourceNotFoundException(..)
+2023-06-16 12:09:44.216  INFO 41872 --- [http-nio-8080-exec-1] c.M.MongBitProject.aspect.LoggingAspect  : Executed: GlobalExceptionHandler.handleResourceNotFoundException(..), Return: <404 NOT_FOUND Not Found,해당 테스트가 조회되지 않았습니다. 1,[]>
+2023-06-16 12:09:44.237  WARN 41872 --- [http-nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.MongMoong.MongBitProject.exception.ResourceNotFoundException: 해당 테스트가 조회되지 않았습니다. 1]
+2023-06-16 12:09:48.449 ERROR 41872 --- [http-nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+
+org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
+	at org.springframework.security.web.firewall.StrictHttpFirewall.rejectedBlocklistedUrls(StrictHttpFirewall.java:535) ~[spring-security-web-5.7.8.jar:5.7.8]
+	at org.springframework.security.web.firewall.StrictHttpFirewall.getFirewalledRequest(StrictHttpFirewall.java:505) ~[spring-security-web-5.7.8.jar:5.7.8]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:206) ~[spring-security-web-5.7.8.jar:5.7.8]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186) ~[spring-security-web-5.7.8.jar:5.7.8]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.27.jar:5.3.27]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:926) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1791) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.75.jar:9.0.75]
+	at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
+
+2023-06-16 12:09:56.648  INFO 41872 --- [http-nio-8080-exec-4] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeController.getLikesCountByTestId(..)
+2023-06-16 12:09:56.648  INFO 41872 --- [http-nio-8080-exec-4] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeService.getLikesCountByTestId(..)
+2023-06-16 12:09:56.649  INFO 41872 --- [http-nio-8080-exec-4] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.findById(..)
+2023-06-16 12:09:56.659  INFO 41872 --- [http-nio-8080-exec-4] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.findById(..), Return: Optional.empty
+2023-06-16 12:09:56.660  INFO 41872 --- [http-nio-8080-exec-4] c.M.MongBitProject.aspect.LoggingAspect  : Executing: GlobalExceptionHandler.handleResourceNotFoundException(..)
+2023-06-16 12:09:56.661  INFO 41872 --- [http-nio-8080-exec-4] c.M.MongBitProject.aspect.LoggingAspect  : Executed: GlobalExceptionHandler.handleResourceNotFoundException(..), Return: <404 NOT_FOUND Not Found,해당 테스트가 조회되지 않았습니다. "",[]>
+2023-06-16 12:09:56.662  WARN 41872 --- [http-nio-8080-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.MongMoong.MongBitProject.exception.ResourceNotFoundException: 해당 테스트가 조회되지 않았습니다. ""]
+2023-06-16 12:10:04.228  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeController.getLikesCountByTestId(..)
+2023-06-16 12:10:04.229  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeService.getLikesCountByTestId(..)
+2023-06-16 12:10:04.230  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.findById(..)
+2023-06-16 12:10:04.336  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.findById(..), Return: Optional[Test(id=648ad8ac4b746a3e1e258c58, title=등산으로 알아보는 인성, content=초록초록, questions=[], results=[], createDate=2023-06-15T18:23:56.575, imageUrl=https://images.unsplash.com/photo-1617361194384-1852022fe186?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1915&q=80, playCount=0)]
+2023-06-16 12:10:04.342  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executing: LikeRepository.countByTestId(..)
+2023-06-16 12:10:04.393  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executed: LikeRepository.countByTestId(..), Return: 0
+2023-06-16 12:10:04.393  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executed: LikeService.getLikesCountByTestId(..), Return: 0
+2023-06-16 12:10:04.393  INFO 41872 --- [http-nio-8080-exec-6] c.M.MongBitProject.aspect.LoggingAspect  : Executed: LikeController.getLikesCountByTestId(..), Return: <200 OK OK,0,[]>
