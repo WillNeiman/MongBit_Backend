@@ -21,11 +21,13 @@ public class TestExistenceAtLikeAspect {
     public void checkTestExistence(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         String testId = findTestId(args);
+        System.out.println("testId = " + testId);
         Test test = testRepository.findById(testId).orElseThrow(() -> new ResourceNotFoundException("해당 테스트가 조회되지 않았습니다. " + testId));
     }
 
     private String findTestId(Object[] args) {
         for (Object arg : args) {
+            System.out.println("(String)arg = " + (String)arg);
             if (arg instanceof String) {
                 return (String)arg;
             }

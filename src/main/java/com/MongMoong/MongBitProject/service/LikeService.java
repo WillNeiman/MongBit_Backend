@@ -22,7 +22,7 @@ public class LikeService {
 
     @TestExistenceAtLikeCheck
     public boolean hasUserLikedTest(String testId, String memberId) {
-        return likeRepository.findByMemberIdAndTestId(memberId, testId) != null;
+        return likeRepository.findByTestIdAndMemberId(testId, memberId) != null;
     }
 
     @TestExistenceAtLikeCheck
@@ -34,7 +34,7 @@ public class LikeService {
 
     @TestExistenceAtLikeCheck
     public void deleteLike(String testId, String memberId) {
-        Like like = likeRepository.findByMemberIdAndTestId(memberId, testId);
+        Like like = likeRepository.findByTestIdAndMemberId(memberId, testId);
         likeRepository.delete(like);
     }
 }

@@ -17,8 +17,8 @@ public class LikeController {
 
     @GetMapping("/{testId}/{memberId}/like")
     @Operation(summary = "특정 테스트에 대해 로그인한 사용자의 좋아요 여부 확인", description = "testId와 memberId가 필요합니다.")
-    public ResponseEntity<Boolean> hasUserLikedTest(@PathVariable String memberId, @PathVariable String testId) {
-        boolean hasLiked = likeService.hasUserLikedTest(memberId, testId);
+    public ResponseEntity<Boolean> hasUserLikedTest(@PathVariable String testId, @PathVariable String memberId) {
+        boolean hasLiked = likeService.hasUserLikedTest(testId, memberId);
         return ResponseEntity.ok(hasLiked);
     }
 
@@ -31,14 +31,14 @@ public class LikeController {
 
     @PostMapping("/{testId}/{memberId}/like")
     @Operation(summary = "특정 테스트에 대해 로그인한 사용자의 좋아요 생성", description = "testId와 memberId가 필요합니다.")
-    public ResponseEntity createLike(@PathVariable String memberId, @PathVariable String testId) {
-        Like likeResponse = likeService.createLike(memberId, testId);
+    public ResponseEntity createLike(@PathVariable String testId, @PathVariable String memberId) {
+        Like likeResponse = likeService.createLike(testId, memberId);
         return ResponseEntity.status(HttpStatus.CREATED).body(likeResponse);
     }
     @DeleteMapping("/{testId}/{memberId}/like")
     @Operation(summary = "특정 테스트에 대해 로그인한 사용자의 좋아요 삭제", description = "testId와 memberId가 필요합니다.")
-    public ResponseEntity deleteLike(@PathVariable String memberId, @PathVariable String testId) {
-        likeService.deleteLike(memberId, testId);
+    public ResponseEntity deleteLike(@PathVariable String testId, @PathVariable String memberId) {
+        likeService.deleteLike(testId, memberId);
         return ResponseEntity.noContent().build();
     }
 }
