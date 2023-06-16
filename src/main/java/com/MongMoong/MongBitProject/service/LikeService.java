@@ -34,7 +34,7 @@ public class LikeService {
 
     @TestExistenceAtLikeCheck
     public void deleteLike(String testId, String memberId) {
-        Like like = likeRepository.findByTestIdAndMemberId(memberId, testId);
+        Like like = likeRepository.findByTestIdAndMemberId(testId, memberId);
         likeRepository.delete(like);
     }
 }
