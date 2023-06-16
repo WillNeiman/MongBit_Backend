@@ -51,23 +51,25 @@ public class CommentService {
     }
 
     @TestExistenceAtCommentCheck
-    public List<CommentResponse> getCommentsForTest(String testId) {
+    public List<CommentResponse> getCommentsForTest(Comment comment) {
+        String testId = comment.getTestId();
         List<Comment> comments = commentRepository.findByTestId(testId);
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
         List<CommentResponse> commentResponses = new ArrayList<>();
-        for(Comment comment : comments) {
-            String memberId = comment.getMemberId();
+        for(Comment findComment : comments) {
+            String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
-            CommentResponse commentResponse = new CommentResponse(comment.getId(), memberId, testId, comment.getCommentDate(), comment.getContent(), username);
+            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username);
             commentResponses.add(commentResponse);
         }
         return commentResponses;
     }
 
     @TestExistenceAtCommentCheck
-    public List<CommentResponse> getCommentsForTestPaged(String testId, int pageNumber) {
+    public List<CommentResponse> getCommentsForTestPaged(Comment comment, int pageNumber) {
+        String testId = comment.getTestId();
         Pageable pageable = PageRequest.of(pageNumber, 10, Sort.by("commentDate").descending());
         Page<Comment> commentsPage = commentRepository.findByTestId(testId, pageable);
         List<Comment> comments = commentsPage.getContent();
@@ -75,10 +77,10 @@ public class CommentService {
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
         List<CommentResponse> commentResponses = new ArrayList<>();
-        for(Comment comment : comments) {
-            String memberId = comment.getMemberId();
+        for(Comment findComment : comments) {
+            String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
-            CommentResponse commentResponse = new CommentResponse(comment.getId(), memberId, testId, comment.getCommentDate(), comment.getContent(), username);
+            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username);
             commentResponses.add(commentResponse);
         }
         return commentResponses;

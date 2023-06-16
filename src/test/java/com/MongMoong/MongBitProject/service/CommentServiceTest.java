@@ -74,7 +74,9 @@ public class CommentServiceTest {
 
     @org.junit.jupiter.api.Test
     public void getCommentsForTest_Success() {
-        List<CommentResponse> comments = commentService.getCommentsForTest(test.getId());
+        String testId = test.getId();
+        comment.setTestId(testId);
+        List<CommentResponse> comments = commentService.getCommentsForTest(comment);
 
         assertFalse(comments.isEmpty(), "Comment list should not be empty");
         assertEquals(1, comments.size(), "Should have 1 comment");
