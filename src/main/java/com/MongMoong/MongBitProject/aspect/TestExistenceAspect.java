@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.aspect;
 
 import com.MongMoong.MongBitProject.exception.ResourceNotFoundException;
+import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,8 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 @Aspect
 @Component
@@ -25,10 +28,11 @@ public class TestExistenceAspect {
 
     private String findTestId(Object[] args) {
         for (Object arg : args) {
-            if (arg instanceof String) {
-                return (String) arg;
+            if (arg instanceof Comment) {
+                Comment comment = (Comment) arg;
+                return comment.getTestId();
             }
         }
-        throw new ResourceNotFoundException("testId를 찾을 수 없습니다.");
+        throw new ResourceNotFoundException("Comment의 testId를 찾을 수 없습니다.");
     }
 }

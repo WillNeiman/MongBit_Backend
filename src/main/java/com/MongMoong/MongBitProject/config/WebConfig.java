@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.config;
 
+import com.MongMoong.MongBitProject.aspect.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -36,6 +37,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns(
                         "/api/1",
                         "/api/2",
-                        "/api/3"); // 특정 경로에 대해 인터셉터 실행
+                        "/api/3"); // 특정 경로에 대해 인터셉터 실행 /api/** 와일드카드도 가능
     }
 }

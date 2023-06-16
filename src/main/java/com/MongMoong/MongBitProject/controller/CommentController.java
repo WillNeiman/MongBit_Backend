@@ -18,24 +18,24 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/{testId}/comment")
-    @Operation(summary = "특정 테스트에 대한 새로운 댓글 생성", description = "testId와 댓글의 세부사항이 필요합니다")
-    public ResponseEntity<Comment> createComment(@PathVariable String testId, @RequestBody Comment comment) {
-        Comment savedComment = commentService.saveComment(testId, comment);
+    @PostMapping("/comment")
+    @Operation(summary = "특정 테스트에 대한 새로운 댓글 생성", description = "Comment의 memberId, testId, content가 필요합니다.")
+    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+        Comment savedComment = commentService.saveComment(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
 
-    @PutMapping("/{testId}/comment")
-    @Operation(summary = "특정 테스트에 대한 댓글 업데이트", description = "testId와 업데이트할 댓글의 세부사항이 필요합니다")
-    public ResponseEntity<Comment> updateComment(@PathVariable String testId, @RequestBody Comment comment) {
-        commentService.updateComment(testId, comment);
+    @PutMapping("/comment")
+    @Operation(summary = "특정 테스트에 대한 댓글 업데이트", description = "업데이트할 Comment의 memberId, testId, content가 필요합니다.")
+    public ResponseEntity<Comment> updateComment(@RequestBody Comment comment) {
+        commentService.updateComment(comment);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{testId}/comment/{commentId}")
-    @Operation(summary = "특정 테스트에 대한 댓글 삭제", description = "testId와 댓글의 ID가 필요합니다")
-    public ResponseEntity<Void> deleteComment(@PathVariable String testId, @RequestBody Comment comment) {
-        commentService.deleteComment(testId, comment);
+    @DeleteMapping("/comment")
+    @Operation(summary = "특정 테스트에 대한 댓글 삭제", description = "삭제할 Comment의 id가 필요합니다")
+    public ResponseEntity<Void> deleteComment(@RequestBody Comment comment) {
+        commentService.deleteComment(comment);
         return ResponseEntity.noContent().build();
     }
 
