@@ -8,6 +8,10 @@ import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.repository.CommentRepository;
 import com.MongMoong.MongBitProject.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -49,6 +53,24 @@ public class CommentService {
     @TestExistenceAtCommentCheck
     public List<CommentResponse> getCommentsForTest(String testId) {
         List<Comment> comments = commentRepository.findByTestId(testId);
+        List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
+        List<Member> members = memberRepository.findByIdIn(memberIds);
+        Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
+        List<CommentResponse> commentResponses = new ArrayList<>();
+        for(Comment comment : comments) {
+            String memberId = comment.getMemberId();
+            String username = memberIdUsernameMap.get(memberId);
+            CommentResponse commentResponse = new CommentResponse(comment.getId(), memberId, testId, comment.getCommentDate(), comment.getContent(), username);
+            commentResponses.add(commentResponse);
+        }
+        return commentResponses;
+    }
+
+    @TestExistenceAtCommentCheck
+    public List<CommentResponse> getCommentsForTestPaged(String testId, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 10, Sort.by("commentDate").descending());
+        Page<Comment> commentsPage = commentRepository.findByTestId(testId, pageable);
+        List<Comment> comments = commentsPage.getContent();
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));

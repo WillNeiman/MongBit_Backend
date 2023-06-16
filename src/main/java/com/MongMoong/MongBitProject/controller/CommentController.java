@@ -45,4 +45,12 @@ public class CommentController {
         List<CommentResponse> commentResponses = commentService.getCommentsForTest(testId);
         return ResponseEntity.ok(commentResponses);
     }
+
+    @GetMapping("/{testId}/comments/page/{pageNumber}")
+    @Operation(summary = "특정 테스트에 대한 댓글 조회 (페이지당 10개)", description = "페이지 번호와 testId가 필요합니다.")
+    public ResponseEntity<List<CommentResponse>> getCommentListPaged(@PathVariable String testId, @PathVariable int pageNumber) {
+        List<CommentResponse> commentResponses = commentService.getCommentsForTestPaged(testId, pageNumber);
+        return ResponseEntity.ok(commentResponses);
+    }
+
 }
