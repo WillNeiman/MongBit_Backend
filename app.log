@@ -1488,3 +1488,26 @@ You may wish to exclude one of them to ensure predictable runtime behavior
 2023-06-16 15:50:04.957  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: WebConfig.addInterceptors(..), Return: null
 2023-06-16 15:50:04.964  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: WebConfig.addCorsMappings(..)
 2023-06-16 15:50:04.967  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: WebConfig.addCorsMappings(..), Return: null
+2023-06-16 15:50:05.585  WARN 23136 --- [Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-06-16 15:50:05.961  INFO 23136 --- [Test worker] c.M.M.service.CommentServiceTest         : Started CommentServiceTest in 5.165 seconds (JVM running for 6.059)
+2023-06-16 15:50:06.263  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.save(..)
+2023-06-16 15:50:06.414  INFO 23136 --- [Test worker] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:7, serverValue:13134}] to ac-7q1nkxa-shard-00-01.unaoa4m.mongodb.net:27017
+2023-06-16 15:50:06.448  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.save(..), Return: com.MongMoong.MongBitProject.model.Member@217009bd
+2023-06-16 15:50:06.449  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.save(..)
+2023-06-16 15:50:06.479  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.save(..), Return: Test(id=testTestId, title=null, content=null, questions=null, results=null, createDate=null, imageUrl=null, playCount=0)
+2023-06-16 15:50:06.484  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.save(..)
+2023-06-16 15:50:06.513  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.save(..), Return: com.MongMoong.MongBitProject.model.Comment@4bc39640
+2023-06-16 15:50:06.515  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CommentService.getCommentsForTest(..)
+2023-06-16 15:50:06.517  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.findById(..)
+2023-06-16 15:50:06.557  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.findById(..), Return: Optional[Test(id=testTestId, title=null, content=null, questions=null, results=null, createDate=null, imageUrl=null, playCount=0)]
+2023-06-16 15:50:06.559  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CommentRepository.findByTestId(..)
+2023-06-16 15:50:06.587  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CommentRepository.findByTestId(..), Return: [com.MongMoong.MongBitProject.model.Comment@4a45ff31]
+2023-06-16 15:50:06.587  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: MemberRepository.findByIdIn(..)
+2023-06-16 15:50:06.603  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: MemberRepository.findByIdIn(..), Return: [com.MongMoong.MongBitProject.model.Member@74ed3be4]
+2023-06-16 15:50:06.604  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CommentService.getCommentsForTest(..), Return: [com.MongMoong.MongBitProject.dto.CommentResponse@193c3b1c]
+2023-06-16 15:50:06.608  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.delete(..)
+2023-06-16 15:50:06.628  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.delete(..), Return: null
+2023-06-16 15:50:06.629  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.delete(..)
+2023-06-16 15:50:06.647  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.delete(..), Return: null
+2023-06-16 15:50:06.648  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executing: CrudRepository.delete(..)
+2023-06-16 15:50:06.667  INFO 23136 --- [Test worker] c.M.MongBitProject.aspect.LoggingAspect  : Executed: CrudRepository.delete(..), Return: null

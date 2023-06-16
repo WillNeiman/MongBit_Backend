@@ -39,16 +39,18 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/comments")
+    @GetMapping("/comments/{testId}")
     @Operation(summary = "특정 테스트에 대한 모든 댓글 조회", description = "Comment객체 안에 testId가 필요합니다")
-    public ResponseEntity<List<CommentResponse>> getCommentList(@RequestBody Comment comment) {
+    public ResponseEntity<List<CommentResponse>> getCommentList(@PathVariable String testId) {
+        Comment comment = new Comment(testId);
         List<CommentResponse> commentResponses = commentService.getCommentsForTest(comment);
         return ResponseEntity.ok(commentResponses);
     }
 
-    @GetMapping("/comments/page/{pageNumber}")
+    @GetMapping("/comments/{testId}/page/{pageNumber}")
     @Operation(summary = "특정 테스트에 대한 댓글 조회 (페이지당 10개)", description = "Comment객체 안에 testId와 페이지 번호가 필요합니다.")
-    public ResponseEntity<List<CommentResponse>> getCommentListPaged(@RequestBody Comment comment, @PathVariable int pageNumber) {
+    public ResponseEntity<List<CommentResponse>> getCommentListPaged(@RequestParam String testId, @PathVariable int pageNumber) {
+        Comment comment = new Comment(testId);
         List<CommentResponse> commentResponses = commentService.getCommentsForTestPaged(comment, pageNumber);
         return ResponseEntity.ok(commentResponses);
     }
