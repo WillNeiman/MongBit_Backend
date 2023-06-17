@@ -11,6 +11,7 @@ import java.util.List;
 public interface CommentRepository extends MongoRepository<Comment, String>, PagingAndSortingRepository<Comment, String> {
 
     List<Comment> findByTestId(String testId);
+    int countByTestId(String testId);
 
     Page<Comment> findByTestId(String testId, Pageable pageable);
 }

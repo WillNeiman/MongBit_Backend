@@ -61,4 +61,13 @@ public class CommentController {
         return ResponseEntity.ok(commentResponses);
     }
 
+    @GetMapping("/{testId}/comments/count")
+    @Operation(summary = "특정 테스트에 대한 댓글 수 조회", description = "testId가 필요합니다.")
+    public ResponseEntity<Integer> getCommentsCountByTestId(@PathVariable String testId) {
+        Comment comment = new Comment();
+        comment.setTestId(testId);
+        int count = commentService.getCommentsCountByTestId(comment);
+        return ResponseEntity.ok(count);
+    }
+
 }
