@@ -34,7 +34,9 @@ public class CommentController {
 
     @DeleteMapping("/comment")
     @Operation(summary = "특정 테스트에 대한 댓글 삭제", description = "삭제할 Comment의 id가 필요합니다")
-    public ResponseEntity<Void> deleteComment(@RequestBody Comment comment) {
+    public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
+        Comment comment = new Comment();
+        comment.setId(commentId);
         commentService.deleteComment(comment);
         return ResponseEntity.noContent().build();
     }
@@ -42,15 +44,17 @@ public class CommentController {
     @GetMapping("/comments/{testId}")
     @Operation(summary = "특정 테스트에 대한 모든 댓글 조회", description = "testId가 필요합니다")
     public ResponseEntity<List<CommentResponse>> getCommentList(@PathVariable String testId) {
-        Comment comment = new Comment(testId);
+        Comment comment = new Comment();
+        comment.setTestId(testId);
         List<CommentResponse> commentResponses = commentService.getCommentsForTest(comment);
         return ResponseEntity.ok(commentResponses);
     }
 
     @GetMapping("/comments/{testId}/page/{pageNumber}")
     @Operation(summary = "특정 테스트에 대한 댓글 조회 (페이지당 10개)", description = "testId와 pageNumber가 필요합니다.")
-    public ResponseEntity<List<CommentResponse>> getCommentListPaged(@RequestParam String testId, @PathVariable int pageNumber) {
-        Comment comment = new Comment(testId);
+    public ResponseEntity<List<CommentResponse>> getCommentListPaged(@PathVariable String testId, @PathVariable int pageNumber) {
+        Comment comment = new Comment();
+        comment.setTestId(testId);
         List<CommentResponse> commentResponses = commentService.getCommentsForTestPaged(comment, pageNumber);
         return ResponseEntity.ok(commentResponses);
     }

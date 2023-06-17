@@ -64,7 +64,7 @@ public class CommentServiceTest {
     @AfterEach
     public void tearDown() {
         // delete test data
-        commentRepository.delete(comment);
+        commentService.deleteComment(comment);
         System.out.println("테스트용 코멘트 삭제: " + comment.toString());
         testRepository.delete(test);
         System.out.println("테스트용 심테 삭제: " + test.toString());

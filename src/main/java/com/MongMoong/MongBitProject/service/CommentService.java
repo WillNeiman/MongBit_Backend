@@ -44,7 +44,6 @@ public class CommentService {
         return existingComment;
     }
 
-    @TestExistenceAtCommentCheck
     @CommentExistenceCheck
     public void deleteComment(Comment comment) {
         commentRepository.delete(comment);

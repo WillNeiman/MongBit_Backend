@@ -19,8 +19,4 @@ public class Comment {
     private String testId;
     private LocalDateTime commentDate;
     private String content;
-
-    public Comment(String id) {
-        this.id = id;
-    }
 }
