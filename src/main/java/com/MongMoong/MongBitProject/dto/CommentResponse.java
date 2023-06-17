@@ -17,4 +17,5 @@ public class CommentResponse {
     private LocalDateTime commentDate;
     private String content;
     private String username;
+    private String thumbnailImage;
 }

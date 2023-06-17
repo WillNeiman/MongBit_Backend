@@ -56,11 +56,13 @@ public class CommentService {
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
+        Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
         List<CommentResponse> commentResponses = new ArrayList<>();
         for(Comment findComment : comments) {
             String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
-            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username);
+            String thumbnailImage = memberIdThumbnailMap.get((memberId));
+            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
             commentResponses.add(commentResponse);
         }
         return commentResponses;
@@ -75,11 +77,13 @@ public class CommentService {
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
+        Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
         List<CommentResponse> commentResponses = new ArrayList<>();
         for(Comment findComment : comments) {
             String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
-            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username);
+            String thumbnailImage = memberIdThumbnailMap.get((memberId));
+            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
             commentResponses.add(commentResponse);
         }
         return commentResponses;

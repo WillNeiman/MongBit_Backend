@@ -3,6 +3,7 @@ package com.MongMoong.MongBitProject.controller;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.service.CommentService;
+import com.MongMoong.MongBitProject.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
+    private final MemberService memberService;
 
     @PostMapping("/comment")
     @Operation(summary = "특정 테스트에 대한 새로운 댓글 생성", description = "Comment의 memberId, testId, content가 필요합니다.")
