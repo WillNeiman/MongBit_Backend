@@ -4,6 +4,7 @@ import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.service.TestService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,14 @@ public class TestController {
 //            return ResponseEntity.notFound().build();
 //        }
 //    }
+
+    @GetMapping("/random")
+    @Operation(summary = "랜덤한 테스트 호출", description = "database에 존재하는 랜덤한 인덱스의 Test를 가져와 반환합니다.")
+    public ResponseEntity<Test> getRandomTest() {
+        Test randomTest = testService.getRandomTest();
+        return ResponseEntity.ok(randomTest);
+    }
+
 
 
 }
