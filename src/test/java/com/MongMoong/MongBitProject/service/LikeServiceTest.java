@@ -1,7 +1,5 @@
 package com.MongMoong.MongBitProject.service;
 
-import com.MongMoong.MongBitProject.dto.CommentResponse;
-import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Like;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.model.Test;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

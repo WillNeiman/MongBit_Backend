@@ -1,6 +1,6 @@
 package com.MongMoong.MongBitProject.service;
 
-import com.MongMoong.MongBitProject.dto.CommentResponse;
+import com.MongMoong.MongBitProject.dto.CommentDTO;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.model.Test;
@@ -76,13 +76,13 @@ public class CommentServiceTest {
     public void getCommentsForTest_Success() {
         String testId = test.getId();
         comment.setTestId(testId);
-        List<CommentResponse> comments = commentService.getCommentsForTest(comment);
+        List<CommentDTO> comments = commentService.getCommentsForTest(comment);
 
         assertFalse(comments.isEmpty(), "Comment list should not be empty");
         assertEquals(1, comments.size(), "Should have 1 comment");
-        CommentResponse commentResponse = comments.get(0);
-        System.out.println("조회된 댓글: " + commentResponse.toString());
-        assertEquals("test content", commentResponse.getContent(), "Content should be 'test content'");
-        assertEquals("testUsername", commentResponse.getUsername(), "Username should be 'testUsername'");
+        CommentDTO commentDTO = comments.get(0);
+        System.out.println("조회된 댓글: " + commentDTO.toString());
+        assertEquals("test content", commentDTO.getContent(), "Content should be 'test content'");
+        assertEquals("testUsername", commentDTO.getUsername(), "Username should be 'testUsername'");
     }
 }
