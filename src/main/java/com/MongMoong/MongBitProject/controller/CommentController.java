@@ -35,7 +35,7 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/comment")
+    @DeleteMapping("/comment/{commentId}")
     @Operation(summary = "특정 테스트에 대한 댓글 삭제", description = "삭제할 Comment의 id가 필요합니다")
     public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
         Comment comment = new Comment();
