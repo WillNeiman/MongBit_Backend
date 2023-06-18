@@ -2,6 +2,7 @@ package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.aspect.CommentExistenceCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceAtCommentCheck;
+import com.MongMoong.MongBitProject.dto.CommentDTO;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Member;
@@ -55,26 +56,26 @@ public class CommentService {
     }
 
     @TestExistenceAtCommentCheck
-    public List<CommentResponse> getCommentsForTest(Comment comment) {
+    public List<CommentDTO> getCommentsForTest(Comment comment) {
         String testId = comment.getTestId();
         List<Comment> comments = commentRepository.findByTestId(testId);
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
         Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
-        List<CommentResponse> commentResponses = new ArrayList<>();
+        List<CommentDTO> commentRespons = new ArrayList<>();
         for(Comment findComment : comments) {
             String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
             String thumbnailImage = memberIdThumbnailMap.get((memberId));
-            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
-            commentResponses.add(commentResponse);
+            CommentDTO commentDTO = new CommentDTO(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
+            commentRespons.add(commentDTO);
         }
-        return commentResponses;
+        return commentRespons;
     }
 
     @TestExistenceAtCommentCheck
-    public List<CommentResponse> getCommentsForTestPaged(Comment comment, int pageNumber) {
+    public CommentResponse<CommentDTO> getCommentsForTestPaged(Comment comment, int pageNumber) {
         String testId = comment.getTestId();
         Pageable pageable = PageRequest.of(pageNumber, 10, Sort.by("commentDate").descending());
         Page<Comment> commentsPage = commentRepository.findByTestId(testId, pageable);
@@ -83,15 +84,18 @@ public class CommentService {
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
         Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
-        List<CommentResponse> commentResponses = new ArrayList<>();
+        List<CommentDTO> commentDTOList = new ArrayList<>();
         for(Comment findComment : comments) {
             String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
             String thumbnailImage = memberIdThumbnailMap.get((memberId));
-            CommentResponse commentResponse = new CommentResponse(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
-            commentResponses.add(commentResponse);
+            CommentDTO commentDTO = new CommentDTO(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
+            commentDTOList.add(commentDTO);
         }
-        return commentResponses;
+        CommentResponse<CommentDTO> commentResponse = new CommentResponse<>();
+        commentResponse.setCommentDTOList(commentDTOList);
+        commentResponse.setHasNextPage(commentsPage.hasNext());
+        return commentResponse;
     }
 
 }
