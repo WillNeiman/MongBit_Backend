@@ -51,5 +51,12 @@ public class TestService {
         return testRepository.findTestResultsById(id);
     }
 
+    public Test getRandomTest(){
+        long count = testRepository.count();
+        int random = (int)(Math.random() * count);
+        Page<Test> page = testRepository.findAll(PageRequest.of(random, 1, Sort.unsorted()));
+        return page.getContent().get(0);
+    }
+
 
 }
