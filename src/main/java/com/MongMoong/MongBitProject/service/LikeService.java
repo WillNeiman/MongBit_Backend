@@ -26,15 +26,22 @@ public class LikeService {
     }
 
     @TestExistenceAtLikeCheck
-    public Like createLike(String testId, String memberId) {
-        LocalDateTime likeDate = LocalDateTime.now();
-        Like like = new Like(memberId, testId, likeDate);
-        return likeRepository.save(like);
+    public synchronized Like createLike(String testId, String memberId) {
+        Like existLike = likeRepository.findByTestIdAndMemberId(testId, memberId);
+        if(existLike != null) {
+            LocalDateTime likeDate = LocalDateTime.now();
+            Like like = new Like(memberId, testId, likeDate);
+            return likeRepository.save(like);
+        }
+        return null;
     }
 
     @TestExistenceAtLikeCheck
     public void deleteLike(String testId, String memberId) {
-        Like like = likeRepository.findByTestIdAndMemberId(testId, memberId);
-        likeRepository.delete(like);
+        Like existLike = likeRepository.findByTestIdAndMemberId(testId, memberId);
+        if(existLike != null) {
+            Like like = likeRepository.findByTestIdAndMemberId(testId, memberId);
+            likeRepository.delete(like);
+        }
     }
 }
