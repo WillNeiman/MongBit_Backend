@@ -4,6 +4,7 @@ import com.MongMoong.MongBitProject.aspect.CommentExistenceCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceAtCommentCheck;
 import com.MongMoong.MongBitProject.dto.CommentDTO;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
+import com.MongMoong.MongBitProject.exception.BadRequestException;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.repository.CommentRepository;
@@ -38,11 +39,13 @@ public class CommentService {
     @CommentExistenceCheck
     public Comment updateComment(Comment comment) {
         Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
-        if(existingComment != null){
+        if(existingComment != null && existingComment.getMemberId().equals(comment.getMemberId())){
             existingComment.setContent(comment.getContent());
             commentRepository.save(existingComment);
+            return existingComment;
+        } else {
+            throw new BadRequestException("자신이 작성한 댓글만 수정할 수 있습니다.");
         }
-        return existingComment;
     }
 
     @CommentExistenceCheck
