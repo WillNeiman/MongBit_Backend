@@ -44,12 +44,6 @@ public class TestService {
 //        });
 //        return test;
 //    }
-    public List<Question> getQuestions(String id){
-        return testRepository.findQuestionsById(id);
-    }
-    public List<TestResult> getTestResult(String id){
-        return testRepository.findTestResultsById(id);
-    }
 
     public Test getRandomTest(){
         long count = testRepository.count();
@@ -58,5 +52,54 @@ public class TestService {
         return page.getContent().get(0);
     }
 
+    public List<Test> getTestList(){
+        List<Test> testList = testRepository.findAll();
+        return testList;
+    }
+    public Optional<Test> getTest(String id){
+        //test내용을 출력하는 화면에 question, testResult 는 필요 x
+        // ㄴ모든 정보를 한번에 가져와서 넘길거면 이 부분 수정
+        Optional<Test> test = testRepository.findById(id);
+        return test;
+    }
+
+    public Test updateTest(Test updatedTest) {
+        Optional<Test> optionalTest = testRepository.findById(updatedTest.getId());
+        if (optionalTest.isPresent()) {
+            Test test = optionalTest.get();
+            test.setTitle(updatedTest.getTitle());
+            test.setContent(updatedTest.getContent());
+            test.setImageUrl(updatedTest.getImageUrl());
+            test.setPlayCount(updatedTest.getPlayCount());
+            //list 형태로 수정
+            //test.setQuestions(updatedTest.getQuestions());
+            //test.setResults(updatedTest.getResults());
+
+            return testRepository.save(test);
+        } else {
+            throw new IllegalArgumentException(updatedTest.getId()+" not exit");
+        }
+    }
+
+    public void deleteTest(Test test){
+        testRepository.delete(test);
+    }
+
+//    public Optional<Test> getTest(String id){
+//        Optional<Test> test = testRepository.findById(id);
+//        test.ifPresent(t -> {
+//            List<Question> questions = testRepository.findQuestionById(id);
+//            List<TestResult> testResults = testRepository.findTestResultById(id);
+//            t.setQuestions(questions);
+//            t.setResults(testResults);
+//        });
+//        return test;
+//    }
+//    public List<Question> getQuestions(String id){
+//        return testRepository.findQuestionsById(id);
+//    }
+//    public List<TestResult> getTestResult(String id){
+//        return testRepository.findTestResultsById(id);
+//    }
 
 }
