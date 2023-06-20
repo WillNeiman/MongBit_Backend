@@ -19,22 +19,21 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    private final MemberService memberService;
 
-    @PostMapping("/comment")
+    @PostMapping("/comments")
     @Operation(summary = "특정 테스트에 대한 새로운 댓글 생성", description = "Request body의 값을 memberId, testId, content 순서로 전달해주세요.")
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
         Comment savedComment = commentService.saveComment(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
 
-    @PutMapping("/comment")
-    @Operation(summary = "특정 테스트에 대한 댓글 업데이트", description = "Request body의 값을 memberId, testId, content, id 순서로 전달해주세요. 이때 content는 새로 수정할 값으로, 나머지는 기존 값과 동일해야 합니다.")
+    @PatchMapping("/comments")
+    @Operation(summary = "특정 테스트에 대한 댓글 업데이트", description = "업데이트를 원하는 Comment의 'content'를 새로운 값으로 전달해주세요. 이때 Comment의 memberId, testId, id는 기존 값과 동일해야 합니다.")
     public ResponseEntity<Comment> updateComment(@RequestBody Comment comment) {
         commentService.updateComment(comment);
         return ResponseEntity.noContent().build();
     }
-    @DeleteMapping("/comment/{commentId}")
+    @DeleteMapping("/comments/{commentId}")
     @Operation(summary = "특정 테스트에 대한 댓글 삭제", description = "삭제할 Comment의 id가 필요합니다")
     public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
         Comment comment = new Comment();
