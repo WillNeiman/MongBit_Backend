@@ -2,7 +2,9 @@ package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.aspect.CommentExistenceCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceAtCommentCheck;
+import com.MongMoong.MongBitProject.dto.CommentDTO;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
+import com.MongMoong.MongBitProject.exception.BadRequestException;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.repository.CommentRepository;
@@ -37,51 +39,67 @@ public class CommentService {
     @CommentExistenceCheck
     public Comment updateComment(Comment comment) {
         Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
-        if(existingComment != null){
+        if(existingComment != null && existingComment.getMemberId().equals(comment.getMemberId())){
             existingComment.setContent(comment.getContent());
             commentRepository.save(existingComment);
+            return existingComment;
+        } else {
+            throw new BadRequestException("자신이 작성한 댓글만 수정할 수 있습니다.");
         }
-        return existingComment;
     }
 
-    @TestExistenceAtCommentCheck
     @CommentExistenceCheck
     public void deleteComment(Comment comment) {
         commentRepository.delete(comment);
     }
 
     @TestExistenceAtCommentCheck
-    public List<CommentResponse> getCommentsForTest(String testId) {
+    public int getCommentsCountByTestId(Comment comment) {
+        String testId = comment.getTestId();
+        return commentRepository.countByTestId(testId);
+    }
+
+    @TestExistenceAtCommentCheck
+    public List<CommentDTO> getCommentsForTest(Comment comment) {
+        String testId = comment.getTestId();
         List<Comment> comments = commentRepository.findByTestId(testId);
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
-        List<CommentResponse> commentResponses = new ArrayList<>();
-        for(Comment comment : comments) {
-            String memberId = comment.getMemberId();
+        Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
+        List<CommentDTO> commentRespons = new ArrayList<>();
+        for(Comment findComment : comments) {
+            String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
-            CommentResponse commentResponse = new CommentResponse(comment.getId(), memberId, testId, comment.getCommentDate(), comment.getContent(), username);
-            commentResponses.add(commentResponse);
+            String thumbnailImage = memberIdThumbnailMap.get((memberId));
+            CommentDTO commentDTO = new CommentDTO(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
+            commentRespons.add(commentDTO);
         }
-        return commentResponses;
+        return commentRespons;
     }
 
     @TestExistenceAtCommentCheck
-    public List<CommentResponse> getCommentsForTestPaged(String testId, int pageNumber) {
+    public CommentResponse<CommentDTO> getCommentsForTestPaged(Comment comment, int pageNumber) {
+        String testId = comment.getTestId();
         Pageable pageable = PageRequest.of(pageNumber, 10, Sort.by("commentDate").descending());
         Page<Comment> commentsPage = commentRepository.findByTestId(testId, pageable);
         List<Comment> comments = commentsPage.getContent();
         List<String> memberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
-        List<CommentResponse> commentResponses = new ArrayList<>();
-        for(Comment comment : comments) {
-            String memberId = comment.getMemberId();
+        Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for(Comment findComment : comments) {
+            String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
-            CommentResponse commentResponse = new CommentResponse(comment.getId(), memberId, testId, comment.getCommentDate(), comment.getContent(), username);
-            commentResponses.add(commentResponse);
+            String thumbnailImage = memberIdThumbnailMap.get((memberId));
+            CommentDTO commentDTO = new CommentDTO(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
+            commentDTOList.add(commentDTO);
         }
-        return commentResponses;
+        CommentResponse<CommentDTO> commentResponse = new CommentResponse<>();
+        commentResponse.setCommentDTOList(commentDTOList);
+        commentResponse.setHasNextPage(commentsPage.hasNext());
+        return commentResponse;
     }
 
 }

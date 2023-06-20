@@ -64,7 +64,7 @@ public class MemberService {
             // ROLE = 사용자
             MemberRole role = MemberRole.USER;
 
-            kakaoMember = new Member(kakaoId, kakaoNickname, encodedPassword, email, role);
+            kakaoMember = new Member(kakaoId, kakaoNickname, encodedPassword, email, role, thumbnailImage);
             kakaoMember = memberRepository.save(kakaoMember); //회원 저장하고 저장된 객체 반환
             System.out.println("memberRepository.save(kakaoMember 실행");
         } else {
@@ -74,6 +74,11 @@ public class MemberService {
                 kakaoMember.setUsername(kakaoNickname);
                 memberRepository.save(kakaoMember);
                 System.out.println("닉네임 업데이트 완료: " + kakaoNickname);
+            }
+            if (!thumbnailImage.equals(kakaoMember.getThumbnailImage())) {
+                kakaoMember.setThumbnailImage(thumbnailImage);
+                memberRepository.save(kakaoMember);
+                System.out.println("썸네일 업데이트 완료: " + thumbnailImage);
             }
         }
 

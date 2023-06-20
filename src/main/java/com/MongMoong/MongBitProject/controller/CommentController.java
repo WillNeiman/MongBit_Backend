@@ -1,8 +1,10 @@
 package com.MongMoong.MongBitProject.controller;
 
+import com.MongMoong.MongBitProject.dto.CommentDTO;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
 import com.MongMoong.MongBitProject.model.Comment;
 import com.MongMoong.MongBitProject.service.CommentService;
+import com.MongMoong.MongBitProject.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,40 +19,55 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
+    private final MemberService memberService;
 
     @PostMapping("/comment")
-    @Operation(summary = "특정 테스트에 대한 새로운 댓글 생성", description = "Comment의 memberId, testId, content가 필요합니다.")
+    @Operation(summary = "특정 테스트에 대한 새로운 댓글 생성", description = "Request body의 값을 memberId, testId, content 순서로 전달해주세요.")
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
         Comment savedComment = commentService.saveComment(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
 
     @PutMapping("/comment")
-    @Operation(summary = "특정 테스트에 대한 댓글 업데이트", description = "업데이트할 Comment의 memberId, testId, content가 필요합니다.")
+    @Operation(summary = "특정 테스트에 대한 댓글 업데이트", description = "Request body의 값을 memberId, testId, content, id 순서로 전달해주세요. 이때 content는 새로 수정할 값으로, 나머지는 기존 값과 동일해야 합니다.")
     public ResponseEntity<Comment> updateComment(@RequestBody Comment comment) {
         commentService.updateComment(comment);
         return ResponseEntity.noContent().build();
     }
-
-    @DeleteMapping("/comment")
+    @DeleteMapping("/comment/{commentId}")
     @Operation(summary = "특정 테스트에 대한 댓글 삭제", description = "삭제할 Comment의 id가 필요합니다")
-    public ResponseEntity<Void> deleteComment(@RequestBody Comment comment) {
+    public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
+        Comment comment = new Comment();
+        comment.setId(commentId);
         commentService.deleteComment(comment);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{testId}/comments")
+    @GetMapping("/comments/{testId}")
     @Operation(summary = "특정 테스트에 대한 모든 댓글 조회", description = "testId가 필요합니다")
-    public ResponseEntity<List<CommentResponse>> getCommentList(@PathVariable String testId) {
-        List<CommentResponse> commentResponses = commentService.getCommentsForTest(testId);
-        return ResponseEntity.ok(commentResponses);
+    public ResponseEntity<List<CommentDTO>> getCommentList(@PathVariable String testId) {
+        Comment comment = new Comment();
+        comment.setTestId(testId);
+        List<CommentDTO> commentRespons = commentService.getCommentsForTest(comment);
+        return ResponseEntity.ok(commentRespons);
     }
 
-    @GetMapping("/{testId}/comments/page/{pageNumber}")
-    @Operation(summary = "특정 테스트에 대한 댓글 조회 (페이지당 10개)", description = "페이지 번호와 testId가 필요합니다.")
-    public ResponseEntity<List<CommentResponse>> getCommentListPaged(@PathVariable String testId, @PathVariable int pageNumber) {
-        List<CommentResponse> commentResponses = commentService.getCommentsForTestPaged(testId, pageNumber);
-        return ResponseEntity.ok(commentResponses);
+    @GetMapping("/comments/{testId}/page/{pageNumber}")
+    @Operation(summary = "특정 테스트에 대한 댓글 조회 (페이지당 10개)", description = "testId와 pageNumber가 필요합니다. 파라미터의 순서를 엄수해주세요.")
+    public ResponseEntity<CommentResponse<CommentDTO>> getCommentListPaged(@PathVariable String testId, @PathVariable int pageNumber) {
+        Comment comment = new Comment();
+        comment.setTestId(testId);
+        CommentResponse<CommentDTO> commentResponse = commentService.getCommentsForTestPaged(comment, pageNumber);
+        return ResponseEntity.ok(commentResponse);
+    }
+
+    @GetMapping("/{testId}/comments/count")
+    @Operation(summary = "특정 테스트에 대한 댓글 수 조회", description = "testId가 필요합니다.")
+    public ResponseEntity<Integer> getCommentsCountByTestId(@PathVariable String testId) {
+        Comment comment = new Comment();
+        comment.setTestId(testId);
+        int count = commentService.getCommentsCountByTestId(comment);
+        return ResponseEntity.ok(count);
     }
 
 }

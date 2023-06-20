@@ -1,10 +1,9 @@
 package com.MongMoong.MongBitProject.service;
 
-import com.MongMoong.MongBitProject.dto.CommentDTO;
-import com.MongMoong.MongBitProject.model.Comment;
+import com.MongMoong.MongBitProject.model.Like;
 import com.MongMoong.MongBitProject.model.Member;
 import com.MongMoong.MongBitProject.model.Test;
-import com.MongMoong.MongBitProject.repository.CommentRepository;
+import com.MongMoong.MongBitProject.repository.LikeRepository;
 import com.MongMoong.MongBitProject.repository.MemberRepository;
 import com.MongMoong.MongBitProject.repository.TestRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -13,35 +12,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
-public class CommentServiceTest {
+public class LikeServiceTest {
 
     @Autowired
-    private CommentService commentService;
-
+    private LikeService likeService;
+    @Autowired
+    private LikeRepository likeRepository;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private TestService testService;
     @Autowired
     private TestRepository testRepository;
 
-    @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
-    private CommentRepository commentRepository;
-
     private Member member;
     private Test test;
-    private Comment comment;
+    private Like like;
 
     @BeforeEach
     public void setup() {
         // 테스트 멤버 생성
         member = new Member();
         member.setId("testMemberId");
-        member.setUsername("testUsername");
         memberRepository.save(member);
         System.out.println("테스트용 계정: " + member.toString());
 
@@ -51,21 +50,20 @@ public class CommentServiceTest {
         testRepository.save(test);
         System.out.println("테스트용 심테: " + test.toString());
 
-        // 테스트 댓글 생성
-        comment = new Comment();
-        comment.setMemberId(member.getId());
-        comment.setTestId(test.getId());
-        comment.setCommentDate(LocalDateTime.now());
-        comment.setContent("test content");
-        commentRepository.save(comment);
-        System.out.println("테스트용 댓글: " + comment.toString());
+        // 테스트 좋아요 생성
+        like = new Like();
+        like.setMemberId(member.getId());
+        like.setTestId(test.getId());
+        like.setLikeDate(LocalDateTime.now());
+        likeRepository.save(like);
+        System.out.println("테스트용 좋아요: " + like.toString());
     }
 
     @AfterEach
     public void tearDown() {
         // delete test data
-        commentService.deleteComment(comment);
-        System.out.println("테스트용 코멘트 삭제: " + comment.toString());
+        likeRepository.delete(like);
+        System.out.println("테스트용 좋아요 삭제: " + like.toString());
         testRepository.delete(test);
         System.out.println("테스트용 심테 삭제: " + test.toString());
         memberRepository.delete(member);
@@ -75,14 +73,12 @@ public class CommentServiceTest {
     @org.junit.jupiter.api.Test
     public void getCommentsForTest_Success() {
         String testId = test.getId();
-        comment.setTestId(testId);
-        List<CommentDTO> comments = commentService.getCommentsForTest(comment);
+        String memberId = member.getId();
+        Like findLike = likeRepository.findByTestIdAndMemberId(testId, memberId);
 
-        assertFalse(comments.isEmpty(), "Comment list should not be empty");
-        assertEquals(1, comments.size(), "Should have 1 comment");
-        CommentDTO commentDTO = comments.get(0);
-        System.out.println("조회된 댓글: " + commentDTO.toString());
-        assertEquals("test content", commentDTO.getContent(), "Content should be 'test content'");
-        assertEquals("testUsername", commentDTO.getUsername(), "Username should be 'testUsername'");
+        assertFalse(findLike == null, "Comment list should not be empty");
+        System.out.println("조회된 좋아요: " + findLike.toString());
+        assertEquals("testTestId", findLike.getTestId(), "Content should be 'test content'");
+        assertEquals("testMemberId", findLike.getMemberId(), "Username should be 'testUsername'");
     }
 }

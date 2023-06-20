@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Document("Like")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Like {
     @Id
     private String id;
