@@ -28,7 +28,7 @@ public class LikeService {
     @TestExistenceAtLikeCheck
     public synchronized Like createLike(String testId, String memberId) {
         Like existLike = likeRepository.findByTestIdAndMemberId(testId, memberId);
-        if(existLike != null) {
+        if(existLike == null) {
             LocalDateTime likeDate = LocalDateTime.now();
             Like like = new Like(memberId, testId, likeDate);
             return likeRepository.save(like);
