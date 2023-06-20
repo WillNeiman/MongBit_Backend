@@ -18,25 +18,5 @@ public class Answer {
     private String property; //속성 - IE/NS/FT/PJ
     private int score;
     private String answer;
-    /*
-    if property == IE
-    result[0] + score
 
-    if property == NS
-    result[1] + score
-
-    if property == FT
-    result[2] + score
-
-    if property == PJ
-    result[3] + score
-
-    or
-    property = I/E/N/S/F/T/P/J
-    if property == I
-    result[0] +1
-
-    if property == E
-    result[0] -1
-     */
 }
