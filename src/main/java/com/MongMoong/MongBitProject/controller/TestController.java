@@ -1,17 +1,13 @@
 package com.MongMoong.MongBitProject.controller;
 
-import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.model.Test;
-import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,31 +23,6 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-//    @GetMapping("/detail/{test_id}")
-//    public ResponseEntity<Test> getTest(@PathVariable String id) {
-//        Optional<Test> test = testService.getTest(id);
-//        if (test.isPresent()) {
-//            return ResponseEntity.ok(test.get());
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
-    @GetMapping("/quizzes/{question_id}")
-    public ResponseEntity<List<Question>> getQuestion(@PathVariable String id){
-        List<Question> question = testService.getQuestions(id);
-        return ResponseEntity.ok(question);
-    }
-//    @GetMapping("/quizzes/{test_id}/result/{result_id}")
-//    public ResponseEntity<TestResult> getTestResult(@PathVariable String id, String result){
-//    Optional<TestResult> testResult = testService.getTestResult(id,result);
-//        if (testResult.isPresent()) {
-//            return ResponseEntity.ok(testResult.get());
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
     @GetMapping("/random")
     @Operation(summary = "랜덤한 테스트 호출", description = "database에 존재하는 랜덤한 인덱스의 Test를 가져와 반환합니다.")
     public ResponseEntity<Test> getRandomTest() {
@@ -59,6 +30,34 @@ public class TestController {
         return ResponseEntity.ok(randomTest);
     }
 
+    @GetMapping("/test/{testId}")
+    public ResponseEntity<Optional<Test>> getTest(@RequestBody String testId){
+        Optional<Test> test = testService.getTest(testId);
+        return ResponseEntity.ok(test);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Test>> getTestList(){
+        List<Test> testList = testService.getTestList();
+        return ResponseEntity.ok(testList);
+    }
+
+    @PutMapping("/test")
+    @Operation(summary = "Test 정보 수정", description = "id, title, content, (questions 리스트, results 리스트), imageUrl, playCount 순서로 전달해주세요.")
+    public ResponseEntity<Optional<Test>> updateTest(@RequestBody Test test){
+        //test 외 다른 model연결된것 아직 업데이트 안됨
+        Test updatedTest = testService.updateTest(test);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/test/{testId}")
+    @Operation(summary = "Test 삭제", description = "testId가 필요합니다.")
+    public ResponseEntity<Void> deleteTest(@PathVariable String testId){
+        Test test = new Test();
+        test.setId(testId);
+        testService.deleteTest(test);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

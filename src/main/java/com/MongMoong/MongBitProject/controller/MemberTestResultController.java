@@ -28,4 +28,11 @@ public class MemberTestResultController {
         Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(Long.parseLong(kakaoId), page, size);
         return ResponseEntity.ok(results);
     }
+    @PostMapping("/{memberTestResult}")
+    public ResponseEntity<MemberTestResult> updateMemberTestResult(
+            @PathVariable MemberTestResult memberTestResult,
+            @RequestParam int[] score){
+        MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(memberTestResult,score);
+        return ResponseEntity.ok(createMemberTestResult);
+    }
 }
