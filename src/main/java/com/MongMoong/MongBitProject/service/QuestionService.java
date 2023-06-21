@@ -15,12 +15,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
+    private final AnswerService answerService;
 
     public List<Question> createQuestionList(List<Question> questionLists){
-        return questionRepository.saveAll(questionLists);
+        List<Question> questionList = questionRepository.saveAll(questionLists);
+//        List<Answer> answerList = answerService.createAnswerList(answerLists);
+        return questionList;
     }
     public Question createQuestion(Question question){
-        return questionRepository.save(question);
+        Question createdquestion = questionRepository.save(question);
+//        List<Answer> answerList = answerService.createAnswerList(answerLists);
+        return createdquestion;
     }
 
     public List<Question> getQuestionList(){
@@ -33,6 +38,9 @@ public class QuestionService {
 
     public Question updateQuestion(Question question){
         return questionRepository.save(question);
+    }
+    public List<Question> updateQuestionList(List<Question> questionList){
+        return questionRepository.saveAll(questionList);
     }
     public void deleteQuestion(String id){
         questionRepository.deleteById(id);
