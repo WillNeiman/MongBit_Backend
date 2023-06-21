@@ -95,7 +95,19 @@ public class TestService {
     }
     //테스트 삭제
     public void deleteTest(Test test){
+        Optional<Test> deletedTest = testRepository.findById(test.getId());
+        List<Question> questionList = deletedTest.get().getQuestions();
+        System.out.println(questionList);
+        for (Question question : questionList) {
+            System.out.println(question.getId());
+            questionService.deleteQuestion(question.getId());
+        }
+        List<TestResult> testResultList = deletedTest.get().getResults();
+        for (TestResult testResult : testResultList) {
+            testResultService.deleteTestResult(testResult.getId());
+        }
         testRepository.delete(test);
     }
 
 }
+

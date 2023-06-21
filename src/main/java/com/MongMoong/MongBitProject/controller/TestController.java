@@ -84,13 +84,12 @@ public class TestController {
     }
 
     @DeleteMapping("/test/{testId}")
-    @Operation(summary = "Test 삭제", description = "testId가 필요합니다.")
+    @Operation(summary = "Test 삭제", description = "testId가 필요합니다. question, testResult가 같이 삭제됩니다.")
     public ResponseEntity<Void> deleteTest(@PathVariable String testId){
         Test test = new Test();
         test.setId(testId);
         testService.deleteTest(test);
         return ResponseEntity.noContent().build();
     }
-
 
 }
