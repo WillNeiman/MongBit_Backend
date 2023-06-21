@@ -1,8 +1,5 @@
 package com.MongMoong.MongBitProject.dto;
 
-import com.MongMoong.MongBitProject.model.Answer;
-import com.MongMoong.MongBitProject.model.Question;
-import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

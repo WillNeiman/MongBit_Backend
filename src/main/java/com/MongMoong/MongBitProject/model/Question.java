@@ -17,7 +17,8 @@ public class Question {
     @Id
     private String id;
     private int index; // 질문의 순서
-    @DBRef
-    private List<Answer> answers;
+    private String property; //속성 - IE/NS/FT/PJ
     private String question;
+    private String answer1;
+    private String answer2;
 }
