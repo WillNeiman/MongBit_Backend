@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,19 +33,20 @@ score[3] > 0 == "J" else "P"
         return memberTestResultRepository.findByMemberId(kakaoId, pageable);
     }
 
-    public MemberTestResult createMemberTestResult(MemberTestResult memberTestResult, int[] score){
+    public MemberTestResult createMemberTestResult(String testId, String memberId, int[] score){
         String result = "";
         setResult(score, result);
         //TODO 계산된 result를 바탕으로 해당 Test의 TestResult를 찾은 후 그 id를 찾아서 MemberTestResult에 set
-        String testId = memberTestResult.getTestId();
-        String testResultId = "";
+        MemberTestResult memberTestResult = new MemberTestResult();
         List<TestResult> testTestList = testRepository.findById(testId).get().getResults();
         for (TestResult testResult : testTestList) {
             if(testResult.getResult().equals(result)){
-                testResultId = testResult.getId();
+                memberTestResult.setTestResultId(testResult.getId());
             }
         }
-        memberTestResult.setTestResultId(testResultId);
+        memberTestResult.setTestId(testId);
+        memberTestResult.setMemberId(memberId);
+        memberTestResult.setTestDate(LocalDateTime.now());
         return memberTestResultRepository.save(memberTestResult);
     }
 

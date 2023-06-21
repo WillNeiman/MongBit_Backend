@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/member-test-result")
+@RequestMapping("/api/v1/member-test-result")
 public class MemberTestResultController {
 
     private final TokenProvider tokenProvider;
@@ -30,9 +32,11 @@ public class MemberTestResultController {
     }
     @PostMapping("/{memberTestResult}")
     public ResponseEntity<MemberTestResult> updateMemberTestResult(
-            @PathVariable MemberTestResult memberTestResult,
-            @RequestParam int[] score){
-        MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(memberTestResult,score);
+            @PathVariable String memberId,
+            @PathVariable String testId,
+            @RequestBody Map<String, int[]> request) {
+        int[] score = request.get("score");
+        MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(memberId,testId,score);
         return ResponseEntity.ok(createMemberTestResult);
     }
 }
