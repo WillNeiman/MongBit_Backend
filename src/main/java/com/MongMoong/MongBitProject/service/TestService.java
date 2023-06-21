@@ -84,16 +84,13 @@ public class TestService {
     //특정 테스트 하나 불러오기
     public Optional<Test> getTest(String id){
         Optional<Test> test = testRepository.findById(id);
-        test.ifPresent(t -> {
-            t.setContent(HtmlUtils.htmlEscape(t.getContent()).replaceAll("\n", "<br>"));
-        });
         return test;
     }
     //테스트 수정
     public Test updateTest(Test updatedTest) {
         Optional<Test> optionalTest = testRepository.findById(updatedTest.getId());
         if (optionalTest.isPresent()) {
-//            questionService.updateQuestionList(updatedTest.getQuestions());
+            questionService.updateQuestionList(updatedTest.getQuestions());
             testResultService.updateTestResultList(updatedTest.getResults());
             return testRepository.save(updatedTest);
         } else {
