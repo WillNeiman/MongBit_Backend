@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.controller;
 
+import com.MongMoong.MongBitProject.dto.RecentTestResponse;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +59,13 @@ public class TestController {
         test.setId(testId);
         testService.deleteTest(test);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{page}/{size}")
+    @Operation(summary = "최신 테스트 불러오기", description = "0부터 시작하는 page와 size가 필요합니다.")
+    public ResponseEntity<List<RecentTestResponse>> getRecentTest(@PathVariable int page, @PathVariable int size) {
+        List<RecentTestResponse> recentTest = testService.getRecentTests(page, size);
+        return ResponseEntity.ok(recentTest);
     }
 
 

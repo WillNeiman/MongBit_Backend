@@ -47,8 +47,8 @@ public class CommentController {
     public ResponseEntity<List<CommentDTO>> getCommentList(@PathVariable String testId) {
         Comment comment = new Comment();
         comment.setTestId(testId);
-        List<CommentDTO> commentRespons = commentService.getCommentsForTest(comment);
-        return ResponseEntity.ok(commentRespons);
+        List<CommentDTO> commentResponse = commentService.getCommentsForTest(comment);
+        return ResponseEntity.ok(commentResponse);
     }
 
     @GetMapping("/comments/{testId}/page/{pageNumber}")
