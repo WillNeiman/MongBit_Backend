@@ -30,13 +30,13 @@ public class MemberTestResultController {
         Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(Long.parseLong(kakaoId), page, size);
         return ResponseEntity.ok(results);
     }
-    @PostMapping("/{memberTestResult}")
+    @PostMapping("/{testId}/{memberId}")
     public ResponseEntity<MemberTestResult> updateMemberTestResult(
-            @PathVariable String memberId,
             @PathVariable String testId,
+            @PathVariable String memberId,
             @RequestBody Map<String, int[]> request) {
         int[] score = request.get("score");
-        MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(memberId,testId,score);
+        MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(testId, memberId, score);
         return ResponseEntity.ok(createMemberTestResult);
     }
 }

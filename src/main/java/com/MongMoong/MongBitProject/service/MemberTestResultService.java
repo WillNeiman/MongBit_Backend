@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.model.MemberTestResult;
+import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.repository.MemberTestResultRepository;
 import com.MongMoong.MongBitProject.repository.TestRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,51 +29,53 @@ score[3] > 0 == "J" else "P"
  */
     private final MemberTestResultRepository memberTestResultRepository;
     private final TestRepository testRepository;
+    private final TestService testService;
 
     public Page<MemberTestResult> getResultsByMemberId(Long kakaoId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "testDate"));
         return memberTestResultRepository.findByMemberId(kakaoId, pageable);
     }
 
-    public MemberTestResult createMemberTestResult(String testId, String memberId, int[] score){
-        String result = "";
-        setResult(score, result);
-        //TODO 계산된 result를 바탕으로 해당 Test의 TestResult를 찾은 후 그 id를 찾아서 MemberTestResult에 set
+    public MemberTestResult createMemberTestResult(String testId, String memberId, int[] score) {
+        String result = setResult(score);
         MemberTestResult memberTestResult = new MemberTestResult();
-        List<TestResult> testTestList = testRepository.findById(testId).get().getResults();
+        Optional<Test> findTest = testService.getTest(testId);
+        List<TestResult> testTestList = findTest.get().getResults();
         for (TestResult testResult : testTestList) {
-            if(testResult.getResult().equals(result)){
+            if (testResult.getResult().equals(result)) {
                 memberTestResult.setTestResultId(testResult.getId());
             }
         }
         memberTestResult.setTestId(testId);
         memberTestResult.setMemberId(memberId);
         memberTestResult.setTestDate(LocalDateTime.now());
+        Test test = testService.getTest(testId).get();
+        test.setPlayCount(test.getPlayCount() + 1);
         return memberTestResultRepository.save(memberTestResult);
     }
 
-    private static void setResult(int[] score, String result) {
-        for (int i = 0; i < 4; i++) {
-            if(i == 0 && score[i] > 0) {
-                result += "E";
-            } else {
-                result += "I";
-            }
-            if(i == 1 && score[i] > 0) {
-                result += "N";
-            } else {
-                result += "S";
-            }
-            if(i == 2 && score[i] > 0) {
-                result += "F";
-            } else {
-                result += "T";
-            }
-            if(i == 3 && score[i] > 0) {
-                result += "J";
-            } else {
-                result += "P";
-            }
+    private static String setResult(int[] score) {
+        String result = "";
+        if (score[0] > 0) {
+            result += "E";
+        } else {
+            result += "I";
         }
+        if (score[1] > 0) {
+            result += "N";
+        } else {
+            result += "S";
+        }
+        if (score[2] > 0) {
+            result += "F";
+        } else {
+            result += "T";
+        }
+        if (score[3] > 0) {
+            result += "J";
+        } else {
+            result += "P";
+        }
+        return result;
     }
 }

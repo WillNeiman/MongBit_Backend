@@ -42,6 +42,7 @@ public class TestService {
 //    }
     public Test createTest(Test test) {
         test.setCreateDate(LocalDateTime.now());
+        test.setPlayCount(0);
         List<Question> questionList = test.getQuestions();
         questionService.createQuestionList(questionList);
         List<TestResult> testResultList = test.getResults();
@@ -82,8 +83,6 @@ public class TestService {
     }
     //특정 테스트 하나 불러오기
     public Optional<Test> getTest(String id){
-        //test내용을 출력하는 화면에 question, testResult 는 필요 x
-        // ㄴ모든 정보를 한번에 가져와서 넘길거면 이 부분 수정
         Optional<Test> test = testRepository.findById(id);
         test.ifPresent(t -> {
             t.setContent(HtmlUtils.htmlEscape(t.getContent()).replaceAll("\n", "<br>"));
@@ -94,10 +93,9 @@ public class TestService {
     public Test updateTest(Test updatedTest) {
         Optional<Test> optionalTest = testRepository.findById(updatedTest.getId());
         if (optionalTest.isPresent()) {
-            Test test = updatedTest;
-            questionService.updateQuestionList(test.getQuestions());
-            testResultService.updateTestResultList(test.getResults());
-            return testRepository.save(test);
+//            questionService.updateQuestionList(updatedTest.getQuestions());
+            testResultService.updateTestResultList(updatedTest.getResults());
+            return testRepository.save(updatedTest);
         } else {
             throw new IllegalArgumentException(updatedTest.getId()+" not exit");
         }
