@@ -7,8 +7,10 @@ import com.MongMoong.MongBitProject.repository.TestResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +41,14 @@ public class TestResultService {
     }
     public void deleteTestResult(String id){
         testResultRepository.deleteById(id);
+    }
+
+    public List<String> getContentForList(TestResult testResult){
+        String content = testResult.getContent();
+        String[] sentences = content.split("\\n");
+        return Arrays.stream(sentences)
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 
 }

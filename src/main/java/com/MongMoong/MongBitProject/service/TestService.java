@@ -85,9 +85,9 @@ public class TestService {
             Test test = updatedTest;
             questionService.updateQuestionList(test.getQuestions());
             List<Question> questionList = test.getQuestions();
-//            for (Question question : questionList) {
-//                answerService.updateAnswerList(question.getAnswers());
-//            }
+            for (Question question : questionList) {
+                answerService.updateAnswerList(question.getAnswers());
+            }
             testResultService.updateTestResultList(test.getResults());
             return testRepository.save(test);
         } else {
@@ -100,7 +100,10 @@ public class TestService {
         List<Question> questionList = deletedTest.get().getQuestions();
         System.out.println(questionList);
         for (Question question : questionList) {
-
+            List<Answer> answerList = question.getAnswers();
+            for (Answer answer : answerList) {
+                answerService.deleteAnswer(answer.getId());
+            }
             questionService.deleteQuestion(question.getId());
 
         }
