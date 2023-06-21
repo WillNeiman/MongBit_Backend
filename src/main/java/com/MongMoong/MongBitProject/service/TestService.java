@@ -1,8 +1,9 @@
 package com.MongMoong.MongBitProject.service;
 
-import com.MongMoong.MongBitProject.model.Question;
+import com.MongMoong.MongBitProject.dto.RecentTestResponse;
 import com.MongMoong.MongBitProject.model.Test;
-import com.MongMoong.MongBitProject.model.TestResult;
+import com.MongMoong.MongBitProject.repository.CommentRepository;
+import com.MongMoong.MongBitProject.repository.LikeRepository;
 import com.MongMoong.MongBitProject.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class TestService {
 
     private final TestRepository testRepository;
+    private final LikeRepository likeRepository;
+    private final CommentRepository commentRepository;
 
     /*
     PageRequest는 Pageable 인터페이스를 구현하는 클래스이므로 Pageable 타입을 요구하는 메소드에 PageRequest 인스턴스를 전달할 수 있다.
@@ -29,9 +33,19 @@ public class TestService {
         Test createdTest = testRepository.save(test);
         return createdTest;
     }
-    public List<Test> getRecentTests(int size) {
-        Page<Test> page = testRepository.findByOrderByCreateDateDesc(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createDate")));
-        return page.getContent();
+    public List<RecentTestResponse> getRecentTests(int page, int size) {
+        Page<Test> recentTestPage = testRepository.findByOrderByCreateDateDesc(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
+        List<Test> recentTestList = recentTestPage.getContent();
+        List<RecentTestResponse> recentTestResponseList = new ArrayList<>();
+        for (Test test : recentTestList) {
+            RecentTestResponse recentTestResponse = new RecentTestResponse(test.getId(), test.getTitle(), test.getImageUrl(), test.getPlayCount());
+            int likeCount = likeRepository.countByTestId(test.getId());
+            recentTestResponse.setLikeCount(likeCount);
+            int commentCount = commentRepository.countByTestId(test.getId());
+            recentTestResponse.setCommentCount(commentCount);
+            recentTestResponseList.add(recentTestResponse);
+        }
+        return recentTestResponseList;
     }
 
 //    public Optional<Test> getTest(String id){

@@ -67,15 +67,15 @@ public class CommentService {
         List<Member> members = memberRepository.findByIdIn(memberIds);
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
         Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
-        List<CommentDTO> commentRespons = new ArrayList<>();
+        List<CommentDTO> commentResponse = new ArrayList<>();
         for(Comment findComment : comments) {
             String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
             String thumbnailImage = memberIdThumbnailMap.get((memberId));
             CommentDTO commentDTO = new CommentDTO(findComment.getId(), memberId, testId, findComment.getCommentDate(), findComment.getContent(), username, thumbnailImage);
-            commentRespons.add(commentDTO);
+            commentResponse.add(commentDTO);
         }
-        return commentRespons;
+        return commentResponse;
     }
 
     @TestExistenceAtCommentCheck
