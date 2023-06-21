@@ -26,7 +26,7 @@ public class TestController {
     @Operation(summary = "테스트 만들기",
             description = "필요한 데이터:" +
                     "Test의 title, content, questions(Question_id 리스트),  results(TestResult_id 리스트), imageUrl" +
-                    "Question의 index, property(IE/NS/FT/PJ), question, answerPlus, answerMinus " +
+                    "Question의 index, question, answerPlus, answerMinus " +
                     "TestResult의 result(MBTI 16가지), title, content, imageUrl")
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         Test createdTest = testService.createTest(test);

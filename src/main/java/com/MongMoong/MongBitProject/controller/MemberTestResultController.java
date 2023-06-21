@@ -24,17 +24,18 @@ public class MemberTestResultController {
     private final MemberTestResultService memberTestResultService;
     private final TestResultService testResultService;
 
-    @GetMapping("/{kakaoId}")
+    @GetMapping("/{memberId}")
+    @Operation(summary = "회원별 10개씩 테스트 결과 조회", description = "memberId, page, size가 필요합니다.")
     public ResponseEntity<?> getResultsByMemberId(
             @PathVariable String kakaoId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "0", name = "page") int page,
+            @RequestParam(defaultValue = "10", name = "size") int size
     ) {
         Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(Long.parseLong(kakaoId), page, size);
         return ResponseEntity.ok(results);
     }
     @PostMapping("/{testId}/{memberId}")
-    @Operation()
+    @Operation(summary = "테스트 결과를 회원에 저장" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다.")
     public ResponseEntity<Optional<TestResult>> updateMemberTestResult(
             @PathVariable String testId,
             @PathVariable String memberId,
