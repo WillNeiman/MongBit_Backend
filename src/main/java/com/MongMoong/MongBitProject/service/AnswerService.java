@@ -31,6 +31,9 @@ public class AnswerService {
     public Answer updateAnswer(Answer answer){
         return answerRepository.save(answer);
     }
+    public List<Answer> updateAnswerList(List<Answer> answerList){
+        return answerRepository.saveAll(answerList);
+    }
     public void deleteAnswer(String id){
         answerRepository.deleteById(id);
     }

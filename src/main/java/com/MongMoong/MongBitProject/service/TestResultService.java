@@ -34,6 +34,9 @@ public class TestResultService {
     public TestResult updateTestResult(TestResult testResult){
         return testResultRepository.save(testResult);
     }
+    public List<TestResult> updateTestResultList(List<TestResult> testResultList){
+        return testResultRepository.saveAll(testResultList);
+    }
     public void deleteTestResult(String id){
         testResultRepository.deleteById(id);
     }

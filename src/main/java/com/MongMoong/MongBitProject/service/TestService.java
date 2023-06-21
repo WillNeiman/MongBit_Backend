@@ -42,8 +42,11 @@ public class TestService {
     public Test createTest(Test test) {
         test.setCreateDate(LocalDateTime.now());
         List<Question> questionList = test.getQuestions();
-        List<TestResult> testResultList = test.getResults();
         questionService.createQuestionList(questionList);
+        for (Question question : questionList) {
+            answerService.createAnswerList(question.getAnswers());
+        }
+        List<TestResult> testResultList = test.getResults();
         testResultService.createTestResultList(testResultList);
         Test createdTest = testRepository.save(test);
         return createdTest;
@@ -79,15 +82,13 @@ public class TestService {
     public Test updateTest(Test updatedTest) {
         Optional<Test> optionalTest = testRepository.findById(updatedTest.getId());
         if (optionalTest.isPresent()) {
-            Test test = optionalTest.get();
-            test.setTitle(updatedTest.getTitle());
-            test.setContent(updatedTest.getContent());
-            test.setImageUrl(updatedTest.getImageUrl());
-            test.setPlayCount(updatedTest.getPlayCount());
-            //list 형태로 수정
-            //test.setQuestions(updatedTest.getQuestions());
-            //test.setResults(updatedTest.getResults());
-
+            Test test = updatedTest;
+            questionService.updateQuestionList(test.getQuestions());
+            List<Question> questionList = test.getQuestions();
+//            for (Question question : questionList) {
+//                answerService.updateAnswerList(question.getAnswers());
+//            }
+            testResultService.updateTestResultList(test.getResults());
             return testRepository.save(test);
         } else {
             throw new IllegalArgumentException(updatedTest.getId()+" not exit");
@@ -99,8 +100,9 @@ public class TestService {
         List<Question> questionList = deletedTest.get().getQuestions();
         System.out.println(questionList);
         for (Question question : questionList) {
-            System.out.println(question.getId());
+
             questionService.deleteQuestion(question.getId());
+
         }
         List<TestResult> testResultList = deletedTest.get().getResults();
         for (TestResult testResult : testResultList) {
