@@ -61,6 +61,7 @@ public class TestService {
     public List<Test> getRecentTests(int size) {
         Page<Test> page = testRepository.findByOrderByCreateDateDesc(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createDate")));
         return page.getContent();
+    }
     public List<RecentTestResponse> getRecentTests(int page, int size) {
         Page<Test> recentTestPage = testRepository.findByOrderByCreateDateDesc(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
         List<Test> recentTestList = recentTestPage.getContent();
