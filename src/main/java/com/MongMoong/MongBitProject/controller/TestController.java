@@ -20,7 +20,10 @@ public class TestController {
 
     @PostMapping("/test")
     @Operation(summary = "테스트 만들기",
-            description = "test, question, testResult 의 id 외 모든 필드가 있어야 합니다. testResult는 아래와 같은 로직으로 계산해 주세요. question의 property는 mbti의 각 속성(4가지부분)이고 answer1는 +1, answer2는 -1이 되는 선택지입니다. ")
+            description = "필요한 데이터:" +
+                    "Test의 title, content, questions(Question_id 리스트),  results(TestResult_id 리스트), imageUrl" +
+                    "Question의 property(IE/NS/FT/PJ), question, answerPlus, answerMinus / (index는 배열이나 리스트묶음으로 들어오는 question으로 백에서 생성)" +
+                    "TestResult의 result(MBTI 16가지), title, content, imageUrl")
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         Test createdTest = testService.createTest(test);
         return ResponseEntity.status(HttpStatus.CREATED).build();

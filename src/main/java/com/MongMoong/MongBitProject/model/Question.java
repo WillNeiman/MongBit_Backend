@@ -19,6 +19,6 @@ public class Question {
     private int index; // 질문의 순서
     private String property; //속성 - IE/NS/FT/PJ
     private String question;
-    private String answer1;
-    private String answer2;
+    private String answerPlus;
+    private String answerMinus;
 }
