@@ -51,7 +51,9 @@ score[3] > 0 == "J" else "P"
         memberTestResult.setTestDate(LocalDateTime.now());
         Test test = testService.getTest(testId).get();
         test.setPlayCount(test.getPlayCount() + 1);
-        return memberTestResultRepository.save(memberTestResult);
+        testService.updateTest(test);
+        memberTestResultRepository.save(memberTestResult);
+        return memberTestResult;
     }
 
     private static String setResult(int[] score) {
