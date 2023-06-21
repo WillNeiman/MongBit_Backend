@@ -1,13 +1,10 @@
 package com.MongMoong.MongBitProject.service;
 
-import com.MongMoong.MongBitProject.model.Answer;
 import com.MongMoong.MongBitProject.model.Question;
-import com.MongMoong.MongBitProject.repository.AnswerRepository;
 import com.MongMoong.MongBitProject.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +12,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
-    private final AnswerService answerService;
 
     public List<Question> createQuestionList(List<Question> questionLists){
         List<Question> questionList = questionRepository.saveAll(questionLists);

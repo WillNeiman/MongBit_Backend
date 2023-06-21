@@ -1,12 +1,7 @@
 package com.MongMoong.MongBitProject.controller;
 
-import com.MongMoong.MongBitProject.dto.TestDTO;
-import com.MongMoong.MongBitProject.model.Answer;
-import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.dto.RecentTestResponse;
 import com.MongMoong.MongBitProject.model.Test;
-import com.MongMoong.MongBitProject.model.TestResult;
-import com.MongMoong.MongBitProject.service.AnswerService;
 import com.MongMoong.MongBitProject.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,10 +17,10 @@ import java.util.Optional;
 @RequestMapping("/api/v1/tests")
 public class TestController {
     private final TestService testService;
-    private final AnswerService answerService;
 
     @PostMapping("/test")
-    @Operation(summary = "테스트 만들기", description = "test, question, testResult 의 id 외 모든 필드가 있어야 합니다. ")
+    @Operation(summary = "테스트 만들기",
+            description = "test, question, testResult 의 id 외 모든 필드가 있어야 합니다. testResult는 아래와 같은 로직으로 계산해 주세요. question의 property는 mbti의 각 속성(4가지부분)이고 answer1는 +1, answer2는 -1이 되는 선택지입니다. ")
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         Test createdTest = testService.createTest(test);
         return ResponseEntity.status(HttpStatus.CREATED).build();

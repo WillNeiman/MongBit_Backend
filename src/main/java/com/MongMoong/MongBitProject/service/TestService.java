@@ -1,16 +1,12 @@
 package com.MongMoong.MongBitProject.service;
 
-import com.MongMoong.MongBitProject.model.Answer;
 import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.dto.RecentTestResponse;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
-import com.MongMoong.MongBitProject.repository.AnswerRepository;
-import com.MongMoong.MongBitProject.repository.QuestionRepository;
 import com.MongMoong.MongBitProject.repository.CommentRepository;
 import com.MongMoong.MongBitProject.repository.LikeRepository;
 import com.MongMoong.MongBitProject.repository.TestRepository;
-import com.MongMoong.MongBitProject.repository.TestResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +26,6 @@ public class TestService {
     private final TestRepository testRepository;
     private final QuestionService questionService;
     private final TestResultService testResultService;
-    private final AnswerService answerService;
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
 
@@ -49,9 +44,6 @@ public class TestService {
         test.setCreateDate(LocalDateTime.now());
         List<Question> questionList = test.getQuestions();
         questionService.createQuestionList(questionList);
-        for (Question question : questionList) {
-            answerService.createAnswerList(question.getAnswers());
-        }
         List<TestResult> testResultList = test.getResults();
         testResultService.createTestResultList(testResultList);
         Test createdTest = testRepository.save(test);
@@ -104,10 +96,6 @@ public class TestService {
         if (optionalTest.isPresent()) {
             Test test = updatedTest;
             questionService.updateQuestionList(test.getQuestions());
-            List<Question> questionList = test.getQuestions();
-            for (Question question : questionList) {
-                answerService.updateAnswerList(question.getAnswers());
-            }
             testResultService.updateTestResultList(test.getResults());
             return testRepository.save(test);
         } else {
@@ -120,10 +108,6 @@ public class TestService {
         List<Question> questionList = deletedTest.get().getQuestions();
         System.out.println(questionList);
         for (Question question : questionList) {
-            List<Answer> answerList = question.getAnswers();
-            for (Answer answer : answerList) {
-                answerService.deleteAnswer(answer.getId());
-            }
             questionService.deleteQuestion(question.getId());
 
         }
