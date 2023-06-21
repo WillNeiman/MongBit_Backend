@@ -39,6 +39,9 @@ public class QuestionService {
     public Question updateQuestion(Question question){
         return questionRepository.save(question);
     }
+    public List<Question> updateQuestionList(List<Question> questionList){
+        return questionRepository.saveAll(questionList);
+    }
     public void deleteQuestion(String id){
         questionRepository.deleteById(id);
     }
