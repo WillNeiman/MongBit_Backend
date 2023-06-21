@@ -25,6 +25,7 @@ public class TestController {
     private final AnswerService answerService;
 
     @PostMapping("/test")
+    @Operation(summary = "테스트 만들기", description = "test, question, testResult 모든 필드가 있어야 합니다.")
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         Test createdTest = testService.createTest(test);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -61,19 +62,21 @@ public class TestController {
     }
 
     @GetMapping("/test/{testId}")
+    @Operation(summary = "특정 테스트 조회", description = "테스트 하나에 대한 내용을 가져와 반환합니다.")
     public ResponseEntity<Optional<Test>> getTest(@PathVariable String testId){
         Optional<Test> test = testService.getTest(testId);
         return ResponseEntity.ok(test);
     }
 
     @GetMapping("")
+    @Operation(summary = "모든 테스트 조회", description = "모든 테스트를 리스트로 가져와 반환합니다.")
     public ResponseEntity<List<Test>> getTestList(){
         List<Test> testList = testService.getTestList();
         return ResponseEntity.ok(testList);
     }
 
     @PutMapping("/test")
-    @Operation(summary = "Test 정보 수정", description = "id, title, content, (questions 리스트, results 리스트), imageUrl, playCount 순서로 전달해주세요.")
+    @Operation(summary = "Test 정보 수정", description = "title, content, questions 리스트, results 리스트, imageUrl, playCount, id 순서로 전달해주세요.")
     public ResponseEntity<Optional<Test>> updateTest(@RequestBody Test test){
         //test 외 다른 model연결된것 아직 업데이트 안됨
         Test updatedTest = testService.updateTest(test);
