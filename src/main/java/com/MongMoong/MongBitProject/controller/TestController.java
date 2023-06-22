@@ -1,6 +1,6 @@
 package com.MongMoong.MongBitProject.controller;
 
-import com.MongMoong.MongBitProject.dto.RecentTestResponse;
+import com.MongMoong.MongBitProject.dto.TestCoverResponse;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.service.TestResultService;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,8 +49,8 @@ public class TestController {
 
     @GetMapping("")
     @Operation(summary = "모든 테스트 조회", description = "모든 테스트를 리스트로 가져와 반환합니다.")
-    public ResponseEntity<List<Test>> getTestList(){
-        List<Test> testList = testService.getTestList();
+    public ResponseEntity<List<TestCoverResponse>> getTestList(){
+        List<TestCoverResponse> testList = testService.getTestList();
         return ResponseEntity.ok(testList);
     }
 
@@ -71,8 +70,8 @@ public class TestController {
 
     @GetMapping("{page}/{size}")
     @Operation(summary = "최신 테스트 불러오기", description = "0부터 시작하는 page와 size가 필요합니다.")
-    public ResponseEntity<List<RecentTestResponse>> getRecentTest(@PathVariable int page, @PathVariable int size) {
-        List<RecentTestResponse> recentTest = testService.getRecentTests(page, size);
+    public ResponseEntity<List<TestCoverResponse>> getRecentTest(@PathVariable int page, @PathVariable int size) {
+        List<TestCoverResponse> recentTest = testService.getRecentTests(page, size);
         return ResponseEntity.ok(recentTest);
     }
 
