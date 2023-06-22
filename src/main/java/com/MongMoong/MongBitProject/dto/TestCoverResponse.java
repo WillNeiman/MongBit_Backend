@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RecentTestResponse {
+public class TestCoverResponse {
     //Test
     private String id;
     private String title;
@@ -18,7 +18,7 @@ public class RecentTestResponse {
     //Comment
     private int commentCount;
 
-    public RecentTestResponse(String id, String title, String imageUrl, int playCount) {
+    public TestCoverResponse(String id, String title, String imageUrl, int playCount) {
         this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;

@@ -2,7 +2,7 @@ package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
 import com.MongMoong.MongBitProject.model.Question;
-import com.MongMoong.MongBitProject.dto.RecentTestResponse;
+import com.MongMoong.MongBitProject.dto.TestCoverResponse;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.repository.CommentRepository;
@@ -13,12 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.HtmlUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,19 +48,19 @@ public class TestService {
         Page<Test> page = testRepository.findByOrderByCreateDateDesc(PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "createDate")));
         return page.getContent();
     }
-    public List<RecentTestResponse> getRecentTests(int page, int size) {
+    public List<TestCoverResponse> getRecentTests(int page, int size) {
         Page<Test> recentTestPage = testRepository.findByOrderByCreateDateDesc(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate")));
         List<Test> recentTestList = recentTestPage.getContent();
-        List<RecentTestResponse> recentTestResponseList = new ArrayList<>();
+        List<TestCoverResponse> testCoverResponseList = new ArrayList<>();
         for (Test test : recentTestList) {
-            RecentTestResponse recentTestResponse = new RecentTestResponse(test.getId(), test.getTitle(), test.getImageUrl(), test.getPlayCount());
+            TestCoverResponse testCoverResponse = new TestCoverResponse(test.getId(), test.getTitle(), test.getImageUrl(), test.getPlayCount());
             int likeCount = likeRepository.countByTestId(test.getId());
-            recentTestResponse.setLikeCount(likeCount);
+            testCoverResponse.setLikeCount(likeCount);
             int commentCount = commentRepository.countByTestId(test.getId());
-            recentTestResponse.setCommentCount(commentCount);
-            recentTestResponseList.add(recentTestResponse);
+            testCoverResponse.setCommentCount(commentCount);
+            testCoverResponseList.add(testCoverResponse);
         }
-        return recentTestResponseList;
+        return testCoverResponseList;
     }
     //랜덤 테스트 불러오기
     ///TODO index없을경우 예외처리
@@ -73,9 +71,18 @@ public class TestService {
         return page.getContent().get(0);
     }
     //모든 테스트 불러오기(리스트)
-    public List<Test> getTestList(){
+    public List<TestCoverResponse> getTestList(){
         List<Test> testList = testRepository.findAll();
-        return testList;
+        List<TestCoverResponse> testCoverResponseList = new ArrayList<>();
+        for (Test test : testList) {
+            TestCoverResponse testCoverResponse = new TestCoverResponse(test.getId(), test.getTitle(), test.getImageUrl(), test.getPlayCount());
+            int likeCount = likeRepository.countByTestId(test.getId());
+            testCoverResponse.setLikeCount(likeCount);
+            int commentCount = commentRepository.countByTestId(test.getId());
+            testCoverResponse.setCommentCount(commentCount);
+            testCoverResponseList.add(testCoverResponse);
+        }
+        return testCoverResponseList;
     }
     //특정 테스트 하나 불러오기
     @TestExistenceCheck
