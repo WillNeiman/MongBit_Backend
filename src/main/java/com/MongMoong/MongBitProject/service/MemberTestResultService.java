@@ -1,5 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
+import com.MongMoong.MongBitProject.aspect.TestScoreCheck;
 import com.MongMoong.MongBitProject.model.MemberTestResult;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
@@ -35,7 +37,8 @@ score[3] > 0 == "J" else "P"
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "testDate"));
         return memberTestResultRepository.findByMemberId(kakaoId, pageable);
     }
-
+    @TestExistenceCheck
+    @TestScoreCheck
     public MemberTestResult createMemberTestResult(String testId, String memberId, int[] score) {
         String result = setResult(score);
         MemberTestResult memberTestResult = new MemberTestResult();
