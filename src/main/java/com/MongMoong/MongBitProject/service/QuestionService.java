@@ -15,12 +15,10 @@ public class QuestionService {
 
     public List<Question> createQuestionList(List<Question> questionLists){
         List<Question> questionList = questionRepository.saveAll(questionLists);
-//        List<Answer> answerList = answerService.createAnswerList(answerLists);
         return questionList;
     }
     public Question createQuestion(Question question){
         Question createdquestion = questionRepository.save(question);
-//        List<Answer> answerList = answerService.createAnswerList(answerLists);
         return createdquestion;
     }
 
@@ -28,8 +26,8 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
-    public Optional<Question> getQuestion(String id){
-        return questionRepository.findById(id);
+    public Question getQuestion(String id){
+        return questionRepository.findById(id).get();
     }
 
     public Question updateQuestion(Question question){
