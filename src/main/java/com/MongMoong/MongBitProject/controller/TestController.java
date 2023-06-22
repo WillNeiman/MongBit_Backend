@@ -42,10 +42,10 @@ public class TestController {
 
     @GetMapping("/test/{testId}")
     @Operation(summary = "특정 테스트 조회", description = "테스트 하나에 대한 내용을 가져와 반환합니다.")
-    public ResponseEntity<Optional<Test>> getTest(@PathVariable String testId){
-        Optional<Test> test = testService.getTest(testId);
-        System.out.println("test = " + test);
-        return ResponseEntity.ok(test);
+    public ResponseEntity<Test> getTest(@PathVariable String testId){
+        Test findTest = testService.getTest(testId);
+        System.out.println("testId = " + testId);
+        return ResponseEntity.ok(findTest);
     }
 
     @GetMapping("")
@@ -57,7 +57,7 @@ public class TestController {
 
     @PatchMapping("/test")
     @Operation(summary = "Test 정보 수정", description = "title, content, questions 리스트, results 리스트, imageUrl, playCount, id 순서로 전달해주세요.")
-    public ResponseEntity<Optional<Test>> updateTest(@RequestBody Test test){
+    public ResponseEntity<Test> updateTest(@RequestBody Test test){
         Test updatedTest = testService.updateTest(test);
         return ResponseEntity.noContent().build();
     }
@@ -65,9 +65,7 @@ public class TestController {
     @DeleteMapping("/test/{testId}")
     @Operation(summary = "Test 삭제", description = "testId가 필요합니다. question, testResult가 같이 삭제됩니다.")
     public ResponseEntity<Void> deleteTest(@PathVariable String testId){
-        Test test = new Test();
-        test.setId(testId);
-        testService.deleteTest(test);
+        testService.deleteTest(testId);
         return ResponseEntity.noContent().build();
     }
 
@@ -79,8 +77,8 @@ public class TestController {
     }
 
     @GetMapping("/test/test-result/{testResultId}")
-    public ResponseEntity<Optional<TestResult>> getTestResult(@PathVariable String testResultId) {
-        Optional<TestResult> findTestResult = testResultService.getTestResult(testResultId);
+    public ResponseEntity<TestResult> getTestResult(@PathVariable String testResultId) {
+        TestResult findTestResult = testResultService.getTestResult(testResultId);
         return ResponseEntity.ok(findTestResult);
     }
 
