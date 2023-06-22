@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.config.KakaoOAuth2;
+import com.MongMoong.MongBitProject.dto.KakaoLoginResponse;
 import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
 import com.MongMoong.MongBitProject.config.TokenProvider;
 import com.MongMoong.MongBitProject.model.Member;
@@ -18,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,24 +34,16 @@ public class MemberService {
     @Value("${admin.token}")
     private String ADMIN_TOKEN;
 
-    public KakaoUserInfo kakaoLogin(String authorizedCode, String url) {
+    public KakaoLoginResponse kakaoLogin(String authorizedCode, String url) {
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
         KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(authorizedCode, url);
         Long kakaoId = userInfo.getId();
         String kakaoNickname = userInfo.getNickname();
         String email = userInfo.getEmail();
         String thumbnailImage = userInfo.getThumbnailImage();
-        LocalDateTime registDate = userInfo.getRegistDate();
-
-        System.out.println("kakaoId = " + kakaoId);
-        System.out.println("kakaoNickname = " + kakaoNickname);
-        System.out.println("email = " + email);
-        System.out.println("thumbnailImage = " + thumbnailImage);
-        System.out.println("registDate = " + registDate);
 
         // 패스워드 = 카카오 Id + ADMIN TOKEN
         String password = kakaoId + ADMIN_TOKEN;
-        System.out.println("password = " + password);
 
         // DB 에 중복된 Kakao Id 가 있는지 확인
         Member kakaoMember = (Member)memberRepository.findByKakaoId(kakaoId).orElse(null);
@@ -60,25 +52,21 @@ public class MemberService {
         if (kakaoMember == null) {
             // 패스워드 인코딩
             String encodedPassword = passwordEncoder.encode(password);
-            System.out.println("카카오 정보가 DB에 없음, encodedPassword = " + encodedPassword);
             // ROLE = 사용자
             MemberRole role = MemberRole.USER;
 
             kakaoMember = new Member(kakaoId, kakaoNickname, encodedPassword, email, role, thumbnailImage);
             kakaoMember = memberRepository.save(kakaoMember); //회원 저장하고 저장된 객체 반환
-            System.out.println("memberRepository.save(kakaoMember 실행");
         } else {
-            // 이미 존재하는 회원이라면 닉네임이 바뀌었는지 확인
+            // 닉네임이 변경되었다면 DB에 저장된 닉네임 업데이트
             if (!kakaoNickname.equals(kakaoMember.getUsername())) {
-                // 닉네임이 변경되었다면 DB에 저장된 닉네임 업데이트
                 kakaoMember.setUsername(kakaoNickname);
                 memberRepository.save(kakaoMember);
-                System.out.println("닉네임 업데이트 완료: " + kakaoNickname);
             }
+            // 썸네일이 변경되었다면 DB에 저장된 닉네임 업데이트
             if (!thumbnailImage.equals(kakaoMember.getThumbnailImage())) {
                 kakaoMember.setThumbnailImage(thumbnailImage);
                 memberRepository.save(kakaoMember);
-                System.out.println("썸네일 업데이트 완료: " + thumbnailImage);
             }
         }
 
@@ -112,13 +100,12 @@ public class MemberService {
         // HttpServletRequest나 HttpServletResponse 객체에 접근할 수 없으므로, SecurityContextHolder를 사용
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), jwtToken, authentication.getAuthorities()));
-        System.out.println("jwtToken = " + jwtToken);
         SecurityContextHolder.setContext(context);
 
         // 반환할 userInfo에 우리 서비스 가입일 정보 담아주기
-        userInfo.setRegistDate(kakaoMember.getRegistDate());
         userInfo.setMemberId(kakaoMember.getId()); // memberId 설정
-
-        return userInfo;
+        KakaoLoginResponse kakaoLoginResponse = new KakaoLoginResponse(
+                kakaoMember.getId(), kakaoMember.getUsername(), kakaoMember.getThumbnailImage(), kakaoMember.getRegistDate());
+        return kakaoLoginResponse;
     }
 }
