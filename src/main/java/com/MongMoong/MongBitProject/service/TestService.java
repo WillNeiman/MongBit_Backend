@@ -65,7 +65,6 @@ public class TestService {
         return recentTestResponseList;
     }
     //랜덤 테스트 불러오기
-    ///TODO index없을경우 예외처리
     public Test getRandomTest(){
         long count = testRepository.count();
         int random = (int)(Math.random() * count);
