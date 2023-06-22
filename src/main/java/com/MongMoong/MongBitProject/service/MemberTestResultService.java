@@ -39,8 +39,8 @@ score[3] > 0 == "J" else "P"
     public MemberTestResult createMemberTestResult(String testId, String memberId, int[] score) {
         String result = setResult(score);
         MemberTestResult memberTestResult = new MemberTestResult();
-        Optional<Test> findTest = testService.getTest(testId);
-        List<TestResult> testTestList = findTest.get().getResults();
+        Test findTest = testService.getTest(testId);
+        List<TestResult> testTestList = findTest.getResults();
         for (TestResult testResult : testTestList) {
             if (testResult.getResult().equals(result)) {
                 memberTestResult.setTestResultId(testResult.getId());
@@ -49,7 +49,7 @@ score[3] > 0 == "J" else "P"
         memberTestResult.setTestId(testId);
         memberTestResult.setMemberId(memberId);
         memberTestResult.setTestDate(LocalDateTime.now());
-        Test test = testService.getTest(testId).get();
+        Test test = testService.getTest(testId);
         test.setPlayCount(test.getPlayCount() + 1);
         testService.updateTest(test);
         memberTestResultRepository.save(memberTestResult);

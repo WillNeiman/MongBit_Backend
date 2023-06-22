@@ -29,8 +29,8 @@ public class TestResultService {
         return testResultRepository.findAll();
     }
 
-    public Optional<TestResult> getTestResult(String id){
-        return testResultRepository.findById(id);
+    public TestResult getTestResult(String id){
+        return testResultRepository.findById(id).get();
     }
 
     public TestResult updateTestResult(TestResult testResult){
@@ -41,14 +41,6 @@ public class TestResultService {
     }
     public void deleteTestResult(String id){
         testResultRepository.deleteById(id);
-    }
-
-    public List<String> getContentForList(TestResult testResult){
-        String content = testResult.getContent();
-        String[] sentences = content.split("\\n");
-        return Arrays.stream(sentences)
-                .map(String::trim)
-                .collect(Collectors.toList());
     }
 
 }

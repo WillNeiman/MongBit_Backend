@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
 import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.dto.RecentTestResponse;
 import com.MongMoong.MongBitProject.model.Test;
@@ -34,12 +35,6 @@ public class TestService {
     getRecentTests())에서 PageRequest 인스턴스를 생성하고 findByOrderByCreateDateDesc())에 전달하면 타입 오류가 발생하지 않는다.
      */
 
-    // 새로운 테스트 생성
-//    public Test createTest(Test test) {
-//        test.setCreateDate(LocalDateTime.now());
-//        Test createdTest = testRepository.save(test);
-//        return createdTest;
-//    }
     public Test createTest(Test test) {
         test.setCreateDate(LocalDateTime.now());
         test.setPlayCount(0);
@@ -70,6 +65,7 @@ public class TestService {
         return recentTestResponseList;
     }
     //랜덤 테스트 불러오기
+    ///TODO index없을경우 예외처리
     public Test getRandomTest(){
         long count = testRepository.count();
         int random = (int)(Math.random() * count);
@@ -82,35 +78,33 @@ public class TestService {
         return testList;
     }
     //특정 테스트 하나 불러오기
-    public Optional<Test> getTest(String id){
-        Optional<Test> test = testRepository.findById(id);
+    @TestExistenceCheck
+    public Test getTest(String testId){
+        Test test = testRepository.findById(testId).get();
         return test;
     }
+
     //테스트 수정
-    public Test updateTest(Test updatedTest) {
-        Optional<Test> optionalTest = testRepository.findById(updatedTest.getId());
-        if (optionalTest.isPresent()) {
-            questionService.updateQuestionList(updatedTest.getQuestions());
-            testResultService.updateTestResultList(updatedTest.getResults());
-            return testRepository.save(updatedTest);
-        } else {
-            throw new IllegalArgumentException(updatedTest.getId()+" not exit");
-        }
+    @TestExistenceCheck
+    public Test updateTest(Test test) {
+            questionService.updateQuestionList(test.getQuestions());
+            testResultService.updateTestResultList(test.getResults());
+            return testRepository.save(test);
     }
     //테스트 삭제
-    public void deleteTest(Test test){
-        Optional<Test> deletedTest = testRepository.findById(test.getId());
-        List<Question> questionList = deletedTest.get().getQuestions();
-        System.out.println(questionList);
+    @TestExistenceCheck
+    public void deleteTest(String testId){
+        Test findTest = testRepository.findById(testId).get();
+        List<Question> questionList = findTest.getQuestions();
         for (Question question : questionList) {
             questionService.deleteQuestion(question.getId());
 
         }
-        List<TestResult> testResultList = deletedTest.get().getResults();
+        List<TestResult> testResultList = findTest.getResults();
         for (TestResult testResult : testResultList) {
             testResultService.deleteTestResult(testResult.getId());
         }
-        testRepository.delete(test);
+        testRepository.delete(findTest);
     }
 
 }
