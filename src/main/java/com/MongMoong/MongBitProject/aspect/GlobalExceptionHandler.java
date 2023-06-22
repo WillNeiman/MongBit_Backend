@@ -33,8 +33,9 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } else if (e.getCause() instanceof MismatchedInputException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return null;
     }
 
 //    @ExceptionHandler(Exception.class)
