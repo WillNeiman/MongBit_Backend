@@ -35,8 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
         // HandlerInterceptor는 Spring MVC의 DispatcherServlet이 요청을 처리하는 과정 중에 실행된다.
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns(
-                        "/api/1",
-                        "/api/2",
-                        "/api/3"); // 특정 경로에 대해 인터셉터 실행 /api/** 와일드카드도 가능
+                        "/api/v1/tokens/validity"
+                ); // 특정 경로에 대해 인터셉터 실행 /api/** 와일드카드도 가능
     }
 }
