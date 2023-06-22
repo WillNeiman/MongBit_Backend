@@ -35,12 +35,11 @@ public class MemberTestResultController {
         return ResponseEntity.ok(results);
     }
     @PostMapping("/{testId}/{memberId}")
-    @Operation(summary = "테스트 결과를 회원에 저장" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다.")
+    @Operation(summary = "테스트 결과를 계산하고 검사 결과를 반환" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다.")
     public ResponseEntity<TestResult> updateMemberTestResult(
             @PathVariable String testId,
             @PathVariable String memberId,
-            @RequestBody Map<String, int[]> request) {
-        int[] score = request.get("score");
+            @RequestBody int[] score) {
         MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(testId, memberId, score);
         TestResult testResult = testResultService.getTestResult(createMemberTestResult.getTestResultId());
         return ResponseEntity.ok(testResult);
