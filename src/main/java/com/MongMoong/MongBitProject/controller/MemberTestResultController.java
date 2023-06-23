@@ -37,6 +37,7 @@ public class MemberTestResultController {
         MemberTestResultResponse<MemberTestResultDTO> memberTestResultResponse = memberTestResultService.getResultsByMemberId(memberId, page, size);
         return ResponseEntity.ok(memberTestResultResponse);
     }
+
     @PostMapping("/{testId}/{memberId}")
     @Operation(summary = "테스트 결과를 계산하고 검사 결과를 반환" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다. score에는 1,3, -1, -3만 넣을 수 있습니다.")
     public ResponseEntity<TestResultResponse> updateMemberTestResult(
