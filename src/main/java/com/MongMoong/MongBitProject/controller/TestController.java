@@ -79,7 +79,7 @@ public class TestController {
     }
 
     @GetMapping("/test/test-result")
-    @Operation(summary = "특정 테스트 결과 페이지 불러오기", description = "testId와 testResultId가 필요합니다.")
+    @Operation(summary = "특정 테스트 결과 페이지 불러오기", description = "testId와 testResultId가 필요합니다. 마이페이지 용도.")
     public ResponseEntity<TestResultFromMyPageResponse> getTestResultFromMyPage(
             @PathVariable String testId, @PathVariable String testResultId) {
         TestResult testResult = testResultService.getTestResultFromMyPage(testResultId);
