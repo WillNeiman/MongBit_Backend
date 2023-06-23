@@ -78,10 +78,11 @@ public class TestController {
         return ResponseEntity.ok(recentTest);
     }
 
-    @GetMapping("/test/test-result")
+    @GetMapping("/test/test-result/{testId}/{testResultId}")
     @Operation(summary = "특정 테스트 결과 페이지 불러오기", description = "testId와 testResultId가 필요합니다. 마이페이지 용도.")
     public ResponseEntity<TestResultFromMyPageResponse> getTestResultFromMyPage(
             @PathVariable String testId, @PathVariable String testResultId) {
+        System.out.println("testId = " + testId);
         TestResult testResult = testResultService.getTestResultFromMyPage(testResultId);
         int likeCount = likeService.getLikesCountByTestId(testId);
         TestResultFromMyPageResponse testResultFromMyPageResponse
