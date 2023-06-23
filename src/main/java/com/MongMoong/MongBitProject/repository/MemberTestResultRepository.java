@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface MemberTestResultRepository extends MongoRepository<MemberTestResult, String> {
-    Page<MemberTestResult> findByMemberId(Long kakaoId, Pageable pageable);
+    Page<MemberTestResult> findByMemberId(String memberId, Pageable pageable);
 }

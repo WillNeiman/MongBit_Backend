@@ -34,9 +34,9 @@ score[3] > 0 == "J" else "P"
     private final TestRepository testRepository;
     private final TestService testService;
 
-    public Page<MemberTestResult> getResultsByMemberId(Long kakaoId, int page, int size) {
+    public Page<MemberTestResult> getResultsByMemberId(String memberId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "testDate"));
-        return memberTestResultRepository.findByMemberId(kakaoId, pageable);
+        return memberTestResultRepository.findByMemberId(memberId, pageable);
     }
     @TestExistenceCheck
     @MemberExistenceAtTestCheck
