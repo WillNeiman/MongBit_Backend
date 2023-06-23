@@ -31,13 +31,13 @@ public class TestNullAspect {
                 if(test.getQuestions().size() != 12){
                     throw new DataMismatchException("question은 12개를 등록해야 합니다.");
                 }
-//                for (Question question : test.getQuestions()) {
-//                    for (int i = 0; i < test.getQuestions().size(); i++) {
-//                          if(i != question.getIndex()){
-//                            throw new DataMismatchException("question index를 확인해주세요.");
-//                        }
+//                for (int i = 0; i < test.getQuestions().size(); i++) {
+//                    Question question = test.getQuestions().get(i);
+//                    if (question.getIndex() != i) {
+//                        throw new DataMismatchException("question index를 확인해주세요.");
 //                    }
 //                }
+
 
                 if(test.getResults().size() != 16){
                     throw new DataMismatchException("testResult는 16개를 등록해야 합니다.");
