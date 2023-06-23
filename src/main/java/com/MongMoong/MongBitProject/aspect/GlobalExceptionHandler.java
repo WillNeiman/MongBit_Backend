@@ -33,6 +33,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//    }
+
+//    @ExceptionHandler(NullPointerException.class)
+//    public ResponseEntity<?> handleNullPointerException(NullPointerException e) {
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         if (e.getCause() instanceof InvalidFormatException) {

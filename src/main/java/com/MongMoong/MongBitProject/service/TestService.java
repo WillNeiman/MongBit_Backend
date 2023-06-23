@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
+import com.MongMoong.MongBitProject.aspect.TestNullCheck;
 import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.dto.TestCoverResponse;
 import com.MongMoong.MongBitProject.model.Test;
@@ -33,6 +34,7 @@ public class TestService {
     getRecentTests())에서 PageRequest 인스턴스를 생성하고 findByOrderByCreateDateDesc())에 전달하면 타입 오류가 발생하지 않는다.
      */
 
+    @TestNullCheck
     public Test createTest(Test test) {
         test.setCreateDate(LocalDateTime.now());
         test.setPlayCount(0);
@@ -92,6 +94,7 @@ public class TestService {
 
     //테스트 수정
     @TestExistenceCheck
+    @TestNullCheck
     public Test updateTest(Test test) {
             questionService.updateQuestionList(test.getQuestions());
             testResultService.updateTestResultList(test.getResults());
