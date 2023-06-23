@@ -1,6 +1,8 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.TokenProvider;
+import com.MongMoong.MongBitProject.dto.MemberTestResultDTO;
+import com.MongMoong.MongBitProject.dto.MemberTestResultResponse;
 import com.MongMoong.MongBitProject.dto.TestResultResponse;
 import com.MongMoong.MongBitProject.model.MemberTestResult;
 import com.MongMoong.MongBitProject.model.TestResult;
@@ -32,8 +34,8 @@ public class MemberTestResultController {
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "10", name = "size") int size
     ) {
-        Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(memberId, page, size);
-        return ResponseEntity.ok(results);
+        MemberTestResultResponse<MemberTestResultDTO> memberTestResultResponse = memberTestResultService.getResultsByMemberId(memberId, page, size);
+        return ResponseEntity.ok(memberTestResultResponse);
     }
     @PostMapping("/{testId}/{memberId}")
     @Operation(summary = "테스트 결과를 계산하고 검사 결과를 반환" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다. score에는 1,3, -1, -3만 넣을 수 있습니다.")
