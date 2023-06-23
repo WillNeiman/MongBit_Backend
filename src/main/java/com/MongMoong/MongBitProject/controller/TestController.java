@@ -1,8 +1,10 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.dto.TestCoverResponse;
+import com.MongMoong.MongBitProject.dto.TestResultFromMyPageResponse;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
+import com.MongMoong.MongBitProject.service.LikeService;
 import com.MongMoong.MongBitProject.service.TestResultService;
 import com.MongMoong.MongBitProject.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,6 +21,7 @@ import java.util.List;
 public class TestController {
     private final TestService testService;
     private final TestResultService testResultService;
+    private final LikeService likeService;
 
 
     @PostMapping("/test")
@@ -73,6 +76,17 @@ public class TestController {
     public ResponseEntity<List<TestCoverResponse>> getRecentTest(@PathVariable int page, @PathVariable int size) {
         List<TestCoverResponse> recentTest = testService.getRecentTests(page, size);
         return ResponseEntity.ok(recentTest);
+    }
+
+    @GetMapping("/test/test-result")
+    @Operation(summary = "특정 테스트 결과 페이지 불러오기", description = "testId와 testResultId가 필요합니다.")
+    public ResponseEntity<TestResultFromMyPageResponse> getTestResultFromMyPage(
+            @PathVariable String testId, @PathVariable String testResultId) {
+        TestResult testResult = testResultService.getTestResultFromMyPage(testResultId);
+        int likeCount = likeService.getLikesCountByTestId(testId);
+        TestResultFromMyPageResponse testResultFromMyPageResponse
+                = new TestResultFromMyPageResponse(testId, testResult.getResult(), testResult.getTitle(), testResult.getContent(), testResult.getImageUrl(), likeCount);
+        return ResponseEntity.ok(testResultFromMyPageResponse);
     }
 
 }
