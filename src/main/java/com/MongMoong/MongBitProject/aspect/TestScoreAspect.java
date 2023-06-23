@@ -19,6 +19,15 @@ public class TestScoreAspect {
         if(score.length != 4){
             throw new DataMismatchException("score의 길이가 부적합합니다.");
         }
+        checkCollectNumber(score);
+    }
+
+    private static void checkCollectNumber(int[] score) {
+        for (int param : score) {
+            if (param != -3 && param != -1 && param != 1 && param != 3) {
+                throw new DataMismatchException("유효하지 않은 값이 있습니다: " + param);
+            }
+        }
     }
 
     private int[] scoreIntArrAndLengthCheck(Object[] args) {
