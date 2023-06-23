@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.TokenProvider;
+import com.MongMoong.MongBitProject.dto.TestResultResponse;
 import com.MongMoong.MongBitProject.model.MemberTestResult;
 import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.service.MemberTestResultService;
@@ -36,12 +37,12 @@ public class MemberTestResultController {
     }
     @PostMapping("/{testId}/{memberId}")
     @Operation(summary = "테스트 결과를 계산하고 검사 결과를 반환" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다.")
-    public ResponseEntity<TestResult> updateMemberTestResult(
+    public ResponseEntity<TestResultResponse> updateMemberTestResult(
             @PathVariable String testId,
             @PathVariable String memberId,
             @RequestBody int[] score) {
         MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(testId, memberId, score);
-        TestResult testResult = testResultService.getTestResult(createMemberTestResult.getTestResultId());
-        return ResponseEntity.ok(testResult);
+        TestResultResponse testResultResponse = testResultService.getTestResult(createMemberTestResult.getTestResultId());
+        return ResponseEntity.ok(testResultResponse);
     }
 }
