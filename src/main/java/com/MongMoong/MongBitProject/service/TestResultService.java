@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.dto.TestResultResponse;
 import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.repository.QuestionRepository;
@@ -29,8 +30,10 @@ public class TestResultService {
         return testResultRepository.findAll();
     }
 
-    public TestResult getTestResult(String id){
-        return testResultRepository.findById(id).get();
+    public TestResultResponse getTestResult(String id){
+        TestResult testResult = testResultRepository.findById(id).get();
+        TestResultResponse testResultResponse = new TestResultResponse(testResult.getResult(), testResult.getTitle(), testResult.getContent(), testResult.getImageUrl());
+        return testResultResponse;
     }
 
     public TestResult updateTestResult(TestResult testResult){

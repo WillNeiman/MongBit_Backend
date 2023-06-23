@@ -75,11 +75,4 @@ public class TestController {
         return ResponseEntity.ok(recentTest);
     }
 
-    @GetMapping("/test/test-result/{testResultId}")
-    public ResponseEntity<TestResult> getTestResult(@PathVariable String testResultId) {
-        TestResult findTestResult = testResultService.getTestResult(testResultId);
-        return ResponseEntity.ok(findTestResult);
-    }
-
-
 }
