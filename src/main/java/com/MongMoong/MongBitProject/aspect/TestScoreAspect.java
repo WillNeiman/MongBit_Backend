@@ -1,7 +1,6 @@
 package com.MongMoong.MongBitProject.aspect;
 
 import com.MongMoong.MongBitProject.exception.DataMismatchException;
-import com.MongMoong.MongBitProject.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,8 +16,8 @@ public class TestScoreAspect {
     public void checkScoreValidate(JoinPoint joinPoint){
         Object[] args = joinPoint.getArgs();
         int[] score = scoreIntArrAndLengthCheck(args);
-        if(score.length != 4 || score ==null){
-            throw new DataMismatchException("score가 유효하지 않습니다.");
+        if(score.length != 4){
+            throw new DataMismatchException("score의 길이가 부적합합니다.");
         }
     }
 
@@ -26,19 +25,8 @@ public class TestScoreAspect {
         for (Object arg : args) {
             if (arg instanceof int[]) {
                 return (int[]) arg;
-            } else if (arg instanceof String[]) {
-                String[] scoreStrArr = (String[]) arg;
-                int[] scoreIntArr = new int[scoreStrArr.length];
-                try {
-                    for (int i = 0; i < scoreStrArr.length; i++) {
-                        scoreIntArr[i] = Integer.parseInt(scoreStrArr[i]);
-                    }
-                    return scoreIntArr;
-                } catch (NumberFormatException e) {
-                    throw new DataMismatchException("score가 유효하지 않습니다.");
-                }
             }
         }
-        return null;
+        throw new DataMismatchException("score의 데이터 타입이 잘못되었습니다.");
     }
 }
