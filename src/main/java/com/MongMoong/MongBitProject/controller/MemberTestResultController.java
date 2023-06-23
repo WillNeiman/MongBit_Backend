@@ -28,11 +28,11 @@ public class MemberTestResultController {
     @GetMapping("/{memberId}")
     @Operation(summary = "회원별 10개씩 테스트 결과 조회", description = "memberId, page, size가 필요합니다.")
     public ResponseEntity<?> getResultsByMemberId(
-            @PathVariable String kakaoId,
+            @PathVariable String memberId,
             @RequestParam(defaultValue = "0", name = "page") int page,
             @RequestParam(defaultValue = "10", name = "size") int size
     ) {
-        Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(Long.parseLong(kakaoId), page, size);
+        Page<MemberTestResult> results = memberTestResultService.getResultsByMemberId(memberId, page, size);
         return ResponseEntity.ok(results);
     }
     @PostMapping("/{testId}/{memberId}")
