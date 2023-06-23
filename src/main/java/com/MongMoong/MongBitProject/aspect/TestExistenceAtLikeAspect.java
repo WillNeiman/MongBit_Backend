@@ -27,7 +27,6 @@ public class TestExistenceAtLikeAspect {
 
     private String findTestId(Object[] args) {
         for (Object arg : args) {
-            System.out.println("(String)arg = " + (String)arg);
             if (arg instanceof String) {
                 return (String)arg;
             }
