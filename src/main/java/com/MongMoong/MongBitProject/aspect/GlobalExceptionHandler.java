@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.aspect;
 
 import com.MongMoong.MongBitProject.exception.BadRequestException;
+import com.MongMoong.MongBitProject.exception.DataMismatchException;
 import com.MongMoong.MongBitProject.exception.ResourceNotFoundException;
 import com.MongMoong.MongBitProject.exception.TokenVerificationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
@@ -24,6 +25,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<?> handleBadRequestException(BadRequestException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(DataMismatchException.class)
+    public ResponseEntity<?> handleDataMismatchException(DataMismatchException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
