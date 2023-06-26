@@ -32,10 +32,9 @@ public class TestResultService {
         return testResultRepository.findAll();
     }
 
-    public TestResultResponse getTestResult(String id){
+    public TestResult getTestResult(String id){
         TestResult testResult = testResultRepository.findById(id).get();
-        TestResultResponse testResultResponse = new TestResultResponse(testResult.getResult(), testResult.getTitle(), testResult.getContent(), testResult.getImageUrl());
-        return testResultResponse;
+        return testResult;
     }
 
     public TestResult updateTestResult(TestResult testResult){
