@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
 
 /*
 HandlerInterceptor 인터페이스에는 3가지 메소드가 선언되어 있다.
@@ -36,44 +34,26 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String origin = request.getHeader("Origin");
-
-        if (origin != null && isAllowedOrigin(origin)) {
-            try {
-                String token = tokenProvider.resolveToken(request);
-                tokenProvider.validateToken(token);
-                return true;
-            } catch (JWTDecodeException ex) {
-                response.setContentType("text/plain; charset=UTF-8");
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().write(ex.getMessage());
-                return false;
-            } catch (TokenExpiredException ex) {
-                response.setContentType("text/plain; charset=UTF-8");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write(ex.getMessage());
-                return false;
-            } catch (TokenVerificationException ex) {
-                response.setContentType("text/plain; charset=UTF-8");
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                response.getWriter().write(ex.getMessage());
-                return false;
-            }
-        } else {
+        try {
+            String token = tokenProvider.resolveToken(request);
+            tokenProvider.validateToken(token);
+            System.out.println("토큰 검증 완료");
+            return true;
+        } catch (JWTDecodeException ex) {
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write(ex.getMessage());
+            return false;
+        } catch (TokenExpiredException ex) {
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(ex.getMessage());
+            return false;
+        } catch (TokenVerificationException ex) {
             response.setContentType("text/plain; charset=UTF-8");
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("Not allowed from this origin");
+            response.getWriter().write(ex.getMessage());
             return false;
         }
-    }
-
-    private boolean isAllowedOrigin(String origin) {
-        List<String> allowedOrigins = Arrays.asList(
-                "https://mongbit.vercel.app",
-                "http://localhost:3000",
-                "http://localhost:8080",
-                "https://mongbit-willneiman.koyeb.app"
-        );
-        return allowedOrigins.contains(origin);
     }
 }
