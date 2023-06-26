@@ -8,6 +8,7 @@ import com.MongMoong.MongBitProject.service.LikeService;
 import com.MongMoong.MongBitProject.service.TestResultService;
 import com.MongMoong.MongBitProject.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/tests")
+@Tag(name = "Test Controller", description = "심리테스트 데이터와 관련된 API를 제공하는 컨트롤러입니다.")
 public class TestController {
     private final TestService testService;
     private final TestResultService testResultService;

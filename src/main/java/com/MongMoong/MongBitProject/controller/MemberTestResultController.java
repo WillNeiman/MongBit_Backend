@@ -9,6 +9,7 @@ import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.service.MemberTestResultService;
 import com.MongMoong.MongBitProject.service.TestResultService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/member-test-result")
+@Tag(name = "MemberTestResult Controller", description = "심리테스트 진행 및 결과 계산과 관련된 API를 제공하는 컨트롤러입니다.")
 public class MemberTestResultController {
 
     private final TokenProvider tokenProvider;

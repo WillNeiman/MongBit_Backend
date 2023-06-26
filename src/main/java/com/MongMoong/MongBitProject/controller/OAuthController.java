@@ -1,10 +1,10 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.TokenProvider;
-import com.MongMoong.MongBitProject.dto.KakaoUserInfo;
 import com.MongMoong.MongBitProject.dto.KakaoLoginResponse;
 import com.MongMoong.MongBitProject.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login/oauth2/kakao")
+@Tag(name = "OAuth Controller", description = "OAuth2 로그인 및 JWT 발급과 관련된 API를 제공하는 컨트롤러입니다.")
 public class OAuthController {
 
     private final MemberService memberService;
@@ -64,7 +63,5 @@ public class OAuthController {
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
                 .body(kakaoLoginResponse);
     }
-
-    // TODO 토큰 블랙리스트
 
 }

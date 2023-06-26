@@ -2,6 +2,7 @@ package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.config.TokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,9 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController("/api/v1/tokens")
 @RequiredArgsConstructor
+@Tag(name = "Member Controller", description = "사용자의 토큰 검증 API를 제공하는 컨트롤러입니다.")
 public class MemberController {
-
-    // TODO 마이페이지 진입 시 토큰 유효성 검사
     private final TokenProvider tokenProvider;
 
     @GetMapping("/validity")

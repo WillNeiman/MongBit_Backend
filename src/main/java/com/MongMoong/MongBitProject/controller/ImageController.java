@@ -2,6 +2,7 @@ package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Image Controller", description = "ImageBB 클라우드 스토리지와 연동하는 컨트롤러입니다.")
 public class ImageController {
 
     private final ImageService imageService;
