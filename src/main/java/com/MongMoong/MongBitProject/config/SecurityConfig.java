@@ -29,9 +29,7 @@ public class SecurityConfig {
         PasswordEncoder passwordEncoder = passwordEncoder();
         return authentication -> {
             String username = authentication.getPrincipal().toString();
-            System.out.println("*** authentication.getPrincipal().toString() username = " + username);
             String password = authentication.getCredentials().toString();
-            System.out.println("*** authentication.getCredentials().toString() password = " + password);
 
             // 사용자 정보를 데이터베이스에서 조회
             Member member = memberRepository.findByUsername(username).orElseThrow(
