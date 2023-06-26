@@ -6,10 +6,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/api/v1/tokens")
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/tokens")
 @Tag(name = "Member Controller", description = "사용자의 토큰 검증 API를 제공하는 컨트롤러입니다.")
 public class MemberController {
     private final TokenProvider tokenProvider;
