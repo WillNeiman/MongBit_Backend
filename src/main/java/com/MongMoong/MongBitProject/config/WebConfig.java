@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                        "https://mong-bit-frontend.vercel.app",
+                        "https://mongbit.vercel.app",
                         "http://localhost:3000",
                         "http://localhost:8080",
                         "https://mongbit-willneiman.koyeb.app" // Swagger UI가 호스팅되는 서버의 URL을 추가.
