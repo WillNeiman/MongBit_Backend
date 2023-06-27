@@ -33,13 +33,16 @@ public class Member {
     private String email;
     private MemberRole role;
     private LocalDateTime registDate;
+    private String thumbnailImage;
 
-    public Member(Long kakaoId, String username, String password, String email, MemberRole role){
+    public Member(Long kakaoId, String username, String password, String email, MemberRole role, String thumbnailImage){
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
         this.kakaoId = kakaoId;
+        this.registDate = LocalDateTime.now();
+        this.thumbnailImage = thumbnailImage;
     }
 
     public List<GrantedAuthority> getAuthorities() {

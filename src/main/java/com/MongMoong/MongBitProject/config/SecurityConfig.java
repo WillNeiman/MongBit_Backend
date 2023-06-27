@@ -8,14 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.Collections;
 
 @Configuration
 @RequiredArgsConstructor
@@ -32,9 +29,7 @@ public class SecurityConfig {
         PasswordEncoder passwordEncoder = passwordEncoder();
         return authentication -> {
             String username = authentication.getPrincipal().toString();
-            System.out.println("*** authentication.getPrincipal().toString() username = " + username);
             String password = authentication.getCredentials().toString();
-            System.out.println("*** authentication.getCredentials().toString() password = " + password);
 
             // 사용자 정보를 데이터베이스에서 조회
             Member member = memberRepository.findByUsername(username).orElseThrow(
@@ -53,12 +48,13 @@ public class SecurityConfig {
     }
 
 
+    // OAuth2 인증 절차를 직접 구현했기 때문에 사실 안씀
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
-            .authorizeRequests(authorize -> authorize
-                    .anyRequest().permitAll()
+            .authorizeRequests(authorize ->
+                    authorize.anyRequest().permitAll()
             )
             .oauth2Login()
                 .userInfoEndpoint()

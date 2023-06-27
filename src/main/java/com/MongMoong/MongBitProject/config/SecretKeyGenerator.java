@@ -7,6 +7,10 @@ public class SecretKeyGenerator {
     private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe
 
+    public static void main(String[] args) {
+        System.out.println(generateNewSecretKey());
+    }
+
     public static String generateNewSecretKey() {
         // 24바이트 길이의 랜덤 바이트 배열을 생성
         byte[] randomBytes = new byte[24];

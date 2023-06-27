@@ -3,6 +3,7 @@ package com.MongMoong.MongBitProject.repository;
 import com.MongMoong.MongBitProject.model.Member;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /*
@@ -13,4 +14,6 @@ public interface MemberRepository extends MongoRepository<Member, String> {
     // Spring Data MongoDB는 메서드 이름을 분석하여 적절한 쿼리를 자동으로 생성하므로 메서드 이름만 정확하게 지정하면 된다.
     Optional<Member> findByKakaoId(Long kakaoId);
     Optional<Member> findByUsername(String username);
+    List<Member> findByIdIn(List<String> ids);
+
 }
