@@ -7,9 +7,20 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonIgnoreProperties(ignoreUnknown = true) // Jackson에게 정의되지 않은 JSON 필드를 만났을 때 오류를 발생시키지 않고 무시
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ImageUploadResponse {
+
+    private int status_code;
     private Data data;
+    private Error error;
+
+    public int getStatus() {
+        return status_code;
+    }
+
+    public void setStatus(int status_code) {
+        this.status_code = status_code;
+    }
 
     public Data getData() {
         return data;
@@ -17,6 +28,14 @@ public class ImageUploadResponse {
 
     public void setData(Data data) {
         this.data = data;
+    }
+
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -40,6 +59,28 @@ public class ImageUploadResponse {
 
         public void setUrlViewer(String urlViewer) {
             this.urlViewer = urlViewer;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Error {
+        private String message;
+        private int code;
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
         }
     }
 }
