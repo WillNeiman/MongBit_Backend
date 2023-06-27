@@ -48,7 +48,13 @@ kakao:
     url: "https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit.vercel.app/login/oauth2/kakao/code&response_type=code"
     client-id: "3245a5f9cb8303814aadbe1eb65b2e73"
 imgbb:
-  key: 8157b37797b76c11b2c257b37b1a7080
+  keys:
+    - "8157b37797b76c11b2c257b37b1a7080"
+    - "a02191b2f5a840c4a2a47fb9729394c0"
+    - "c1a1f029598b32794db12b6bb6cb262e"
+    - "b95578ae9d517409dd244ece0682b6de"
+    - "6a309763a77c96de2f057adfeea40857"
+
 
 springdoc:
   swagger-ui:
