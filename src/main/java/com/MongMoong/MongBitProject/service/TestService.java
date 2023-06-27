@@ -38,9 +38,13 @@ public class TestService {
     public Test createTest(Test test) {
         test.setCreateDate(LocalDateTime.now());
         test.setPlayCount(0);
+        test.setContent(test.getContent().replaceAll("\n", "<br>"));
         List<Question> questionList = test.getQuestions();
         questionService.createQuestionList(questionList);
         List<TestResult> testResultList = test.getResults();
+        for (TestResult testResult : testResultList) {
+            testResult.setContent(testResult.getContent().replaceAll("\n", "<br>"));
+        }
         testResultService.createTestResultList(testResultList);
         Test createdTest = testRepository.save(test);
         return createdTest;
@@ -96,9 +100,13 @@ public class TestService {
     @TestExistenceCheck
     @TestNullCheck
     public Test updateTest(Test test) {
-            questionService.updateQuestionList(test.getQuestions());
-            testResultService.updateTestResultList(test.getResults());
-            return testRepository.save(test);
+        test.setContent(test.getContent().replaceAll("\n", "<br>"));
+        questionService.updateQuestionList(test.getQuestions());
+        for (TestResult testResult : test.getResults()) {
+            testResult.setContent(testResult.getContent().replaceAll("\n", "<br>"));
+        }
+        testResultService.updateTestResultList(test.getResults());
+        return testRepository.save(test);
     }
     //테스트 삭제
     @TestExistenceCheck
