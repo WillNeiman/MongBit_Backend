@@ -21,7 +21,6 @@ public class LikeService {
         return likeRepository.countByTestId(testId);
     }
 
-    @MemberExistenceAtTestCheck
     @TestExistenceAtLikeCheck
     public boolean hasUserLikedTest(String testId, String memberId) {
         return likeRepository.findByTestIdAndMemberId(testId, memberId) != null;
