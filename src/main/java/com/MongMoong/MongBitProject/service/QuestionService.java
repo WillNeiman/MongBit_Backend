@@ -13,10 +13,13 @@ import java.util.Optional;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
+    // 질문 리스트 생성하기
     public List<Question> createQuestionList(List<Question> questionLists){
         List<Question> questionList = questionRepository.saveAll(questionLists);
         return questionList;
     }
+
+    // 질문 생성하기
     public Question createQuestion(Question question){
         Question createdquestion = questionRepository.save(question);
         return createdquestion;
@@ -33,9 +36,11 @@ public class QuestionService {
     public Question updateQuestion(Question question){
         return questionRepository.save(question);
     }
+
     public List<Question> updateQuestionList(List<Question> questionList){
         return questionRepository.saveAll(questionList);
     }
+
     public void deleteQuestion(String id){
         questionRepository.deleteById(id);
     }

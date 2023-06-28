@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.aspect;
 
 import com.MongMoong.MongBitProject.exception.*;
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -53,6 +54,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TokenVerificationException.class)
     public ResponseEntity<?> handleTokenVerificationException(TokenVerificationException e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+    @ExceptionHandler(AlgorithmMismatchException.class)
+    public ResponseEntity<?> handleAlgorithmMismatchException(AlgorithmMismatchException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
     @ExceptionHandler(UnauthorizedException.class)

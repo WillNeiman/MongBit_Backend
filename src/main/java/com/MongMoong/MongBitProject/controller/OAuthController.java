@@ -58,11 +58,7 @@ public class OAuthController {
         // JWT 토큰 가져오기
         Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
         String jwtToken = (String) currentAuthentication.getCredentials();
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String memberIdFromJwt = tokenProvider.getPrincipalFromToken(jwtToken);
-        System.out.println("(String)principal = " + (String) principal);
-        System.out.println("jwtToken = " + jwtToken);
-        System.out.println("memberIdFromJwt = " + memberIdFromJwt);
 
         // JWT 토큰을 HTTP 응답에 포함시키기, 바디에 썸네일과 가입일 정보 담아서 보내기
         return ResponseEntity.ok()

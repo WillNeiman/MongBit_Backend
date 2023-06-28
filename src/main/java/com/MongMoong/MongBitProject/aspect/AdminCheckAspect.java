@@ -27,16 +27,8 @@ public class AdminCheckAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
-        try {
-            String token = tokenProvider.resolveToken(request);
-            tokenProvider.validateTokenAndCheckAdmin(token);
-            System.out.println("토큰 검증 완료");
-        } catch (JWTDecodeException ex) {
-            throw new UnauthorizedException(ex.getMessage());
-        } catch (TokenExpiredException ex) {
-            throw new UnauthorizedException(ex.getMessage());
-        } catch (TokenVerificationException ex) {
-            throw new UnauthorizedException(ex.getMessage());
-        }
+        String token = tokenProvider.resolveToken(request);
+        tokenProvider.validateTokenAndCheckAdmin(token);
+        System.out.println("관리자 권한 확인");
     }
 }

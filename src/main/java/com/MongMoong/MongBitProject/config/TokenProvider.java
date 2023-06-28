@@ -4,6 +4,7 @@ import com.MongMoong.MongBitProject.exception.TokenVerificationException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -68,6 +69,8 @@ public class TokenProvider {
             throw new TokenExpiredException("토큰이 만료되었습니다.");
         } catch (SignatureVerificationException ex) {
             throw new TokenVerificationException("토큰 시그니처 검증에 실패했습니다.");
+        } catch (AlgorithmMismatchException ex) {
+            throw new AlgorithmMismatchException("토큰이 변조되었습니다.");
         }
     }
 
@@ -90,6 +93,8 @@ public class TokenProvider {
             throw new TokenExpiredException("토큰이 만료되었습니다.");
         } catch (SignatureVerificationException ex) {
             throw new TokenVerificationException("토큰 시그니처 검증에 실패했습니다.");
+        } catch (AlgorithmMismatchException ex) {
+            throw new AlgorithmMismatchException("토큰이 변조되었습니다.");
         }
     }
 
@@ -97,6 +102,13 @@ public class TokenProvider {
     public String getPrincipalFromToken(String token) {
         DecodedJWT jwt = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
         return jwt.getSubject();
+    }
+
+    // 주어진 토큰으로부터 ADMIN인지의 여부 확인
+    public boolean isAdminFromToken(String token) {
+        DecodedJWT jwt = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
+        String[] roles = jwt.getClaim(AUTHORITIES_KEY).asString().split(",");
+        return Arrays.stream(roles).anyMatch(role -> role.equals("ROLE_ADMIN"));
     }
 
 

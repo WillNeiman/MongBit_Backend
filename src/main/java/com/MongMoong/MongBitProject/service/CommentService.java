@@ -31,6 +31,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
 
+    // 댓글 저장 (신원 검증 필요)
     @MemberExistenceAtTestCheck
     @TestExistenceAtCommentCheck
     @CommentLimitCheck
@@ -39,33 +40,33 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    // 댓글 수정 (신원 검증 필요)
     @MemberExistenceAtTestCheck
     @TestExistenceAtCommentCheck
     @CommentExistenceCheck
     @CommentLimitCheck
     public Comment updateComment(Comment comment) {
         Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
-        if(existingComment != null && existingComment.getMemberId().equals(comment.getMemberId())){
-            existingComment.setContent(comment.getContent());
-            commentRepository.save(existingComment);
-            return existingComment;
-        } else {
-            throw new BadRequestException("자신이 작성한 댓글만 수정할 수 있습니다.");
-        }
+        existingComment.setContent(comment.getContent());
+        commentRepository.save(existingComment);
+        return existingComment;
     }
 
+    // 댓글 삭제(신원 검증 필요)
     @MemberExistenceAtTestCheck
     @CommentExistenceCheck
     public void deleteComment(Comment comment) {
         commentRepository.delete(comment);
     }
 
+    // 댓글 수 가져오기
     @TestExistenceAtCommentCheck
     public int getCommentsCountByTestId(Comment comment) {
         String testId = comment.getTestId();
         return commentRepository.countByTestId(testId);
     }
 
+    // 모든 댓글 가져오기 (현재 사용 안함)
     @TestExistenceAtCommentCheck
     public List<CommentDTO> getCommentsForTest(Comment comment) {
         String testId = comment.getTestId();
@@ -75,7 +76,7 @@ public class CommentService {
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
         Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
         List<CommentDTO> commentResponse = new ArrayList<>();
-        for(Comment findComment : comments) {
+        for (Comment findComment : comments) {
             String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
             String thumbnailImage = memberIdThumbnailMap.get((memberId));
@@ -85,6 +86,7 @@ public class CommentService {
         return commentResponse;
     }
 
+    // 댓글 페이지로 가져오기
     @TestExistenceAtCommentCheck
     public CommentResponse<CommentDTO> getCommentsForTestPaged(Comment comment, int pageNumber) {
         String testId = comment.getTestId();
@@ -96,7 +98,7 @@ public class CommentService {
         Map<String, String> memberIdUsernameMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getUsername));
         Map<String, String> memberIdThumbnailMap = members.stream().collect(Collectors.toMap(Member::getId, Member::getThumbnailImage));
         List<CommentDTO> commentDTOList = new ArrayList<>();
-        for(Comment findComment : comments) {
+        for (Comment findComment : comments) {
             String memberId = findComment.getMemberId();
             String username = memberIdUsernameMap.get(memberId);
             String thumbnailImage = memberIdThumbnailMap.get((memberId));

@@ -37,6 +37,7 @@ score[3] > 0 == "J" else "P"
     private final TestResultRepository testResultRepository;
     private final TestService testService;
 
+    // 최근 테스트 결과 페이지로 불러오기
     public MemberTestResultResponse<MemberTestResultDTO> getResultsByMemberId(String memberId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "testDate"));
         Page<MemberTestResult> memberTestResultPage = memberTestResultRepository.findByMemberId(memberId, pageable);
@@ -67,8 +68,9 @@ score[3] > 0 == "J" else "P"
         return memberTestResultResponse;
     }
 
-    @TestExistenceCheck
+    // 회원의 테스트 결과 저장하기
     @MemberExistenceAtTestCheck
+    @TestExistenceCheck
     @TestScoreCheck
     public MemberTestResult createMemberTestResult(String testId, String memberId, int[] score) {
         String result = setResult(score);
@@ -90,6 +92,7 @@ score[3] > 0 == "J" else "P"
         return memberTestResult;
     }
 
+    // 테스트 결과 점수를 MBTI로 변환하기
     private static String setResult(int[] score) {
         String result = "";
         if (score[0] > 0) {
