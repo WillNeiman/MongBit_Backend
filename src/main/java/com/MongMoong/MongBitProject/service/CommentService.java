@@ -2,6 +2,7 @@ package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.aspect.CommentExistenceCheck;
 import com.MongMoong.MongBitProject.aspect.CommentLimitCheck;
+import com.MongMoong.MongBitProject.aspect.MemberExistenceAtTestCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceAtCommentCheck;
 import com.MongMoong.MongBitProject.dto.CommentDTO;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
@@ -30,6 +31,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
 
+    @MemberExistenceAtTestCheck
     @TestExistenceAtCommentCheck
     @CommentLimitCheck
     public Comment saveComment(Comment comment) {
@@ -37,6 +39,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    @MemberExistenceAtTestCheck
     @TestExistenceAtCommentCheck
     @CommentExistenceCheck
     @CommentLimitCheck
@@ -51,6 +54,7 @@ public class CommentService {
         }
     }
 
+    @MemberExistenceAtTestCheck
     @CommentExistenceCheck
     public void deleteComment(Comment comment) {
         commentRepository.delete(comment);

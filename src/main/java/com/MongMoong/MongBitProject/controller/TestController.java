@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.controller;
 
+import com.MongMoong.MongBitProject.aspect.AdminRequired;
 import com.MongMoong.MongBitProject.dto.TestCoverResponse;
 import com.MongMoong.MongBitProject.dto.TestResultFromMyPageResponse;
 import com.MongMoong.MongBitProject.model.Test;
@@ -26,6 +27,7 @@ public class TestController {
     private final LikeService likeService;
 
 
+    @AdminRequired
     @PostMapping("/test")
     @Operation(summary = "테스트 만들기",
             description = "필요한 데이터:" +
@@ -35,6 +37,22 @@ public class TestController {
     public ResponseEntity<Test> createTest(@RequestBody Test test) {
         Test createdTest = testService.createTest(test);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @AdminRequired
+    @PatchMapping("/test")
+    @Operation(summary = "Test 정보 수정", description = "title, content, questions 리스트, results 리스트, imageUrl, playCount, id 순서로 전달해주세요.")
+    public ResponseEntity<Test> updateTest(@RequestBody Test test){
+        Test updatedTest = testService.updateTest(test);
+        return ResponseEntity.noContent().build();
+    }
+
+    @AdminRequired
+    @DeleteMapping("/test/{testId}")
+    @Operation(summary = "Test 삭제", description = "testId가 필요합니다. question, testResult가 같이 삭제됩니다.")
+    public ResponseEntity<Void> deleteTest(@PathVariable String testId){
+        testService.deleteTest(testId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/random")
@@ -57,20 +75,6 @@ public class TestController {
     public ResponseEntity<List<TestCoverResponse>> getTestList(){
         List<TestCoverResponse> testList = testService.getTestList();
         return ResponseEntity.ok(testList);
-    }
-
-    @PatchMapping("/test")
-    @Operation(summary = "Test 정보 수정", description = "title, content, questions 리스트, results 리스트, imageUrl, playCount, id 순서로 전달해주세요.")
-    public ResponseEntity<Test> updateTest(@RequestBody Test test){
-        Test updatedTest = testService.updateTest(test);
-        return ResponseEntity.noContent().build();
-    }
-
-    @DeleteMapping("/test/{testId}")
-    @Operation(summary = "Test 삭제", description = "testId가 필요합니다. question, testResult가 같이 삭제됩니다.")
-    public ResponseEntity<Void> deleteTest(@PathVariable String testId){
-        testService.deleteTest(testId);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("{page}/{size}")

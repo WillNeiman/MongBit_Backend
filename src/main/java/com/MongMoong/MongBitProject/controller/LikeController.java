@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.controller;
 
+import com.MongMoong.MongBitProject.aspect.AdminRequired;
 import com.MongMoong.MongBitProject.model.Like;
 import com.MongMoong.MongBitProject.service.LikeService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -28,12 +28,12 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager() throws Exception {
         PasswordEncoder passwordEncoder = passwordEncoder();
         return authentication -> {
-            String username = authentication.getPrincipal().toString();
+            String memberId = authentication.getPrincipal().toString();
             String password = authentication.getCredentials().toString();
 
             // 사용자 정보를 데이터베이스에서 조회
-            Member member = memberRepository.findByUsername(username).orElseThrow(
-                    () -> new UsernameNotFoundException("User not found: " + username)
+            Member member = memberRepository.findById(memberId).orElseThrow(
+                    () -> new UsernameNotFoundException("User not found: " + memberId)
             );
 
             // 비밀번호를 확인
@@ -43,7 +43,7 @@ public class SecurityConfig {
             }
 
             // 인증 성공: 새 UsernamePasswordAuthenticationToken 반환
-            return new UsernamePasswordAuthenticationToken(username, password, member.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(memberId, password, member.getAuthorities());
         };
     }
 
