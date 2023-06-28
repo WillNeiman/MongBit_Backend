@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/test")
@@ -20,7 +22,8 @@ public class LikeController {
 
     @GetMapping("/{testId}/{memberId}/like")
     @Operation(summary = "특정 테스트에 대해 로그인한 사용자의 좋아요 여부 확인", description = "testId와 memberId가 필요합니다. 파라미터의 순서를 엄수해주세요.")
-    public ResponseEntity<Boolean> hasUserLikedTest(@PathVariable String testId, @PathVariable String memberId) {
+    public ResponseEntity<Boolean> hasUserLikedTest(@PathVariable String testId, @PathVariable String memberId, Principal principal) {
+        System.out.println("principal = " + principal);
         boolean hasLiked = likeService.hasUserLikedTest(testId, memberId);
         return ResponseEntity.ok(hasLiked);
     }

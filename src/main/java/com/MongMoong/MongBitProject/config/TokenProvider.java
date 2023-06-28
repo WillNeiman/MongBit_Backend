@@ -93,6 +93,13 @@ public class TokenProvider {
         }
     }
 
+    // 주어진 토큰으로부터 memberId 추출
+    public String getPrincipalFromToken(String token) {
+        DecodedJWT jwt = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
+        return jwt.getSubject();
+    }
+
+
     // 주어진 토큰으로부터 사용자 인증 정보를 추출
     // 토큰으로부터 사용자 이름(subject)와 권한 정보를 추출하여 Authentication 객체를 생성
     // 만약 토큰이 유효하지 않거나 사용자 이름 정보가 없는 경우, null 반환
