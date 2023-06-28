@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.service;
 
 import com.MongMoong.MongBitProject.aspect.CommentExistenceCheck;
+import com.MongMoong.MongBitProject.aspect.CommentLimitCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceAtCommentCheck;
 import com.MongMoong.MongBitProject.dto.CommentDTO;
 import com.MongMoong.MongBitProject.dto.CommentResponse;
@@ -30,6 +31,7 @@ public class CommentService {
     private final MemberRepository memberRepository;
 
     @TestExistenceAtCommentCheck
+    @CommentLimitCheck
     public Comment saveComment(Comment comment) {
         comment.setCommentDate(LocalDateTime.now());
         return commentRepository.save(comment);
@@ -37,6 +39,7 @@ public class CommentService {
 
     @TestExistenceAtCommentCheck
     @CommentExistenceCheck
+    @CommentLimitCheck
     public Comment updateComment(Comment comment) {
         Comment existingComment = commentRepository.findById(comment.getId()).orElse(null);
         if(existingComment != null && existingComment.getMemberId().equals(comment.getMemberId())){
