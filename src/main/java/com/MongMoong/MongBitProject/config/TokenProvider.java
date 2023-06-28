@@ -71,6 +71,28 @@ public class TokenProvider {
         }
     }
 
+    // 주어진 토큰의 유효성을 검증 및 어드민 권한 체크
+    public boolean validateTokenAndCheckAdmin(String token) {
+        try {
+            DecodedJWT jwt = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build().verify(token);
+            String[] roles = jwt.getClaim(AUTHORITIES_KEY).asString().split(",");
+            for (String role : roles) {
+                System.out.println(role);
+            }
+            if (Arrays.stream(roles).noneMatch(role -> role.equals("ROLE_ADMIN"))) {
+                throw new TokenVerificationException("권한이 없습니다.");
+            }
+
+            return true;
+        } catch (JWTDecodeException ex) {
+            throw new JWTDecodeException("토큰 형식이 잘못되었습니다.");
+        } catch (TokenExpiredException ex) {
+            throw new TokenExpiredException("토큰이 만료되었습니다.");
+        } catch (SignatureVerificationException ex) {
+            throw new TokenVerificationException("토큰 시그니처 검증에 실패했습니다.");
+        }
+    }
+
     // 주어진 토큰으로부터 사용자 인증 정보를 추출
     // 토큰으로부터 사용자 이름(subject)와 권한 정보를 추출하여 Authentication 객체를 생성
     // 만약 토큰이 유효하지 않거나 사용자 이름 정보가 없는 경우, null 반환
@@ -86,4 +108,5 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList()));
     }
+
 }

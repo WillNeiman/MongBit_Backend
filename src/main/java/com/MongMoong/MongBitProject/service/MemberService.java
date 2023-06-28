@@ -69,11 +69,12 @@ public class MemberService {
                 memberRepository.save(kakaoMember);
             }
         }
+        System.out.println("kakaoMember.getId() = " + kakaoMember.getId());
 
         // 로그인 처리
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(kakaoNickname, password, authorities);
+        Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(kakaoMember.getId(), password, authorities);
         Authentication authentication = authenticationManager.authenticate(kakaoUsernamePassword);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // SecurityContextHolder에 저장된 Authentication 객체가 정상적으로 저장되었는지 확인

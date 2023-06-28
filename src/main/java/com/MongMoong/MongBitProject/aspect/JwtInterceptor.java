@@ -3,7 +3,6 @@ package com.MongMoong.MongBitProject.aspect;
 import com.MongMoong.MongBitProject.config.TokenProvider;
 import com.MongMoong.MongBitProject.exception.TokenVerificationException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -36,7 +35,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
             String token = tokenProvider.resolveToken(request);
-            tokenProvider.validateToken(token);
+            tokenProvider.validateTokenAndCheckAdmin(token);
             System.out.println("토큰 검증 완료");
             return true;
         } catch (JWTDecodeException ex) {
