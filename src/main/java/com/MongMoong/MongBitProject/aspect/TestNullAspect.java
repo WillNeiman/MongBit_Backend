@@ -55,8 +55,15 @@ public class TestNullAspect {
         for (TestResult testResult : testResultList) {
             int resultTitleLength= testResult.getTitle().length();
             int resultContentLength = testResult.getContent().length();
+            String result = testResult.getResult();
             if(resultTitleLength<MIN_LENGTH || resultTitleLength > MAX_LENGTH || resultContentLength<MIN_LENGTH || resultContentLength > MAX_LENGTH){
                 throw new DataMismatchException("result 내용 글자제한 수 확인바랍니다.");
+            }
+            if (result.length() != 4) {
+                throw new DataMismatchException("result는 4글자여야 합니다.");
+            }
+            if (!result.matches("[EIei][SNsn][TFtf][PJpj]")) {
+                throw new DataMismatchException("result에는 MBTI 결과가 등록되어야 합니다.");
             }
         }
 
