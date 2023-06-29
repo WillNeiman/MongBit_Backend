@@ -36,7 +36,6 @@ public class TestService {
      */
 
     // 테스트 생성
-    @AdminRequired
     @TestNullCheck
     public Test createTest(Test test) {
         test.setCreateDate(LocalDateTime.now());
@@ -54,7 +53,6 @@ public class TestService {
     }
 
     //테스트 수정
-    @AdminRequired
     @TestExistenceCheck
     @TestNullCheck
     public Test updateTest(Test test) {
@@ -68,7 +66,6 @@ public class TestService {
     }
 
     //테스트 삭제
-    @AdminRequired
     @TestExistenceCheck
     public void deleteTest(String testId){
         Test findTest = testRepository.findById(testId).get();

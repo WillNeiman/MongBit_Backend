@@ -28,6 +28,7 @@ public class TestController {
     private final TestResultService testResultService;
     private final LikeService likeService;
 
+    @AdminRequired
     @PostMapping("/test")
     @Operation(
             summary = "테스트 만들기",
@@ -41,6 +42,7 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @AdminRequired
     @PatchMapping("/test")
     @Operation(
             summary = "Test 정보 수정",
@@ -51,6 +53,7 @@ public class TestController {
         return ResponseEntity.noContent().build();
     }
 
+    @AdminRequired
     @DeleteMapping("/test/{testId}")
     @Operation(
             summary = "Test 삭제",
