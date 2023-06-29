@@ -78,7 +78,7 @@ score[3] > 0 == "J" else "P"
         Test findTest = testService.getTest(testId);
         List<TestResult> testTestList = findTest.getResults();
         for (TestResult testResult : testTestList) {
-            if (testResult.getResult().equals(result)) {
+            if (testResult.getResult().toUpperCase().equals(result)) {
                 memberTestResult.setTestResultId(testResult.getId());
             }
         }
