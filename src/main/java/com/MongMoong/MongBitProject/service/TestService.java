@@ -3,12 +3,14 @@ package com.MongMoong.MongBitProject.service;
 import com.MongMoong.MongBitProject.aspect.AdminRequired;
 import com.MongMoong.MongBitProject.aspect.TestExistenceCheck;
 import com.MongMoong.MongBitProject.aspect.TestNullCheck;
+import com.MongMoong.MongBitProject.model.MemberTestResult;
 import com.MongMoong.MongBitProject.model.Question;
 import com.MongMoong.MongBitProject.dto.TestCoverResponse;
 import com.MongMoong.MongBitProject.model.Test;
 import com.MongMoong.MongBitProject.model.TestResult;
 import com.MongMoong.MongBitProject.repository.CommentRepository;
 import com.MongMoong.MongBitProject.repository.LikeRepository;
+import com.MongMoong.MongBitProject.repository.MemberTestResultRepository;
 import com.MongMoong.MongBitProject.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,7 @@ public class TestService {
     private final TestResultService testResultService;
     private final LikeRepository likeRepository;
     private final CommentRepository commentRepository;
+    private final MemberTestResultRepository memberTestResultRepository;
 
     /*
     PageRequest는 Pageable 인터페이스를 구현하는 클래스이므로 Pageable 타입을 요구하는 메소드에 PageRequest 인스턴스를 전달할 수 있다.
@@ -72,12 +75,16 @@ public class TestService {
         List<Question> questionList = findTest.getQuestions();
         for (Question question : questionList) {
             questionService.deleteQuestion(question.getId());
-
         }
         List<TestResult> testResultList = findTest.getResults();
         for (TestResult testResult : testResultList) {
             testResultService.deleteTestResult(testResult.getId());
         }
+//        List<MemberTestResult> memberTestResultList = memberTestResultService.getResultsByTestId(testId);
+//        for (MemberTestResult memberTestResult : memberTestResultList) {
+//            memberTestResultService.de
+//        }
+        memberTestResultRepository.deleteAllByTestId(testId);
         testRepository.delete(findTest);
     }
 
