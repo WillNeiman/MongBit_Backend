@@ -1,0 +1,34 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd">
+
+    <defaultCache
+            maxElementsInMemory="100"
+            eternal="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="3600"
+    overflowToDisk="false"
+    diskPersistent="false"
+    diskExpiryThreadIntervalSeconds="120" />
+
+    <cache name="test"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false" />
+
+    <cache name="testList"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false" />
+
+    <cache name="recentTests"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="3600"
+           overflowToDisk="false" />
+
+</ehcache>

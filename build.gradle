@@ -36,6 +36,8 @@ dependencies {
 	implementation 'org.apache.httpcomponents:httpmime:4.5.13'
 
 	implementation 'org.springdoc:springdoc-openapi-ui:1.5.12' // Spring Doc의 Swagger UI 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	implementation 'net.sf.ehcache:ehcache'
 }
 
 tasks.named('test') {

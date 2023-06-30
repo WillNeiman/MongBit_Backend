@@ -1,6 +1,7 @@
 package com.MongMoong.MongBitProject.controller;
 
 import com.MongMoong.MongBitProject.aspect.AdminRequired;
+import com.MongMoong.MongBitProject.dto.TestCoverDTO;
 import com.MongMoong.MongBitProject.dto.TestCoverResponse;
 import com.MongMoong.MongBitProject.dto.TestResultFromMyPageResponse;
 import com.MongMoong.MongBitProject.model.Test;
@@ -81,15 +82,15 @@ public class TestController {
 
     @GetMapping("")
     @Operation(summary = "모든 테스트 조회", description = "모든 테스트를 리스트로 가져와 반환합니다.")
-    public ResponseEntity<List<TestCoverResponse>> getTestList(){
-        List<TestCoverResponse> testList = testService.getTestList();
+    public ResponseEntity<List<TestCoverDTO>> getTestList(){
+        List<TestCoverDTO> testList = testService.getTestList();
         return ResponseEntity.ok(testList);
     }
 
     @GetMapping("{page}/{size}")
     @Operation(summary = "최신 테스트 불러오기", description = "0부터 시작하는 page와 size가 필요합니다.")
-    public ResponseEntity<List<TestCoverResponse>> getRecentTest(@PathVariable int page, @PathVariable int size) {
-        List<TestCoverResponse> recentTest = testService.getRecentTests(page, size);
+    public ResponseEntity<TestCoverResponse<TestCoverDTO>> getRecentTest(@PathVariable int page, @PathVariable int size) {
+        TestCoverResponse<TestCoverDTO> recentTest = testService.getRecentTests(page, size);
         return ResponseEntity.ok(recentTest);
     }
 

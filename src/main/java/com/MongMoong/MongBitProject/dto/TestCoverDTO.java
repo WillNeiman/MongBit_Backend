@@ -10,13 +10,24 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TestDTO {
-//    private Test test;
+public class TestCoverDTO {
+    //Test
+    private String id;
     private String title;
-    private String content;
     private String imageUrl;
-//    private List<Question> questionList;
-//    private List<Answer> answerList;
-    private List<TestResult> testResultList;
+    private int playCount;
+
+    //Like
+    private int likeCount;
+
+    //Comment
+    private int commentCount;
+
+    public TestCoverDTO(String id, String title, String imageUrl, int playCount) {
+        this.id = id;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.playCount = playCount;
+    }
 
 }
