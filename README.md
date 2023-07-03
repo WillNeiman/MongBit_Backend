@@ -11,7 +11,6 @@
 - 임건재 : back-end / java / database / deployment / PM
 - 김정은 : back-end / java / api developement / QA
 - 안혜지 : back-end / java / api developement / QA
----
 ## **기술스택**
 **Frontend** : html5, css, JavaScript, React
 **Backend** :
@@ -25,7 +24,6 @@
 - 의존성 : Spring Web, Lombok, Spring Boot DevTools, Spring Data MongoDB, Spring Security, **OAuth2 Client**, Json, Spring AOP, Spring Test, Swagger, **Jwt**, HttpClient, Httpmime
 - **아키텍쳐 : RESTful API**
 - VCS : Git, Github, Git Kraken
----
 ## 작업 영역
 - 기획 (Figma)
     - 프로젝트 설계
@@ -51,7 +49,6 @@
     - AWS Route 53 → DNS 호스팅
     - AWS ACM → SSL/TLS 인증서 발급
     - 로드밸런서 → HTTPS 통신
----
 ### 추가 사항:
 1. 클라우드 서비스: Koyeb, AWS EC2
  - 프로젝트 배포를 위해 Koyeb의 서비스를 활용
@@ -59,11 +56,9 @@
 2. 파일 저장: ImageBB
  - 이미지 저장을 위한 클라우드 스토리지
 3. 쿠팡 파트너스: 임건재가 옛날에 만들어둔 계정 그대로 활용
----
 ### 화면 설계
 - figma wire-frame
 https://www.figma.com/file/C9D4w9U6uKwewR5MqdYBIA/Untitled?type=design&node-id=0%3A1&t=RmadoLPgs2ZPFFck-1
----
 ## 기획, 팀 빌딩
 
 **초안은 SSR이었다.**
@@ -85,7 +80,6 @@ https://www.figma.com/file/C9D4w9U6uKwewR5MqdYBIA/Untitled?type=design&node-id=0
 
 - 프론트엔드 경력자에게 팀의 상황을 설명하고 헬프요청, 깃 허브 협업 플로우 및 GUI 기반 깃 관리 툴인 GitKraken 사용법을 모든 팀원이 교육받게 함. ~~(만세)~~
 - **master, dev, feature의 계층구조를 갖는 워크 플로우를 프로젝트 컨벤션으로 채택**
----
 ## 목표와 과제, 트러블슈팅
 
 **OAuth2 로그인**
