@@ -1,9 +1,7 @@
 package com.MongMoong.MongBitProject.aspect;
 
-import com.MongMoong.MongBitProject.exception.BadRequestException;
-import com.MongMoong.MongBitProject.exception.DataMismatchException;
-import com.MongMoong.MongBitProject.exception.ResourceNotFoundException;
-import com.MongMoong.MongBitProject.exception.TokenVerificationException;
+import com.MongMoong.MongBitProject.exception.*;
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -33,16 +31,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-//    @ExceptionHandler(IllegalArgumentException.class)
-//    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException e) {
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//    }
-
-//    @ExceptionHandler(NullPointerException.class)
-//    public ResponseEntity<?> handleNullPointerException(NullPointerException e) {
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//    }
-
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         if (e.getCause() instanceof InvalidFormatException) {
@@ -53,6 +41,48 @@ public class GlobalExceptionHandler {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @ExceptionHandler(JWTDecodeException.class)
+    public ResponseEntity<?> handleJWTDecodeException(JWTDecodeException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<?> handleTokenExpiredException(TokenExpiredException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    }
+
+    @ExceptionHandler(TokenVerificationException.class)
+    public ResponseEntity<?> handleTokenVerificationException(TokenVerificationException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+    }
+    @ExceptionHandler(AlgorithmMismatchException.class)
+    public ResponseEntity<?> handleAlgorithmMismatchException(AlgorithmMismatchException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<?> handleUnauthorizedException(UnauthorizedException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    }
+    /*
+
+        } catch (JWTDecodeException ex) {
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write(ex.getMessage());
+            return false;
+        } catch (TokenExpiredException ex) {
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(ex.getMessage());
+            return false;
+        } catch (TokenVerificationException ex) {
+            response.setContentType("text/plain; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.getWriter().write(ex.getMessage());
+            return false;
+        }
+     */
 
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<?> handleGenericException(Exception e) {

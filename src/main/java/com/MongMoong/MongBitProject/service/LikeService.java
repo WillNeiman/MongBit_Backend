@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.aspect.MemberExistenceAtTestCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceAtCommentCheck;
 import com.MongMoong.MongBitProject.aspect.TestExistenceAtLikeCheck;
 import com.MongMoong.MongBitProject.model.Like;
@@ -25,6 +26,7 @@ public class LikeService {
         return likeRepository.findByTestIdAndMemberId(testId, memberId) != null;
     }
 
+    @MemberExistenceAtTestCheck
     @TestExistenceAtLikeCheck
     public synchronized Like createLike(String testId, String memberId) {
         Like existLike = likeRepository.findByTestIdAndMemberId(testId, memberId);
@@ -36,6 +38,7 @@ public class LikeService {
         return null;
     }
 
+    @MemberExistenceAtTestCheck
     @TestExistenceAtLikeCheck
     public void deleteLike(String testId, String memberId) {
         Like existLike = likeRepository.findByTestIdAndMemberId(testId, memberId);

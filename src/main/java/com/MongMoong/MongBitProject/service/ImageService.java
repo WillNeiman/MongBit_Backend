@@ -1,5 +1,6 @@
 package com.MongMoong.MongBitProject.service;
 
+import com.MongMoong.MongBitProject.aspect.AdminRequired;
 import com.MongMoong.MongBitProject.config.ImgbbConfig;
 import com.MongMoong.MongBitProject.dto.ImageUploadResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +28,7 @@ public class ImageService {
     private int index = 0;
     private final ImgbbConfig imgbbConfig;
 
+    @AdminRequired
     public String uploadImageToImgBB(MultipartFile file) throws Exception {
         String key = getNextKey();
         InputStream in = file.getInputStream();

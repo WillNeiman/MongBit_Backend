@@ -30,12 +30,13 @@ public class OAuthController {
     private String kakaoOAuthUrl;
 
     /*
-    8080포트 테스트용 url
-    https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=http://localhost:8080/login/oauth2/kakao/code&response_type=code
+    8100포트 테스트용 url
+    https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=http://localhost:8100/login/oauth2/kakao/code&response_type=code
     배포 테스트용 url
     https://kauth.kakao.com/oauth/authorize?client_id=3245a5f9cb8303814aadbe1eb65b2e73&redirect_uri=https://mongbit-willneiman.koyeb.app/login/oauth2/kakao/code&response_type=code
     프론트엔드 도메인
     https://mongbit-frontend-moorisong.koyeb.app/
+    http://localhost:8100/api/v1/test/649a7bccaa04db61384808c5/648153acc5f9f12b045730de/like
      */
 
     // 카카오 OAuth 인증 URL을 반환하는 엔드포인트. 테스트용
@@ -57,6 +58,7 @@ public class OAuthController {
         // JWT 토큰 가져오기
         Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
         String jwtToken = (String) currentAuthentication.getCredentials();
+        String memberIdFromJwt = tokenProvider.getPrincipalFromToken(jwtToken);
 
         // JWT 토큰을 HTTP 응답에 포함시키기, 바디에 썸네일과 가입일 정보 담아서 보내기
         return ResponseEntity.ok()
