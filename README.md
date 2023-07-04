@@ -1,3 +1,5 @@
+![image](https://github.com/WillNeiman/MongBit_Backend/assets/122020165/05317cbc-8e8a-4cd1-b227-70924299b2d1)
+
 # MongBit Project
 
 ### [프로젝트 개요]
