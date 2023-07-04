@@ -2,19 +2,27 @@
 
 # MongBit Project
 
-### [프로젝트 개요]
-- jwt 인증을 기반으로 카카오 로그인, 공유하기를 지원하는 심리테스트 플랫폼
-- 카카오톡 소셜 로그인 기능을 도입하여 로그인 정보를 관리하고, 카카오톡 공유하기 기능을 사용할 수 있게 한다.
-- 각 테스트마다 사용자 경험을 해치지 않는 선에서 쿠팡 광고배너를 배치하여 10원짜리 한 장이라도 건져본다.
-###프로젝트 기간
+## [몽빗](https://mong-bit-frontend.vercel.app/)
+
+2023.6.6 - 6.27 (3주) | 상용화 완료
+
+jwt 인증을 기반으로 카카오 로그인, 공유하기를 지원하고 **쿠팡 광고로 수익화**하는 심리테스트 플랫폼
+
+**각 테스트마다 사용자 경험을 해치지 않는 선에서 쿠팡 광고배너를 배치하여 10원짜리 한 장이라도 건져본다.**
+
+### 프로젝트 기간
 - 2023/06/06 ~ 2023/06/27 (3주)
-### [몽뭉이 크루] (ORDER BY birthday)
+
+### 몽뭉이 크루 (ORDER BY birthday)
 - 김송현 : front-end / react / git-hub
 - 임건재 : back-end / java / database / deployment / PM
 - 김정은 : back-end / java / api developement / QA
 - 안혜지 : back-end / java / api developement / QA
+
 ## **기술스택**
+
 **Frontend** : html5, css, JavaScript, React
+
 **Backend** :
 - 언어: Java (버전 11)
 - 프로젝트 관리 도구 : Gradle-Groovy
