@@ -42,7 +42,7 @@ public class TestService {
      */
 
     // 테스트 생성
-    @CacheEvict(value = {"recentTests", "testList"}, allEntries = true) // 기존의 최신 테스트 캐싱 데이터를 무효화함
+    @CacheEvict(value = {"test", "recentTests", "testList"}, allEntries = true) // 기존의 최신 테스트 캐싱 데이터를 무효화함
     @TestNullCheck
     public Test createTest(Test test) {
         test.setCreateDate(LocalDateTime.now());
@@ -61,7 +61,7 @@ public class TestService {
     }
 
     //테스트 수정
-    @CacheEvict(value = {"recentTests", "testList"}, allEntries = true)
+    @CacheEvict(value = {"test", "recentTests", "testList"}, allEntries = true)
     @TestExistenceCheck
     @TestNullCheck
     public Test updateTest(Test test) {
@@ -75,7 +75,7 @@ public class TestService {
     }
 
     //테스트 삭제
-    @CacheEvict(value = {"recentTests", "testList"}, allEntries = true)
+    @CacheEvict(value = {"test", "recentTests", "testList"}, allEntries = true)
     @TestExistenceCheck
     public void deleteTest(String testId){
         Test findTest = testRepository.findById(testId).get();
