@@ -76,8 +76,8 @@ score[3] > 0 == "J" else "P"
         String result = setResult(score);
         MemberTestResult memberTestResult = new MemberTestResult();
         Test findTest = testService.getTest(testId);
-        List<TestResult> testTestList = findTest.getResults();
-        for (TestResult testResult : testTestList) {
+        List<TestResult> testResultList = findTest.getResults();
+        for (TestResult testResult : testResultList) {
             if (testResult.getResult().toUpperCase().equals(result)) {
                 memberTestResult.setTestResultId(testResult.getId());
             }
@@ -85,11 +85,24 @@ score[3] > 0 == "J" else "P"
         memberTestResult.setTestId(testId);
         memberTestResult.setMemberId(memberId);
         memberTestResult.setTestDate(LocalDateTime.now());
-        Test test = testService.getTest(testId);
-        test.setPlayCount(test.getPlayCount() + 1);
-        testService.updateTest(test);
+        findTest.setPlayCount(findTest.getPlayCount() + 1);
+        testService.updateTest(findTest);
         memberTestResultRepository.save(memberTestResult);
         return memberTestResult;
+    }
+
+    @TestExistenceCheck
+    @TestScoreCheck
+    public String getTestResultIdWithoutAuth(String testId, int[] score) {
+        String result = setResult(score);
+        Test findTest = testService.getTest(testId);
+        List<TestResult> testResultList = findTest.getResults();
+        for(TestResult testResult : testResultList) {
+            if (testResult.getResult().toUpperCase().equals(result)) {
+                return testResult.getId();
+            }
+        }
+        return "";
     }
 
     // 테스트 결과 점수를 MBTI로 변환하기
