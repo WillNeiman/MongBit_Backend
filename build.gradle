@@ -45,6 +45,6 @@ tasks.named('test') {
 }
 
 // Koyeb에 배포하기 위해서는 jar가 2개 만들어지는 걸 막아야 함
-//jar {
-//	enabled = false
-//}
+jar {
+	enabled = false
+}
