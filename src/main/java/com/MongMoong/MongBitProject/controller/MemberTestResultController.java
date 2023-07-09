@@ -25,7 +25,6 @@ import java.util.Optional;
 public class MemberTestResultController {
 
     private final TokenProvider tokenProvider;
-
     private final MemberTestResultService memberTestResultService;
     private final TestResultService testResultService;
 
@@ -41,13 +40,23 @@ public class MemberTestResultController {
     }
 
     @PostMapping("/{testId}/{memberId}")
-    @Operation(summary = "테스트 결과를 계산하고 검사 결과를 반환" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다. score에는 1,3, -1, -3만 넣을 수 있습니다.")
+    @Operation(summary = "회원 테스트 결과를 계산하고 검사 결과를 반환" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다. score에는 1,3, -1, -3만 넣을 수 있습니다.")
     public ResponseEntity<TestResult> updateMemberTestResult(
             @PathVariable String testId,
             @PathVariable String memberId,
             @RequestBody int[] score) {
         MemberTestResult createMemberTestResult = memberTestResultService.createMemberTestResult(testId, memberId, score);
         TestResult testResult = testResultService.getTestResult(createMemberTestResult.getTestResultId());
+        return ResponseEntity.ok(testResult);
+    }
+
+    @PostMapping("/{testId}")
+    @Operation(summary = "비회원 테스트 결과를 계산하고 검사 결과를 반환" , description = "testId, memberId 순으로 전달해주세요. score는 길이가 4인 정수배열입니다. score에는 1,3, -1, -3만 넣을 수 있습니다.")
+    public ResponseEntity<TestResult> getTestResultWithoutAuth(
+            @PathVariable String testId,
+            @RequestBody int[] score) {
+        String testResultId = memberTestResultService.getTestResultIdWithoutAuth(testId, score);
+        TestResult testResult = testResultService.getTestResult(testResultId);
         return ResponseEntity.ok(testResult);
     }
 }
